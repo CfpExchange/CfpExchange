@@ -92,7 +92,7 @@
             <a href="@(Url.Action("details", "cfp", new { id = cfp.Id }))">
               <img src="images/square-recipes3.jpg" alt="">
             </a>
-            <h2><a href="recipe-detail.html">Milk fruit fresh with vegetables </a></h2>
+            <h2><a href="@(Url.Action("details", "cfp", new { id = cfp.Id }))">Milk fruit fresh with vegetables </a></h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
             <div class="tag">
               <a href="#">Milk</a>
@@ -160,7 +160,7 @@
         </div>
 
         <div class="col-lg-12 text-center">
-          <a href="#" class="btn btn-load">Load More</a>
+          <a href="@(Url.Action("browse", "cfp"))" class="btn btn-load">Load More</a>
         </div>
 
       </div>

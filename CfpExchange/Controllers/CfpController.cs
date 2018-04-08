@@ -48,7 +48,12 @@ namespace CfpExchange.Controllers
 			
 			var selectedCfp = _cfpContext.Cfps.SingleOrDefault(cfp => cfp.Id == id);
 
-			// Error handling
+			if (selectedCfp == null)
+				// TODO to error page?
+				RedirectToAction("index", "home");
+
+			selectedCfp.Views++;
+			_cfpContext.SaveChanges();
 			 
 			return View(selectedCfp);
 		}

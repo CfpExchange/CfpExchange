@@ -39,8 +39,8 @@
             </div>
 
             <div class="form-group">
-              <label>Event Location</label>
-              <input type="text" class="form-control" id="eventLocation">
+                <label>Event Location</label>
+                <input class="form-control" id="eventLocation" type="text" placeholder="Enter a location" >
             </div>
 
             <!--<div class="form-group">
@@ -177,3 +177,11 @@
       </div>
     </div>
   </div>
+
+@section Scripts {
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgVGJaXfyAu25OCrj3xu7RI0GQvzQY4p4&libraries=places"></script>
+
+    $(document).ready(function() {
+        var autocomplete = new google.maps.places.Autocomplete($('#eventLocation'));
+    });
+}
