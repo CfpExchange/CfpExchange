@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using CfpExchange.Data;
+using CfpExchange.Helpers;
 using CfpExchange.Models;
 using Microsoft.AspNetCore.Mvc;
 
