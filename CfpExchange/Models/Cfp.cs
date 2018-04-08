@@ -20,5 +20,6 @@ namespace CfpExchange.Models
 
 		public int Views { get; set; }
 		public int ClicksToCfpUrl { get; set; }
+		public string SubmittedByName { get; set; }
 	}
 }

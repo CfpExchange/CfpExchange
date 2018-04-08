@@ -85,7 +85,23 @@
 
           <h5>🖖<!--<i class="fa fa-cutlery" aria-hidden="true"></i>-->  List CFPs</h5>
 
+        @foreach(var cfp in @Model.CfpList)
+        {
           <div class="box list recipes">
+            <div class="by"><i class="fa fa-user" aria-hidden="true"></i> @cfp.EventName</div>
+            <a href="@(Url.Action("details", "cfp", new { id = cfp.Id }))">
+              <img src="images/square-recipes3.jpg" alt="">
+            </a>
+            <h2><a href="recipe-detail.html">Milk fruit fresh with vegetables </a></h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <div class="tag">
+              <a href="#">Milk</a>
+              <a href="#">Lemon</a>
+              <a href="#">Sayur</a>
+            </div>
+          </div>
+        }
+          <!--<div class="box list recipes">
             <div class="by"><i class="fa fa-user" aria-hidden="true"></i> Gerina Amy</div>
             <a href="recipe-detail.html">
               <img src="images/square-recipes3.jpg" alt="">
@@ -139,21 +155,7 @@
               <a href="#">Lemon</a>
               <a href="#">Sayur</a>
             </div>
-          </div>
-
-          <div class="box list recipes">
-            <div class="by"><i class="fa fa-user" aria-hidden="true"></i> Gerina Amy</div>
-            <a href="recipe-detail.html">
-              <img src="images/square-recipes3.jpg" alt="">
-            </a>
-            <h2><a href="recipe-detail.html">Milk fruit fresh with vegetables </a></h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            <div class="tag">
-              <a href="#">Milk</a>
-              <a href="#">Lemon</a>
-              <a href="#">Sayur</a>
-            </div>
-          </div>
+          </div>-->
 
         </div>
 

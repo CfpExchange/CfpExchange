@@ -27,6 +27,8 @@ namespace CfpExchange.Controllers
 			// Set latest Cfp
 			indexViewModel.NewestCfp = _cfpContext.Cfps.OrderByDescending(cfp => cfp.CfpAdded).FirstOrDefault();
 
+			indexViewModel.CfpList = _cfpContext.Cfps.OrderByDescending(cfp => cfp.CfpAdded).Take(10).ToArray();
+
 			return View(indexViewModel);
 		}
 

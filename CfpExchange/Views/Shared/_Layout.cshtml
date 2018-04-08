@@ -76,7 +76,7 @@
                 </div>
               </li>-->
               <li class="nav-item btn-submit-recipe">
-                <a class="nav-link" href="/cfp/submit">📨<!--<i class="fa fa-upload" aria-hidden="true"></i>--> Submit CFP</a>
+                <a class="nav-link" href="@(Url.Action("submit", "cfp"))">📨<!--<i class="fa fa-upload" aria-hidden="true"></i>--> Submit CFP</a>
               </li>
             </ul>
           </div>
@@ -91,27 +91,21 @@
           <div class="row">
             <div class="col-lg-3 col-sm-6">
               <h5>About</h5>
-              <p>Nunc at augue gravida est fermentum vulputate. gravida est fermentum vulputate Pellentesque et ipsum in dui malesuada tempus.</p>
+              <p>CFP Exchange tries to gather current CFPs from events around the world by crowd-sourcing them from the community.</p>
             </div>
             <div class="col-lg-3 col-sm-6">
-              <!--<h5>Archive</h5>
+              <h5>Follow us!</h5>
               <ul>
-                <li><a href="#">June 2017</a>
+                <li><a href="https://twitter.com/cfp_exchange" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i> Twitter</a>
                 </li>
-                <li><a href="#">July 2017</a>
-                </li>
-                <li><a href="#">August 2017</a>
-                </li>
-                <li><a href="#">September 2017</a>
-                </li>
-              </ul>-->
+              </ul>
             </div>
             <div class="col-lg-3 col-sm-6">
               <h5>CFPs</h5>
               <ul>
-                <li><a href="browse-recipes.html">Browse CFPs</a>
+                <li><a href="@(Url.Action("browse", "cfp"))">Browse CFPs</a>
                 </li>
-                <li><a href="submit-recipes.html">Submit Recipe</a>
+                <li><a href="@(Url.Action("submit", "cfp"))">Submit Recipe</a>
                 </li>
               </ul>
             </div>
