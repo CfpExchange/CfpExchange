@@ -16,6 +16,14 @@ namespace CfpExchange.Controllers
 			_cfpContext = cfpContext;
 		}
 
+		[HttpPost]
+		public IActionResult GetMetadata(string url)
+		{
+			var metadata = MetaScraper.GetMetaDataFromUrl(url);
+
+			return Json(metadata);
+		}
+
 		public IActionResult Submit()
 		{
 			return View();
