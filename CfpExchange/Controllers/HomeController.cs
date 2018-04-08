@@ -1,14 +1,33 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using CfpExchange.Models;
+using CfpExchange.Data;
+using System.Linq;
+using CfpExchange.ViewModels;
 
 namespace CfpExchange.Controllers
 {
 	public class HomeController : Controller
 	{
+		private readonly CfpContext _cfpContext;
+
+		public HomeController(CfpContext cfpContext)
+		{
+			_cfpContext = cfpContext;
+		}
+
 		public IActionResult Index()
 		{
-			return View();
+			var indexViewModel = new IndexViewModel();
+
+			// Set most viewed
+			var maxViews = _cfpContext.Cfps.Max(cfp => cfp.Views);
+			indexViewModel.MostViewedCfp = _cfpContext.Cfps.FirstOrDefault(cfp => cfp.Views == maxViews);
+
+			// Set latest Cfp
+			indexViewModel.NewestCfp = _cfpContext.Cfps.OrderByDescending(cfp => cfp.CfpAdded).FirstOrDefault();
+
+			return View(indexViewModel);
 		}
 
 		public IActionResult About()

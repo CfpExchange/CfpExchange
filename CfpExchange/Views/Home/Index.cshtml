@@ -6,36 +6,46 @@
   <div class="top">
     <div class="container">
       <div class="row">
+            @if (@Model.NewestCfp != null)
+            {
         <div class="col-lg-4">
           <h5>✨<!--<i class="fa fa-cutlery" aria-hidden="true"></i>--> Newest CFP</h5>
           <div class="box clearfix">
             <a href="recipe-detail.html">
               <img src="images/square-recipes1.jpg" alt="">
             </a>
-            <h3><a href="recipe-detail.html">Cinnamon Baked Doughnuts</a></h3>
+            <h3><a href="@(Url.Action("details", "cfp", new { id = Model.NewestCfp.Id }))">@Model.NewestCfp.EventName</a></h3>
             <p>Lorem ipsum dolor sit amet, adipiscing elit...</p>
           </div>
         </div>
+            }
+            
+            @if (@Model.MostViewedCfp != null)
+            {
         <div class="col-lg-4">
           <h5>🕵<!--<i class="fa fa-cutlery" aria-hidden="true"></i>--> Most Viewed CFP</h5>
           <div class="box clearfix">
             <a href="recipe-detail.html">
               <img src="images/square-recipes2.jpg" alt="">
             </a>
-            <h3><a href="recipe-detail.html">Fruit Mix With Lemon Gravy</a></h3>
+            <h3><a href="@(Url.Action("details", "cfp", new { id = Model.MostViewedCfp.Id }))">@Model.MostViewedCfp.EventName</a></h3>
             <p>Lorem ipsum dolor sit amet, adipiscing elit...</p>
           </div>
         </div>
+            }
+            @if (@Model.RandomCfp != null)
+            {
         <div class="col-lg-4">
           <h5>🔀<!--<i class="fa fa-cutlery" aria-hidden="true"></i>--> Just Random</h5>
           <div class="box clearfix">
             <a href="recipe-detail.html">
               <img src="images/square-recipes3.jpg" alt="">
             </a>
-            <h3><a href="recipe-detail.html">Red Cilly Sauce Cheese</a></h3>
+            <h3><a href="@(Url.Action("details", "cfp", new { id = Model.RandomCfp.Id }))">@Model.RandomCfp.EventName</a></h3>
             <p>Lorem ipsum dolor sit amet, adipiscing elit...</p>
           </div>
         </div>
+            }
       </div>
     </div>
   </div>
