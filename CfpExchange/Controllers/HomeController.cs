@@ -27,6 +27,12 @@ namespace CfpExchange.Controllers
 			// Set latest Cfp
 			indexViewModel.NewestCfp = _cfpContext.Cfps.OrderByDescending(cfp => cfp.CfpAdded).FirstOrDefault();
 
+			// TODO set real random
+			indexViewModel.RandomCfp = _cfpContext.Cfps.FirstOrDefault();
+
+			// TODO set real CFP of the day
+			indexViewModel.CfpOfTheDay = _cfpContext.Cfps.FirstOrDefault();
+
 			indexViewModel.CfpList = _cfpContext.Cfps.OrderByDescending(cfp => cfp.CfpAdded).Take(10).ToArray();
 
 			return View(indexViewModel);

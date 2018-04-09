@@ -164,7 +164,8 @@ body {
   padding-left: 15px;
 }
 .box.grid.recipes img {
-  width: 100%;
+  /*width: 100%;*/
+  max-width: 160px;
   margin-bottom: 30px;
 }
 .box.grid.recipes .tag {

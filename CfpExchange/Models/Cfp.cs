@@ -6,7 +6,9 @@ namespace CfpExchange.Models
 	{
 		public Guid Id { get; set; }
 		public string EventName { get; set; }
-		public string EventLocation { get; set; }
+		public string EventLocationName { get; set; }
+		public double EventLocationLat { get; set; }
+		public double EventLocationLong { get; set; }
 		public string EventUrl { get; set; }
 		public string EventImage { get; set; }
 

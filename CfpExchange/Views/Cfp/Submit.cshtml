@@ -9,6 +9,7 @@
         <div class="row">
           <div class="col-lg-12">
             <h2>Submit CFP</h2>
+            Please do not fill out this form! Check out the <a href="@(Url.Action("about", "home"))">About</a> page on how to contact me. <br /><br />
           </div>
         </div>
       </div>
@@ -170,8 +171,7 @@
               </div>
             </div>-->
 
-            <button type="submit" class="btn btn-submit">Submit Recipe</button>
-
+            <button type="submit" class="btn btn-submit" onclick="javascript:submitCfp();alert('I love your enthusiasm! Sorry, not working yet..');">Submit CFP</button>
           </div>
         </div>
       </div>
@@ -181,7 +181,33 @@
 @section Scripts {
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgVGJaXfyAu25OCrj3xu7RI0GQvzQY4p4&libraries=places"></script>
 
-    $(document).ready(function() {
-        var autocomplete = new google.maps.places.Autocomplete($('#eventLocation'));
-    });
+    <script type="text/javascript">
+        var cfpToSubmit = {};
+    
+        function submitCfp()
+        {
+            submitCfp.EventTitle = $('#eventTitle').text;
+        }
+
+        $(document).ready(function() {
+            
+    
+            var autocomplete = new google.maps.places.Autocomplete(document.getElementById('eventLocation'));
+
+            autocomplete.addListener('place_changed', function() {
+                  var place = autocomplete.getPlace();
+                  if (!place.geometry) {
+                    // User entered the name of a Place that was not suggested and
+                    // pressed the Enter key, or the Place Details request failed.
+                    window.alert("No details available for input: '" + place.name + "'");
+                    return;
+                  }
+
+                // TODO do something useful with our info
+                cfpToSubmit.Location = document.getElementById('eventLocation').value;
+                cfpToSubmit.Lat = place.geometry.location.lat();
+                cfpToSubmit.Long = place.geometry.location.lng();
+             }); 
+        });
+    </script>
 }

@@ -24,6 +24,11 @@ namespace CfpExchange.Controllers
 			return Json(metadata);
 		}
 
+		public IActionResult Browse()
+		{
+			return View();
+		}
+
 		public IActionResult Submit()
 		{
 			return View();
