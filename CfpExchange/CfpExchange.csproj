@@ -24,5 +24,8 @@
     <Folder Include="Data\" />
     <Folder Include="ViewModels\" />
     <Folder Include="Helpers\" />
+    <Folder Include="wwwroot\js\plugins\bootstrap-datepicker\" />
+    <Folder Include="wwwroot\css\plugins\" />
+    <Folder Include="wwwroot\css\plugins\bootstrap-datepicker\" />
   </ItemGroup>
 </Project>

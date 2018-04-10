@@ -19,6 +19,10 @@ namespace CfpExchange.Controllers
 		[HttpPost]
 		public IActionResult GetMetadata(string url)
 		{
+			if (string.IsNullOrWhiteSpace(url))
+				return Ok();
+
+			// TODO check url for scheme
 			var metadata = MetaScraper.GetMetaDataFromUrl(url);
 
 			return Json(metadata);
