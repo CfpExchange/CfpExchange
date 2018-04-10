@@ -3,6 +3,7 @@ using System.Linq;
 using CfpExchange.Data;
 using CfpExchange.Helpers;
 using CfpExchange.Models;
+using CfpExchange.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CfpExchange.Controllers
@@ -20,10 +21,15 @@ namespace CfpExchange.Controllers
 		public IActionResult GetMetadata(string url)
 		{
 			if (string.IsNullOrWhiteSpace(url))
-				return Ok();
+				return NotFound();
 
-			// TODO check url for scheme
-			var metadata = MetaScraper.GetMetaDataFromUrl(url);
+			var validatedUrl = url.ToLower();
+
+			if (!validatedUrl.StartsWith("http://", StringComparison.Ordinal)
+			    || !validatedUrl.StartsWith("https://", StringComparison.Ordinal))
+				validatedUrl = $"http://{validatedUrl}";
+			
+			var metadata = MetaScraper.GetMetaDataFromUrl(validatedUrl);
 
 			return Json(metadata);
 		}
@@ -39,7 +45,7 @@ namespace CfpExchange.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult Submit(Cfp submittedCfp)
+		public IActionResult Submit(SubmittedCfp submittedCfp)
 		{
 			// Check validity
 
