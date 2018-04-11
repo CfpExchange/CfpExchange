@@ -20,7 +20,8 @@ namespace CfpExchange.Data
 					SubmittedByName = "Gerald",
 					EventLocationName = "Antwerp, Belgium",
 					EventDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-					CfpEndDate = DateTime.Now.AddDays(100)
+					CfpEndDate = DateTime.Now.AddDays(100),
+					EventImage = "https://techorama.nl/wp-content/uploads/sites/2/2017/10/TVrobot@4x.svg"
 				});
 
 				Cfps.Add(new Cfp
@@ -32,7 +33,8 @@ namespace CfpExchange.Data
 					SubmittedByName = "Gerald",
 					EventLocationName = "Ede, The Netherlands",
 					EventDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-					CfpEndDate = DateTime.Now.AddDays(10)
+					CfpEndDate = DateTime.Now.AddDays(10),
+					EventImage = "https://techorama.nl/wp-content/uploads/sites/2/2017/10/TVrobot@4x.svg"
 				});
 
 				Cfps.Add(new Cfp

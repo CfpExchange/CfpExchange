@@ -18,7 +18,8 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-12">
-
+            <h1>Required</h1>
+            <p>These fields are required and the minimum amount of information for adding a CFP</p>
             <div class="form-group">
               <label>Event URL</label>
               <input type="text" class="form-control" onblur="javascript: getMetadata(this.value);">
@@ -46,12 +47,6 @@
             </div>
 
             <div class="form-group">
-              <label>CFP url</label>
-              <input type="text" class="form-control" id="eventCfpDirectUrl">
-              <small id="eventTitleHelp" class="form-text text-muted">Is there a direct link to the CFP portal? Please let us know here!</small>
-            </div>
-
-            <div class="form-group">
                 <label>CFP Close Date</label>
                 <input class="form-control col-lg-12" id="eventCfpCloseDate" type="text" readonly>
                 <small id="eventCfpCloseDateHelp" class="form-text text-muted">When does the CFP close?</small>
@@ -61,6 +56,15 @@
                 <label>Event Location</label>
                 <input class="form-control" id="eventLocation" type="text">
                 <small id="eventLocationHelp" class="form-text text-muted">Where does the event take place?</small>
+            </div>
+
+            <h1>Nice to have</h1>
+            <p>By providing this information you will help other speakers to find out more about the event, but is not absolutely necessary</p>
+
+            <div class="form-group">
+              <label>CFP url</label>
+              <input type="text" class="form-control" id="eventCfpDirectUrl">
+              <small id="eventTitleHelp" class="form-text text-muted">Is there a direct link to the CFP portal? Please let us know here!</small>
             </div>
 
             <div class="form-group">
@@ -74,6 +78,17 @@
                     </div>
                 </div>
                 <small id="eventDatesHelp" class="form-text text-muted">When does the event take place?</small>
+            </div>
+
+            <div class="form-group">
+                <label>Provides Travel &amp; Expenses</label>
+                <select class="js-search-category form-control" name="eventTandE" data-placeholder="Choose option">
+                    <option value="1">Unknown</option>
+                    <option value="2">Travel &amp; Expenses</option>
+                    <option value="3">Only travel</option>
+                    <option value="4">Only expenses</option>
+
+                  </select>
             </div>
 
             <button type="submit" class="btn btn-submit" onclick="javascript:submitCfp();alert('I love your enthusiasm! Sorry, not working yet..');">Submit CFP</button>
@@ -138,6 +153,9 @@
 
                     $('#eventTitle').attr('value', metadata.title);
                     $('#eventUrlPreview').show();
+                },
+                error: function() {
+                    // TODO show manual entry
                 }
             });
         }

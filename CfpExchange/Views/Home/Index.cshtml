@@ -13,8 +13,8 @@
         <div class="col-lg-4">
           <h5>✨<!--<i class="fa fa-cutlery" aria-hidden="true"></i>--> Newest CFP</h5>
           <div class="box clearfix">
-            <a href="recipe-detail.html">
-              <img src="images/noimage.svg" alt="">
+            <a href="@(Url.Action("details", "cfp", new { id = Model.NewestCfp.Id }))">
+              <img src="@Model.NewestCfp.EventImage" alt="">
             </a>
             <h3><a href="@(Url.Action("details", "cfp", new { id = Model.NewestCfp.Id }))">@Model.NewestCfp.EventName</a></h3>
             <p>@($"{Model.NewestCfp.EventDescription.Substring(0, 40)}...")</p>
@@ -27,8 +27,8 @@
         <div class="col-lg-4">
           <h5>🕵<!--<i class="fa fa-cutlery" aria-hidden="true"></i>--> Most Viewed CFP</h5>
           <div class="box clearfix">
-            <a href="recipe-detail.html">
-              <img src="images/noimage.svg" alt="">
+            <a href="@(Url.Action("details", "cfp", new { id = Model.MostViewedCfp.Id }))">
+              <img src="@Model.MostViewedCfp.EventImage" alt="">
             </a>
             <h3><a href="@(Url.Action("details", "cfp", new { id = Model.MostViewedCfp.Id }))">@Model.MostViewedCfp.EventName</a></h3>
             <p>@($"{Model.MostViewedCfp.EventDescription.Substring(0, 40)}...")</p>
@@ -40,8 +40,8 @@
         <div class="col-lg-4">
           <h5>🔀<!--<i class="fa fa-cutlery" aria-hidden="true"></i>--> Just Random</h5>
           <div class="box clearfix">
-            <a href="recipe-detail.html">
-              <img src="images/noimage.svg" alt="">
+            <a href="@(Url.Action("details", "cfp", new { id = Model.RandomCfp.Id }))">
+              <img src="@Model.RandomCfp.EventImage" alt="">
             </a>
             <h3><a href="@(Url.Action("details", "cfp", new { id = Model.RandomCfp.Id }))">@Model.RandomCfp.EventName</a></h3>
             <p>@($"{Model.RandomCfp.EventDescription.Substring(0, 40)}...")</p>
@@ -65,8 +65,8 @@
         <div class="col-lg-8">
           <div class="box grid recipes">
             <div class="by"><i class="fa fa-user" aria-hidden="true"></i> Ends in: @(((TimeSpan)Model.CfpOfTheDay.CfpEndDate.Subtract(DateTime.Now)).Humanize(minUnit: TimeUnit.Hour))</div>
-            <a href="recipe-detail.html">
-              <img src="images/noimage.svg" alt="Event image">
+            <a href="@(Url.Action("details", "cfp", new { id = Model.CfpOfTheDay.Id }))">
+              <img src="@Model.CfpOfTheDay.EventImage" alt="Event image">
             </a>
             <h2><a href="@(Url.Action("details", "cfp", new { id = Model.CfpOfTheDay.Id }))">@Model.CfpOfTheDay.EventName</a>@if (!string.IsNullOrWhiteSpace(Model.CfpOfTheDay.EventLocationName)) 
                     {
@@ -98,7 +98,7 @@
           <div class="box list recipes">
             <div class="by"><i class="fa fa-clock-o" aria-hidden="true"></i> Ends in: @(((TimeSpan)cfp.CfpEndDate.Subtract(DateTime.Now)).Humanize(minUnit: TimeUnit.Hour))</div>
             <a href="@(Url.Action("details", "cfp", new { id = cfp.Id }))">
-              <img src="images/noimage.svg" alt="Event image">
+              <img src="@cfp.EventImage" alt="Event image">
             </a>
             <h2><a href="@(Url.Action("details", "cfp", new { id = cfp.Id }))">@cfp.EventName</a>@if (!string.IsNullOrWhiteSpace(cfp.EventLocationName)) 
                     {

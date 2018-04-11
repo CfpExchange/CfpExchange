@@ -11,7 +11,20 @@ namespace CfpExchange.Models
 		public double EventLocationLat { get; set; }
 		public double EventLocationLong { get; set; }
 		public string EventUrl { get; set; }
-		public string EventImage { get; set; }
+
+		private string _eventImage;
+		public string EventImage
+		{
+			get
+			{
+				return string.IsNullOrWhiteSpace(_eventImage) ? "/images/noimage.svg" : _eventImage;
+			}
+
+			set
+			{
+				_eventImage = value;
+			}
+		}
 
 		public DateTime EventStartDate { get; set; }
 		public DateTime EventEndDate { get; set; }
