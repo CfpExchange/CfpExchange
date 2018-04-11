@@ -19,7 +19,8 @@ namespace CfpExchange.Data
 					CfpAdded = DateTime.Now.AddDays(-10),
 					SubmittedByName = "Gerald",
 					EventLocationName = "Antwerp, Belgium",
-					EventDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+					EventDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+					CfpEndDate = DateTime.Now.AddDays(100)
 				});
 
 				Cfps.Add(new Cfp
@@ -30,7 +31,8 @@ namespace CfpExchange.Data
 					CfpAdded = DateTime.Now,
 					SubmittedByName = "Gerald",
 					EventLocationName = "Ede, The Netherlands",
-					EventDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+					EventDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+					CfpEndDate = DateTime.Now.AddDays(10)
 				});
 
 				Cfps.Add(new Cfp
@@ -41,7 +43,8 @@ namespace CfpExchange.Data
 					CfpAdded = DateTime.Now,
 					SubmittedByName = "Gerald",
 					EventLocationName = "Minnesota, USA",
-					EventDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+					EventDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+					CfpEndDate = DateTime.Now.AddDays(1)
 				});
 
 				Cfps.Add(new Cfp
@@ -52,7 +55,8 @@ namespace CfpExchange.Data
 					CfpAdded = DateTime.Now,
 					SubmittedByName = "Gerald",
 					EventLocationName = "London, UK",
-					EventDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+					EventDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+					CfpEndDate = DateTime.Now.AddHours(2)
 				});
 
 				Cfps.Add(new Cfp
@@ -63,7 +67,8 @@ namespace CfpExchange.Data
 					CfpAdded = DateTime.Now,
 					SubmittedByName = "Gerald",
 					EventLocationName = "Oslo, Norway",
-					EventDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+					EventDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+					CfpEndDate = DateTime.Now.AddDays(20)
 				});
 
 				Cfps.Add(new Cfp
@@ -74,7 +79,8 @@ namespace CfpExchange.Data
 					CfpAdded = DateTime.Now,
 					SubmittedByName = "Gerald",
 					EventLocationName = "Zeist, The Netherlands",
-					EventDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+					EventDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+					CfpEndDate = DateTime.Now.AddDays(7)
 				});
 
 				SaveChanges();

@@ -1,4 +1,6 @@
-﻿@{
+﻿@using Humanizer;
+@using Humanizer.Localisation;
+@{
     ViewData["Title"] = "Home";
 }
 
@@ -62,11 +64,14 @@
         </div>
         <div class="col-lg-8">
           <div class="box grid recipes">
-            <div class="by"><i class="fa fa-user" aria-hidden="true"></i> @Model.CfpOfTheDay.SubmittedByName</div>
+            <div class="by"><i class="fa fa-user" aria-hidden="true"></i> Ends in: @(((TimeSpan)Model.CfpOfTheDay.CfpEndDate.Subtract(DateTime.Now)).Humanize(minUnit: TimeUnit.Hour))</div>
             <a href="recipe-detail.html">
               <img src="images/noimage.svg" alt="Event image">
             </a>
-            <h2><a href="@(Url.Action("details", "cfp", new { id = Model.CfpOfTheDay.Id }))">@Model.CfpOfTheDay.EventName</a></h2>
+            <h2><a href="@(Url.Action("details", "cfp", new { id = Model.CfpOfTheDay.Id }))">@Model.CfpOfTheDay.EventName</a>@if (!string.IsNullOrWhiteSpace(Model.CfpOfTheDay.EventLocationName)) 
+                    {
+                        @Html.Raw($"&nbsp;<small>{@Model.CfpOfTheDay.EventLocationName}</small>");
+                    }</h2>
             <p>@Model.CfpOfTheDay.EventDescription</p>
             <div class="tag">
               <a href="#">Tech</a>
@@ -91,11 +96,14 @@
         @foreach(var cfp in @Model.CfpList)
         {
           <div class="box list recipes">
-            <div class="by"><i class="fa fa-user" aria-hidden="true"></i> @Model.CfpOfTheDay.SubmittedByName</div>
+            <div class="by"><i class="fa fa-clock-o" aria-hidden="true"></i> Ends in: @(((TimeSpan)cfp.CfpEndDate.Subtract(DateTime.Now)).Humanize(minUnit: TimeUnit.Hour))</div>
             <a href="@(Url.Action("details", "cfp", new { id = cfp.Id }))">
               <img src="images/noimage.svg" alt="Event image">
             </a>
-            <h2><a href="@(Url.Action("details", "cfp", new { id = cfp.Id }))">@cfp.EventName </a></h2>
+            <h2><a href="@(Url.Action("details", "cfp", new { id = cfp.Id }))">@cfp.EventName</a>@if (!string.IsNullOrWhiteSpace(cfp.EventLocationName)) 
+                    {
+                        @Html.Raw($"&nbsp;<small>{@cfp.EventLocationName}</small>");
+                    }</h2>
             <p>@cfp.EventDescription</p>
             <div class="tag">
               <a href="#">Awesome</a>

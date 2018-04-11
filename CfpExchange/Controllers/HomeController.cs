@@ -33,15 +33,13 @@ namespace CfpExchange.Controllers
 			// TODO set real CFP of the day
 			indexViewModel.CfpOfTheDay = _cfpContext.Cfps.FirstOrDefault();
 
-			indexViewModel.CfpList = _cfpContext.Cfps.OrderByDescending(cfp => cfp.CfpAdded).Take(10).ToArray();
+			indexViewModel.CfpList = _cfpContext.Cfps.OrderBy(cfp => cfp.CfpEndDate).Take(10).ToArray();
 
 			return View(indexViewModel);
 		}
 
 		public IActionResult About()
 		{
-			ViewData["Message"] = "Your application description page.";
-
 			return View();
 		}
 
