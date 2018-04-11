@@ -16,7 +16,10 @@ namespace CfpExchange.Data
 					EventName = "Techorama BE",
 					Id = Guid.NewGuid(),
 					Views = 100,
-					CfpAdded = DateTime.Now.AddDays(-10)
+					CfpAdded = DateTime.Now.AddDays(-10),
+					SubmittedByName = "Gerald",
+					EventLocationName = "Antwerp, Belgium",
+					EventDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
 				});
 
 				Cfps.Add(new Cfp
@@ -24,7 +27,10 @@ namespace CfpExchange.Data
 					EventName = "Techorama NL",
 					Id = Guid.NewGuid(),
 					Views = 10,
-					CfpAdded = DateTime.Now
+					CfpAdded = DateTime.Now,
+					SubmittedByName = "Gerald",
+					EventLocationName = "Ede, The Netherlands",
+					EventDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
 				});
 
 				Cfps.Add(new Cfp
@@ -32,7 +38,10 @@ namespace CfpExchange.Data
 					EventName = "NDC Minnesota",
 					Id = Guid.NewGuid(),
 					Views = 15,
-					CfpAdded = DateTime.Now
+					CfpAdded = DateTime.Now,
+					SubmittedByName = "Gerald",
+					EventLocationName = "Minnesota, USA",
+					EventDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
 				});
 
 				Cfps.Add(new Cfp
@@ -40,7 +49,10 @@ namespace CfpExchange.Data
 					EventName = "NDC London",
 					Id = Guid.NewGuid(),
 					Views = 23,
-					CfpAdded = DateTime.Now
+					CfpAdded = DateTime.Now,
+					SubmittedByName = "Gerald",
+					EventLocationName = "London, UK",
+					EventDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
 				});
 
 				Cfps.Add(new Cfp
@@ -48,7 +60,10 @@ namespace CfpExchange.Data
 					EventName = "NDC Oslo",
 					Id = Guid.NewGuid(),
 					Views = 34,
-					CfpAdded = DateTime.Now
+					CfpAdded = DateTime.Now,
+					SubmittedByName = "Gerald",
+					EventLocationName = "Oslo, Norway",
+					EventDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
 				});
 
 				Cfps.Add(new Cfp
@@ -56,7 +71,10 @@ namespace CfpExchange.Data
 					EventName = "SDN Event",
 					Id = Guid.NewGuid(),
 					Views = 42,
-					CfpAdded = DateTime.Now
+					CfpAdded = DateTime.Now,
+					SubmittedByName = "Gerald",
+					EventLocationName = "Zeist, The Netherlands",
+					EventDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
 				});
 
 				SaveChanges();

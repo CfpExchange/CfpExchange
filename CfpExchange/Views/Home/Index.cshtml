@@ -2,7 +2,7 @@
     ViewData["Title"] = "Home";
 }
 
-  <!-- Top Recipes -->
+  <!-- Top CFPs -->
   <div class="top">
     <div class="container">
       <div class="row">
@@ -15,7 +15,7 @@
               <img src="images/noimage.svg" alt="">
             </a>
             <h3><a href="@(Url.Action("details", "cfp", new { id = Model.NewestCfp.Id }))">@Model.NewestCfp.EventName</a></h3>
-            <p>Lorem ipsum dolor sit amet, adipiscing elit...</p>
+            <p>@($"{Model.NewestCfp.EventDescription.Substring(0, 40)}...")</p>
           </div>
         </div>
             }
@@ -29,7 +29,7 @@
               <img src="images/noimage.svg" alt="">
             </a>
             <h3><a href="@(Url.Action("details", "cfp", new { id = Model.MostViewedCfp.Id }))">@Model.MostViewedCfp.EventName</a></h3>
-            <p>Lorem ipsum dolor sit amet, adipiscing elit...</p>
+            <p>@($"{Model.MostViewedCfp.EventDescription.Substring(0, 40)}...")</p>
           </div>
         </div>
             }
@@ -42,7 +42,7 @@
               <img src="images/noimage.svg" alt="">
             </a>
             <h3><a href="@(Url.Action("details", "cfp", new { id = Model.RandomCfp.Id }))">@Model.RandomCfp.EventName</a></h3>
-            <p>Lorem ipsum dolor sit amet, adipiscing elit...</p>
+            <p>@($"{Model.RandomCfp.EventDescription.Substring(0, 40)}...")</p>
           </div>
         </div>
             }
@@ -67,7 +67,7 @@
               <img src="images/noimage.svg" alt="Event image">
             </a>
             <h2><a href="@(Url.Action("details", "cfp", new { id = Model.CfpOfTheDay.Id }))">@Model.CfpOfTheDay.EventName</a></h2>
-            <p>Dapibus mattis a. Nec lacus nam. Volutpat molestie ipsum. Eu et fermentum malesuada et et lorem mauris aenean partur..</p>
+            <p>@Model.CfpOfTheDay.EventDescription</p>
             <div class="tag">
               <a href="#">Tech</a>
               <a href="#">.NET</a>
@@ -91,12 +91,12 @@
         @foreach(var cfp in @Model.CfpList)
         {
           <div class="box list recipes">
-            <div class="by"><i class="fa fa-user" aria-hidden="true"></i> @cfp.EventName</div>
+            <div class="by"><i class="fa fa-user" aria-hidden="true"></i> @Model.CfpOfTheDay.SubmittedByName</div>
             <a href="@(Url.Action("details", "cfp", new { id = cfp.Id }))">
               <img src="images/noimage.svg" alt="Event image">
             </a>
             <h2><a href="@(Url.Action("details", "cfp", new { id = cfp.Id }))">@cfp.EventName </a></h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>@cfp.EventDescription</p>
             <div class="tag">
               <a href="#">Awesome</a>
               <a href="#">Unicorns</a>
@@ -104,61 +104,6 @@
             </div>
           </div>
         }
-          <!--<div class="box list recipes">
-            <div class="by"><i class="fa fa-user" aria-hidden="true"></i> Gerina Amy</div>
-            <a href="recipe-detail.html">
-              <img src="images/square-recipes3.jpg" alt="">
-            </a>
-            <h2><a href="recipe-detail.html">Milk fruit fresh with vegetables </a></h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            <div class="tag">
-              <a href="#">Milk</a>
-              <a href="#">Lemon</a>
-              <a href="#">Sayur</a>
-            </div>
-          </div>
-
-          <div class="box list recipes">
-            <div class="by"><i class="fa fa-user" aria-hidden="true"></i> Gerina Amy</div>
-            <a href="recipe-detail.html">
-              <img src="images/square-recipes3.jpg" alt="">
-            </a>
-            <h2><a href="recipe-detail.html">Milk fruit fresh with vegetables </a></h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            <div class="tag">
-              <a href="#">Milk</a>
-              <a href="#">Lemon</a>
-              <a href="#">Sayur</a>
-            </div>
-          </div>
-
-          <div class="box list recipes">
-            <div class="by"><i class="fa fa-user" aria-hidden="true"></i> Gerina Amy</div>
-            <a href="recipe-detail.html">
-              <img src="images/square-recipes3.jpg" alt="">
-            </a>
-            <h2><a href="recipe-detail.html">Milk fruit fresh with vegetables </a></h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            <div class="tag">
-              <a href="#">Milk</a>
-              <a href="#">Lemon</a>
-              <a href="#">Sayur</a>
-            </div>
-          </div>
-
-          <div class="box list recipes">
-            <div class="by"><i class="fa fa-user" aria-hidden="true"></i> Gerina Amy</div>
-            <a href="recipe-detail.html">
-              <img src="images/square-recipes3.jpg" alt="">
-            </a>
-            <h2><a href="recipe-detail.html">Milk fruit fresh with vegetables </a></h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            <div class="tag">
-              <a href="#">Milk</a>
-              <a href="#">Lemon</a>
-              <a href="#">Sayur</a>
-            </div>
-          </div>-->
 
         </div>
 

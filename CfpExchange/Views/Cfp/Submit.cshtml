@@ -28,12 +28,15 @@
             <div class="form-group" id="eventUrlPreview" style="display:none;">
                 <a id="eventUrl" class="fragment" href="#" target="_blank">
                     <img src ="https://placehold.it/116x116" alt="Event image"/> 
-                    <h3>Event Title</h3>
+                    <h3></h3>
                     <p class="text">
                         
                     </p>
                 </a>
-                <small id="eventUrlPreviewHelp" class="form-text text-muted"><a href="#">Edit this data manually</a></small>
+                <small id="eventUrlPreviewHelp" class="form-text text-muted"><a href="javascript:editEventData();">Edit this data manually</a></small>
+            </div>
+
+            <div class="form-group" id="eventData" style="display:none;">
             </div>
 
              <div class="form-group">
@@ -73,133 +76,6 @@
                 <small id="eventDatesHelp" class="form-text text-muted">When does the event take place?</small>
             </div>
 
-            <!--<div class="form-group">
-              <label>Choose category</label>
-              <select class="js-search-category form-control" name="category" data-placeholder="Choose Category">
-                <option value="1">All</option>
-                <option value="2">Breakfast</option>
-                <option value="3">Lunch</option>
-                <option value="4">Beverages</option>
-                <option value="5">Appetizers</option>
-                <option value="6">Soups</option>
-                <option value="7">Salads</option>
-                <option value="8">Beef</option>
-                <option value="9">Poultry</option>
-                <option value="10">Pork</option>
-                <option value="11">Seafood</option>
-                <option value="12">Vegetarian</option>
-                <option value="13">Vegetables</option>
-                <option value="14">Desserts</option>
-                <option value="15">Canning / Freezing</option>
-                <option value="16">Breads</option>
-                <option value="17">Holidays</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label>Short summary</label>
-              <textarea class="form-control" rows="4" required="required"></textarea>
-            </div>
-
-            <div class="form-group">
-              <label>Tag</label>
-              <input type="text" class="form-control">
-            </div>
-
-            <div class="form-group">
-              <label>Upload your photos</label>
-              <input type="file" class="form-control-file">
-            </div>
-
-            <div class="form-group">
-              <label>Ingredients:</label>
-
-              <div id="sortable">
-                <div class="box ui-sortable-handle">
-                  <div class="row">
-                    <div class="col-lg-1 col-sm-1">
-                      <i class="fa fa-arrows" aria-hidden="true"></i>
-                    </div>
-                    <div class="col-lg-5 col-sm-5">
-                      <input type="text" class="form-control" placeholder="Name of ingredient">
-                    </div>
-                    <div class="col-lg-5 col-sm-5">
-                      <input type="text" class="form-control" placeholder="Notes (quantity or additional info)">
-                    </div>
-                    <div class="col-lg-1 col-sm-1">
-                      <i class="fa fa-times-circle-o minusbtn" aria-hidden="true"></i>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-              <a href="#" class="btn btn-light">Add new ingredient</a>
-
-            </div>
-
-            <div class="form-group">
-              <label>Directions:</label>
-              <textarea class="form-control" rows="4" required="required"></textarea>
-            </div>
-
-            <div class="form-group">
-              <label>Additional Informations</label>
-              <hr>
-            </div>
-            <div class="form-group row">
-              <label class="col-sm-2 col-form-label">Yield</label>
-              <div class="col-sm-10">
-                <input type="text" class="form-control">
-              </div>
-            </div>
-            <div class="form-group row">
-              <label class="col-sm-2 col-form-label">Preparation Time</label>
-              <div class="col-sm-10">
-                <input type="text" class="form-control">
-              </div>
-            </div>
-            <div class="form-group row">
-              <label class="col-sm-2 col-form-label">Cooking Time</label>
-              <div class="col-sm-10">
-                <input type="text" class="form-control">
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label>Nutrition Facts</label>
-              <hr>
-            </div>
-            <div class="form-group row">
-              <label class="col-sm-2 col-form-label">Calories</label>
-              <div class="col-sm-10">
-                <input type="text" class="form-control">
-              </div>
-            </div>
-            <div class="form-group row">
-              <label class="col-sm-2 col-form-label">Total Carbohydrate</label>
-              <div class="col-sm-10">
-                <input type="text" class="form-control">
-              </div>
-            </div>
-            <div class="form-group row">
-              <label class="col-sm-2 col-form-label">Total Fat</label>
-              <div class="col-sm-10">
-                <input type="text" class="form-control">
-              </div>
-            </div>
-            <div class="form-group row">
-              <label class="col-sm-2 col-form-label">Protein</label>
-              <div class="col-sm-10">
-                <input type="text" class="form-control">
-              </div>
-            </div>
-            <div class="form-group row">
-              <label class="col-sm-2 col-form-label">Cholesterol</label>
-              <div class="col-sm-10">
-                <input type="text" class="form-control">
-              </div>
-            </div>-->
-
             <button type="submit" class="btn btn-submit" onclick="javascript:submitCfp();alert('I love your enthusiasm! Sorry, not working yet..');">Submit CFP</button>
           </div>
         </div>
@@ -216,6 +92,12 @@
     
         function submitCfp()
         {
+            // TODO validate
+            if (cfpToSubmit.Location === null || cfpToSubmit.Location === '') {
+                // TODO Notify user
+                return;
+            }
+            
             // TODO get all data when user did not follow form fields
     
             $.ajax({
@@ -225,7 +107,6 @@
 
                 success: function(result) {
 
-                    
                 }
             });
         }
@@ -261,6 +142,12 @@
             });
         }
 
+        function editEventData() {
+            // TODO
+            $('#eventData').show();
+            $('#eventUrlPreview').hide();
+        }
+
         $(document).ready(function() {
             $('#eventStartDate').datepicker({
                 startView: 1
@@ -288,7 +175,7 @@
                 // TODO do something useful with our info
                 cfpToSubmit.Location = document.getElementById('eventLocation').value;
                 cfpToSubmit.Lat = place.geometry.location.lat();
-                cfpToSubmit.Long = place.geometry.location.lng();
+                cfpToSubmit.Lng = place.geometry.location.lng();
              }); 
         });
     </script>
