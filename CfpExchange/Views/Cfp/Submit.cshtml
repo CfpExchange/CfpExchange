@@ -104,24 +104,33 @@
 
     <script type="text/javascript">
         var cfpToSubmit = {};
+        cfpToSubmit.locationName = null;
+        cfpToSubmit.eventUrl = null;
+        cfpToSubmit.eventImageUrl = null;
+        cfpToSubmit.eventTitle = null;
+        cfpToSubmit.eventDescription = null;
+        cfpToSubmit.locationLat = null;
+        cfpToSubmit.locationLng = null;
+        cfpToSubmit.cfpEndDate = null;
     
         function submitCfp()
         {
             // TODO validate
-            if (cfpToSubmit.Location === null || cfpToSubmit.Location === '') {
+            //if (cfpToSubmit.location === null || cfpToSubmit.location === '') {
                 // TODO Notify user
-                return;
-            }
+            //    return;
+            //}
             
             // TODO get all data when user did not follow form fields
+            cfpToSubmit.eventTitle = $('#eventTitle').val();
     
             $.ajax({
                 type: "POST",
                 url: "/cfp/submit",
                 data: {"submittedCfp":cfpToSubmit},
-
-                success: function(result) {
-
+                success: function(resultId) {
+                    var url = '@Url.Action("Details", "cfp", new { id = "__id__" })';
+                    window.location.href = url.replace('__id__', resultId);
                 }
             });
         }
@@ -177,6 +186,8 @@
 
             $('#eventCfpCloseDate').datepicker({
                 startView: 1
+            }).on('changeDate', function(e) {
+                cfpToSubmit.cfpEndDate = e.date.toISOString();
             });
 
             var autocomplete = new google.maps.places.Autocomplete(document.getElementById('eventLocation'));
@@ -191,9 +202,9 @@
                   }
 
                 // TODO do something useful with our info
-                cfpToSubmit.Location = document.getElementById('eventLocation').value;
-                cfpToSubmit.Lat = place.geometry.location.lat();
-                cfpToSubmit.Lng = place.geometry.location.lng();
+                cfpToSubmit.locationName = document.getElementById('eventLocation').value;
+                cfpToSubmit.locationLat = place.geometry.location.lat();
+                cfpToSubmit.locationLng = place.geometry.location.lng();
              }); 
         });
     </script>

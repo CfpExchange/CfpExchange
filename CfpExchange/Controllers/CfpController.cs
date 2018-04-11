@@ -50,13 +50,39 @@ namespace CfpExchange.Controllers
 		[HttpPost]
 		public IActionResult Submit(SubmittedCfp submittedCfp)
 		{
+			// TODO
 			// Check validity
+			if (ModelState.IsValid)
+			{
+				// Map
+				var cfpToAddId = Guid.NewGuid();
 
-			// Save CFP
+				var cfpToAdd = new Cfp
+				{
+					Id = cfpToAddId,
+					EventName = submittedCfp.EventTitle,
+					EventUrl = submittedCfp.EventUrl,
+					EventImage = submittedCfp.EventImageUrl,
+					EventDescription = submittedCfp.EventDescription,
+					EventLocationName = submittedCfp.LocationName,
+					EventLocationLat = submittedCfp.LocationLat,
+					EventLocationLng = submittedCfp.LocationLng,
+					CfpEndDate = submittedCfp.CfpEndDate,
+					CfpAdded = DateTime.Now
+				};
 
-			// Post to Twitter
+				// Save CFP
+				_cfpContext.Add(cfpToAdd);
+				_cfpContext.SaveChanges();
 
-			return View();
+				// Post to Twitter
+
+				// Send back ID to do whatever at the client-side
+				return Json(cfpToAddId);
+			}
+
+			// Add invalid model
+			return BadRequest();
 		}
 
 		public IActionResult Details(Guid id)

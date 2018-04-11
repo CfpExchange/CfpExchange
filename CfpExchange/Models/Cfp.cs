@@ -9,7 +9,7 @@ namespace CfpExchange.Models
 		public string EventDescription { get; set; }
 		public string EventLocationName { get; set; }
 		public double EventLocationLat { get; set; }
-		public double EventLocationLong { get; set; }
+		public double EventLocationLng { get; set; }
 		public string EventUrl { get; set; }
 
 		private string _eventImage;
