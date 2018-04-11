@@ -18,33 +18,33 @@
           <div class="info">
             <div class="row">
               <div class="col-lg-4 col-sm-4">
-                <p>Serves:</p>
-                <p><strong><i class="fa fa-users" aria-hidden="true"></i> 4 people</strong>
+                <p>Location:</p>
+                <p><strong><i class="fa fa-map-marker" aria-hidden="true"></i> @Model.EventLocationName</strong>
                 </p>
               </div>
               <div class="col-lg-4 col-sm-4">
-                <p>Prep Time:</p>
-                <p><strong><i class="fa fa-clock-o" aria-hidden="true"></i> 30 min</strong>
+                <p>Event dates:</p>
+                <p><strong><i class="fa fa-clock-o" aria-hidden="true"></i> @Model.EventStartDate.ToShortDateString() - @Model.EventEndDate.ToShortDateString()</strong>
                 </p>
               </div>
               <div class="col-lg-4 col-sm-4">
-                <p>Cooking:</p>
-                <p><strong><i class="fa fa-clock-o" aria-hidden="true"></i> 1 Hour</strong>
+                <p>Added:</p>
+                <p><strong><i class="fa fa-clock-o" aria-hidden="true"></i> @Model.CfpAdded</strong>
                 </p>
               </div>
             </div>
           </div>
 
 
-          <p>Lorem ipsum dolor sit amet, usu eu vocibus laboramus appellantur, pro no natum ullum omittam. Mei vitae utinam complectitur eu. Te usu cibo vulputate. Id propriae adipisci pro. Legere nominati ut mel, natum libris at vix.</p>
+          <p>@Model.EventDescription</p>
 
           <div class="tag">
-            <a href="#">Chicken</a>
-            <a href="#">Lemon</a>
-            <a href="#">Sayur</a>
+            <a href="#">.NET</a>
+            <a href="#">Development</a>
+            <a href="#">Azure</a>
           </div>
 
-          <div class="ingredient-direction">
+          <!--<div class="ingredient-direction">
             <div class="row">
               <div class="col-lg-6 col-sm-6">
                 <h3>Ingredients</h3>
@@ -188,7 +188,7 @@
                 </p>
               </form>
             </div>
-          </div>
+          </div>-->
 
         </div>
       </div>

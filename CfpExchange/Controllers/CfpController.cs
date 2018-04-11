@@ -59,13 +59,13 @@ namespace CfpExchange.Controllers
 		public IActionResult Details(Guid id)
 		{
 			if (id == Guid.Empty)
-				RedirectToAction("index", "home");
+				return RedirectToAction("index", "home");
 			
 			var selectedCfp = _cfpContext.Cfps.SingleOrDefault(cfp => cfp.Id == id);
 
 			if (selectedCfp == null)
 				// TODO to error page?
-				RedirectToAction("index", "home");
+				return RedirectToAction("index", "home");
 
 			selectedCfp.Views++;
 			_cfpContext.SaveChanges();

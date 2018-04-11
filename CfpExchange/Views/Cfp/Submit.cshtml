@@ -26,13 +26,14 @@
             </div>
 
             <div class="form-group" id="eventUrlPreview" style="display:none;">
-                <a class="fragment" href="#" target="_blank">
+                <a id="eventUrl" class="fragment" href="#" target="_blank">
                     <img src ="https://placehold.it/116x116" alt="Event image"/> 
                     <h3>Event Title</h3>
                     <p class="text">
                         
                     </p>
                 </a>
+                <small id="eventUrlPreviewHelp" class="form-text text-muted"><a href="#">Edit this data manually</a></small>
             </div>
 
              <div class="form-group">
@@ -61,8 +62,15 @@
 
             <div class="form-group">
                 <label>Event Dates</label>
-                <input class="form-control col-lg-12" id="eventDate" type="text">
-                <small id="eventDateHelp" class="form-text text-muted">When does the event take place?</small>
+                <div class="form-row">
+                    <div class="col">
+                        <input class="form-control col-lg-12" id="eventStartDate" type="text" placeholder="Start date" readonly>
+                    </div>
+                    <div class="col">
+                        <input class="form-control col-lg-12" id="eventEndDate" type="text" placeholder="End date" readonly>
+                    </div>
+                </div>
+                <small id="eventDatesHelp" class="form-text text-muted">When does the event take place?</small>
             </div>
 
             <!--<div class="form-group">
@@ -234,8 +242,16 @@
                     cfpToSubmit.eventTitle = metadata.title;
                     cfpToSubmit.eventDescription = metadata.description;
     
-                    $('#eventUrlPreview a').attr('href', metadata.url);
-                    $('#eventUrlPreview img').attr('src', metadata.imageUrl);
+                    $('#eventUrlPreview #eventUrl').attr('href', metadata.url);
+
+                    if (metadata.imageUrl === null || metadata.imageUrl === '')
+                        $('#eventUrlPreview img').hide();
+                    else
+                    {
+                        $('#eventUrlPreview img').show();
+                        $('#eventUrlPreview img').attr('src', metadata.imageUrl);
+                    }
+    
                     $('#eventUrlPreview h3').text(metadata.title);
                     $('#eventUrlPreview p').html(metadata.description);
 
@@ -246,9 +262,13 @@
         }
 
         $(document).ready(function() {
-            $('#eventDate').datepicker({
+            $('#eventStartDate').datepicker({
                 startView: 1
             });
+
+            $('#eventEndDate').datepicker({
+                startView: 1
+            })
 
             $('#eventCfpCloseDate').datepicker({
                 startView: 1
