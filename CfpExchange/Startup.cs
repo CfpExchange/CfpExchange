@@ -9,9 +9,14 @@ namespace CfpExchange
 {
 	public class Startup
 	{
-		public Startup(IConfiguration configuration)
+		public Startup(IHostingEnvironment env)
 		{
-			Configuration = configuration;
+			Configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: false)
+                .AddEnvironmentVariables()
+                .AddUserSecrets("CfpExchangeSecrets")
+                .Build();
 		}
 
 		public IConfiguration Configuration { get; }
