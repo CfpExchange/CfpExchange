@@ -1,0 +1,32 @@
+﻿@model RegisterViewModel
+
+<div class="page registration">
+    @await Html.PartialAsync("PageTitle", "Register a new account")
+    <form asp-action="Register" asp-controller="Account" method="post" asp-route-returnUrl="@ViewData["ReturnUrl"]">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label asp-for="EmailAddress">E-mail address</label>
+                        <input asp-for="EmailAddress" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="FullName">Full name</label>
+                        <input asp-for="FullName" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password">Password</label>
+                        <input asp-for="Password" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PasswordConfirmation">Confirm password</label>
+                        <input asp-for="PasswordConfirmation" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Register</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

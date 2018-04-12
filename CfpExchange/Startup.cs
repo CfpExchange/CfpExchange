@@ -1,6 +1,11 @@
-﻿using CfpExchange.Data;
+﻿using System;
+using CfpExchange.Data;
+using CfpExchange.Models;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,6 +25,21 @@ namespace CfpExchange
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddDbContext<CfpContext>(opt => opt.UseInMemoryDatabase("Cfps"));
+
+			services.AddIdentity<ApplicationUser, IdentityRole>(options => { options.User.RequireUniqueEmail = true; })
+				.AddEntityFrameworkStores<CfpContext>()
+				.AddDefaultTokenProviders();
+			
+			services.ConfigureApplicationCookie(options =>
+			{
+				options.Cookie.SameSite = SameSiteMode.Strict;
+				options.Cookie.Expiration = TimeSpan.FromMinutes(30);
+				options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+				
+				options.LoginPath = "/Account/Login";
+				options.AccessDeniedPath = "/Errors/AccessDenied";
+			});
+			
 			services.AddMvc();
 		}
 
@@ -29,6 +49,7 @@ namespace CfpExchange
 			if (env.IsDevelopment())
 			{
 				app.UseDeveloperExceptionPage();
+				app.UseBrowserLink();
 			}
 			else
 			{
@@ -36,6 +57,8 @@ namespace CfpExchange
 			}
 
 			app.UseStaticFiles();
+
+			app.UseAuthentication();
 
 			app.UseMvc(routes =>
 			{
