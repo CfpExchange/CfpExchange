@@ -863,3 +863,7 @@ footer .btn {
     color: white;
     text-decoration: underline
 }
+
+.validation-summary-valid {
+  display: none;
+}

@@ -15,31 +15,32 @@ namespace CfpExchange
 {
 	public class Startup
 	{
-        private IHostingEnvironment _environment;
-
-        public Startup(IHostingEnvironment env)
+		private IHostingEnvironment _environment;
+   
+		public Startup(IHostingEnvironment env)
 		{
-            _environment = env;
+			_environment = env;
 
-            Configuration = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: false)
-                .AddEnvironmentVariables()
-                .AddUserSecrets("CfpExchangeSecrets")
-                .Build();
-        }
+			Configuration = new ConfigurationBuilder()
+				.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+				.AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: false)
+				.AddEnvironmentVariables()
+				.AddUserSecrets("CfpExchangeSecrets")
+				.Build();
+		}
 
 		public IConfiguration Configuration { get; }
 
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-            if (_environment.IsDevelopment())
-                services.AddDbContext<CfpContext>(opt => opt.UseInMemoryDatabase("Cfps"));
-            else
-                services.AddDbContext<CfpContext>(opt => opt.UseSqlServer(Configuration["CfpExchangeDb"]));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>(options => { options.User.RequireUniqueEmail = true; })
+			if (_environment.IsDevelopment())
+				services.AddDbContext<CfpContext>(opt => opt.UseInMemoryDatabase("Cfps"));
+			else
+				services.AddDbContext<CfpContext>(opt => opt.UseSqlServer(Configuration["CfpExchangeDb"]));
+
+			services.AddIdentity<ApplicationUser, IdentityRole>(options => { options.User.RequireUniqueEmail = true; })
 				.AddEntityFrameworkStores<CfpContext>()
 				.AddDefaultTokenProviders();
 			
@@ -67,7 +68,6 @@ namespace CfpExchange
 			if (env.IsDevelopment())
 			{
 				app.UseDeveloperExceptionPage();
-				app.UseBrowserLink();
 			}
 			else
 			{
@@ -75,15 +75,19 @@ namespace CfpExchange
 			}
 
 			app.UseStaticFiles();
-
 			app.UseAuthentication();
-
 			app.UseMvc(routes =>
 			{
 				routes.MapRoute(
 					name: "default",
 					template: "{controller=Home}/{action=Index}/{id?}");
 			});
+
+			if (env.IsDevelopment())
+			{
+				using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+					serviceScope.ServiceProvider.GetService<CfpContext>().EnsureSeeded();
+			}
 		}
 	}
 }

@@ -24,6 +24,12 @@ namespace CfpExchange.Controllers
             _emailSender = emailSender;
         }
 
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        {
+            _userManager = userManager;
+            _signInManager = signInManager;
+        }
+
         [AllowAnonymous]
         public IActionResult Login(string returnUrl)
         {
