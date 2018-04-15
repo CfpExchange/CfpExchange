@@ -1,9 +1,11 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace CfpExchange.Models
 {
 	public class Cfp
 	{
+		[Key]
 		public Guid Id { get; set; }
 		public string EventName { get; set; }
 		public string EventDescription { get; set; }

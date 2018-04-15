@@ -9,14 +9,18 @@ namespace CfpExchange
 {
 	public class Startup
 	{
+		private IHostingEnvironment _environment;
+
 		public Startup(IHostingEnvironment env)
 		{
+			_environment = env;
+
 			Configuration = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: false)
-                .AddEnvironmentVariables()
-                .AddUserSecrets("CfpExchangeSecrets")
-                .Build();
+				.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+				.AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: false)
+				.AddEnvironmentVariables()
+				.AddUserSecrets("CfpExchangeSecrets")
+				.Build();
 		}
 
 		public IConfiguration Configuration { get; }
@@ -24,7 +28,11 @@ namespace CfpExchange
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddDbContext<CfpContext>(opt => opt.UseInMemoryDatabase("Cfps"));
+			if (_environment.IsDevelopment())
+				services.AddDbContext<CfpContext>(opt => opt.UseInMemoryDatabase("Cfps"));
+			else
+				services.AddDbContext<CfpContext>(opt => opt.UseSqlServer(Configuration["CfpExchangeDb"]));
+
 			services.AddMvc();
 		}
 

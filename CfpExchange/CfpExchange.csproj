@@ -10,9 +10,11 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="2.0.2" />
     <PackageReference Include="HtmlAgilityPack" Version="1.7.3" />
     <PackageReference Include="Humanizer.Core" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.2" />
   </ItemGroup>
 
   <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.2" />
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
   </ItemGroup>
 
@@ -29,5 +31,16 @@
     <Folder Include="wwwroot\js\plugins\bootstrap-datepicker\" />
     <Folder Include="wwwroot\css\plugins\" />
     <Folder Include="wwwroot\css\plugins\bootstrap-datepicker\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="appsettings.Development.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Data\DatabaseInitializer.cs" />
   </ItemGroup>
 </Project>

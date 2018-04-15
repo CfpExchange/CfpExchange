@@ -16,8 +16,16 @@ The file should have the following layout:
 
 //TODO: Specify what settings we store
 
+| Key| Value description|
+| ------------- |:-------------:| -----:|
+| **CfpExchangeDb**| Connection string to MSSQL database |
+
 ### On Mac or Linux
 Create a file in `~/.microsoft/usersecrets/CfpExchangeSecrets/secrets.json`.
 The file should have the following layout:
 
 //TODO: Specify what settings we store
+
+| Key| Value description|
+| ------------- |:-------------:| -----:|
+| **CfpExchangeDb**| Connection string to MSSQL database |
