@@ -26,7 +26,7 @@ namespace CfpExchange.Controllers
 			var validatedUrl = url.ToLower();
 
 			if (!validatedUrl.StartsWith("http://", StringComparison.Ordinal)
-			    || !validatedUrl.StartsWith("https://", StringComparison.Ordinal))
+				&& !validatedUrl.StartsWith("https://", StringComparison.Ordinal))
 				validatedUrl = $"http://{validatedUrl}";
 			
 			var metadata = MetaScraper.GetMetaDataFromUrl(validatedUrl);
