@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using CfpExchange.Data;
 using CfpExchange.Models;
 using CfpExchange.Services;
@@ -15,19 +15,31 @@ namespace CfpExchange
 {
 	public class Startup
 	{
-		public Startup(IConfiguration configuration)
+        private IHostingEnvironment _environment;
+
+        public Startup(IHostingEnvironment env)
 		{
-			Configuration = configuration;
-		}
+            _environment = env;
+
+            Configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: false)
+                .AddEnvironmentVariables()
+                .AddUserSecrets("CfpExchangeSecrets")
+                .Build();
+        }
 
 		public IConfiguration Configuration { get; }
 
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddDbContext<CfpContext>(opt => opt.UseInMemoryDatabase("Cfps"));
+            if (_environment.IsDevelopment())
+                services.AddDbContext<CfpContext>(opt => opt.UseInMemoryDatabase("Cfps"));
+            else
+                services.AddDbContext<CfpContext>(opt => opt.UseSqlServer(Configuration["CfpExchangeDb"]));
 
-			services.AddIdentity<ApplicationUser, IdentityRole>(options => { options.User.RequireUniqueEmail = true; })
+            services.AddIdentity<ApplicationUser, IdentityRole>(options => { options.User.RequireUniqueEmail = true; })
 				.AddEntityFrameworkStores<CfpContext>()
 				.AddDefaultTokenProviders();
 			
