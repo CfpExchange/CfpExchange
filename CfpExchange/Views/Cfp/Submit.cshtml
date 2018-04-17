@@ -177,15 +177,20 @@
 
         $(document).ready(function() {
             $('#eventStartDate').datepicker({
-                startView: 1
-            });
+                startView: 1,
+                startDate: '0d'
+            }).on('changeDate', function(e) {
+                $('#eventEndDate').datepicker('setStartDate', e.date);
+            });;
 
             $('#eventEndDate').datepicker({
-                startView: 1
+                startView: 1,
+                startDate: '0d'
             })
 
             $('#eventCfpCloseDate').datepicker({
-                startView: 1
+                startView: 1,
+                startDate: '0d'
             }).on('changeDate', function(e) {
                 cfpToSubmit.cfpEndDate = e.date.toISOString();
             });
