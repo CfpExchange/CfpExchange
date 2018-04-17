@@ -1,4 +1,5 @@
-﻿using CfpExchange.Data;
+﻿using System;
+using CfpExchange.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -56,6 +57,12 @@ namespace CfpExchange
 					name: "default",
 					template: "{controller=Home}/{action=Index}/{id?}");
 			});
+
+			if (env.IsDevelopment())
+			{
+				using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+					serviceScope.ServiceProvider.GetService<CfpContext>().EnsureSeeded();
+			}
 		}
 	}
 }
