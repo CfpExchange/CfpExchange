@@ -5,15 +5,21 @@
   <!-- CFP details-->
   <div class="recipe-detail">
     <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+            <div class="addthis_inline_share_toolbox"></div>
+            <small id="shareButtons" class="form-text text-muted">Share this CFP</small>
+        </div>
+      </div>
       <div class="row justify-content-center">
         <div class="col-lg-12 text-center">
           <h4>CFP Closes: @Model.CfpEndDate.ToString("MMM dd, yyyy")</h4>
           <h1>@Model.EventName</h1>
           <div class="by"><i class="fa fa-user" aria-hidden="true"></i> @Model.SubmittedByName</div>
         </div>
-        <div class="col-lg-8">
+        <div class="col-lg-8 text-center">
 
-          <img src="images/recipe1.jpg" alt="">
+          <img src="@Model.EventImage" class="img-fluid" style="max-width: 300px; margin-bottom:10px;" alt="Event image">
 
           <div class="info">
             <div class="row">
