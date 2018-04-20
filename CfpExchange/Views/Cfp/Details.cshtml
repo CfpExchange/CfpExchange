@@ -29,8 +29,26 @@
                 </p>
               </div>
               <div class="col-lg-4 col-sm-4">
-                <p>Event dates:</p>
-                <p><strong><i class="fa fa-clock-o" aria-hidden="true"></i> @Model.EventStartDate.ToShortDateString() - @Model.EventEndDate.ToShortDateString()</strong>
+                <p>Event date(s):</p>
+                <p><strong>@if(@Model.EventStartDate != default(DateTime) && @Model.EventEndDate != default(DateTime))
+                {
+                    @($"<i class=\"fa fa-clock-o\" aria-hidden=\"true\"></i> {Model.EventStartDate.ToShortDateString()} - {@Model.EventEndDate.ToShortDateString()}");
+                }
+                else if (@Model.EventStartDate == @Model.EventEndDate && @Model.EventStartDate != default(DateTime) && @Model.EventEndDate != default(DateTime))
+                {
+                    @($"<i class=\"fa fa-clock-o\" aria-hidden=\"true\"></i> {Model.EventStartDate.ToShortDateString()}");
+                }
+                else
+                {
+                    if (!string.IsNullOrWhiteSpace(Model.EventUrl))
+                    {
+                        @Html.Raw($"<a href=\"{Model.EventUrl}\" target=\"_blank\">See website</a>");
+                    }
+                    else
+                    {
+                        @($"See website");
+                    }
+                }</strong>
                 </p>
               </div>
               <div class="col-lg-4 col-sm-4">
