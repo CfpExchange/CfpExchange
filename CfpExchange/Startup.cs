@@ -55,7 +55,7 @@ namespace CfpExchange
 			});
 
             services.AddAuthorization();
-			
+
 			services.AddMvc();
 
             // TODO: Need to replace this with a real solution like sendgrid.
