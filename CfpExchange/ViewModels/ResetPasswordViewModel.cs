@@ -1,0 +1,29 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace CfpExchange.ViewModels
+{
+    public class ResetPasswordViewModel
+    {
+        public string Code { get; set; }
+
+        [EmailAddress]
+        [Required(ErrorMessage = "E-mail address is required")]
+        public string Email { get; set; }
+
+        [Required(ErrorMessage = "Full name is required")]
+        public string FullName { get; set; }
+
+        [DataType(DataType.Password)]
+        [Required(ErrorMessage = "Password is required")]
+        public string Password { get; set; }
+
+        [DataType(DataType.Password)]
+        [Compare("Password", ErrorMessage = "Password and confirmation must match")]
+        [Required(ErrorMessage = "Password confirmation is required")]
+        public string PasswordConfirmation { get; set; }
+    }
+}
