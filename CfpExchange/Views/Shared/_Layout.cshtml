@@ -1,4 +1,6 @@
-﻿@{
+﻿@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+@{
     var currentAction = ViewContext.RouteData.Values["Action"].ToString().ToLower();
 }
 <!DOCTYPE html>
