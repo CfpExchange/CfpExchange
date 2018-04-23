@@ -1,6 +1,7 @@
 ﻿using System;
 using CfpExchange.Data;
 using CfpExchange.Models;
+using CfpExchange.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -39,8 +40,13 @@ namespace CfpExchange
 				options.LoginPath = "/Account/Login";
 				options.AccessDeniedPath = "/Errors/AccessDenied";
 			});
+
+            services.AddAuthorization();
 			
 			services.AddMvc();
+
+            // TODO: Need to replace this with a real solution like sendgrid.
+            services.AddTransient<IEmailSender, MockEmailSender>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

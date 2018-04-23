@@ -19,7 +19,6 @@
     <Folder Include="Views\Cfp\" />
     <Folder Include="wwwroot\images\" />
     <Folder Include="Data\" />
-    <Folder Include="ViewModels\" />
     <Folder Include="Helpers\" />
     <Folder Include="wwwroot\js\plugins\bootstrap-datepicker\" />
     <Folder Include="wwwroot\css\plugins\" />
