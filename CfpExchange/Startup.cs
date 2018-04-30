@@ -43,6 +43,8 @@ namespace CfpExchange
 				.AddEntityFrameworkStores<CfpContext>()
 				.AddDefaultTokenProviders();
 			
+			services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
+
 			services.ConfigureApplicationCookie(options =>
 			{
 				options.Cookie.SameSite = SameSiteMode.Strict;
@@ -57,7 +59,8 @@ namespace CfpExchange
 
 			services.AddMvc();
 
-            // TODO: Need to replace this with a real solution like sendgrid.
+            // After signing up at MailGun (https://www.mailgun.com/) swap the following two lines:
+			// services.AddTransient<IEmailSender, MailGunEmailSender>();
             services.AddTransient<IEmailSender, MockEmailSender>();
 		}
 
