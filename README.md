@@ -1,4 +1,5 @@
-# CFP.Exchange
+# CFP.Exchange [![Build status](https://ci.appveyor.com/api/projects/status/8u3fj55h4vmrn6rw/branch/master?svg=true)](https://ci.appveyor.com/project/jfversluis/cfpexchange/branch/master)
+
 An online community website used to share interesting call for papers with
 speakers. 
 
