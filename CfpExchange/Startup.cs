@@ -25,7 +25,7 @@ namespace CfpExchange
 				.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
 				.AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: false)
 				.AddEnvironmentVariables()
-				.AddUserSecrets("CfpExchangeSecrets")
+				.AddUserSecrets<Startup>()
 				.Build();
 		}
 
