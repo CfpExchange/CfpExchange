@@ -6,15 +6,15 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>@ViewData["Title"] - CFP Exchange</title>
+      <title>@ViewData["Title"] - CFP Exchange</title>
 
-    <!--    <environment include="Development">-->
+      <!--    <environment include="Development">-->
             
-    <!--    </environment>
+      <!--    </environment>
         <environment exclude="Development">-->
             <!---Font Icon-->
             <link href="/css/font-awesome.min.css" rel="stylesheet">
@@ -24,16 +24,25 @@
             <link href="/css/select2.min.css" rel="stylesheet">
             <link href="/css/styles.css" rel="stylesheet">
             @RenderSection("Styles", required:false)
-    <!--    </environment>-->
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-43277628-7"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+      <!--    </environment>-->
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-43277628-7"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
 
-      gtag('config', 'UA-43277628-7');
-    </script>
+        gtag('config', 'UA-43277628-7');
+      </script>
+      
+      <!-- Favicons -->
+      <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon.png">
+      <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+      <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+      <link rel="manifest" href="/site.webmanifest">
+      <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+      <meta name="msapplication-TileColor" content="#ffffff">
+      <meta name="theme-color" content="#ffffff">
     </head>
     <body>
       <!-- Navigation -->
