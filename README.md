@@ -11,21 +11,17 @@ For this we use the [ASP.NET Core user secrets](https://docs.microsoft.com/en-us
 To enter the connection string for your development database, use the following steps:
 
 ### On Windows
-Create a file in `%APPDATA%\microsoft\UserSecrets\CfpExchangeSecrets\secrets.json`.
-The file should have the following layout:
-
-//TODO: Specify what settings we store
-
-| Key| Value description|
-| ------------- |:-------------:| -----:|
-| **CfpExchangeDb**| Connection string to MSSQL database |
+Create a file in `%APPDATA%\microsoft\UserSecrets\CfpExchangeSecrets\secrets.json` and paste in the example below - then update it with your own secret values!
 
 ### On Mac or Linux
-Create a file in `~/.microsoft/usersecrets/CfpExchangeSecrets/secrets.json`.
+Create a file in `~/.microsoft/usersecrets/CfpExchangeSecrets/secrets.json` and paste in the example below - then update it with your own secret values!
+
+### User Secrets example
 The file should have the following layout:
+```json
+{
+    "CfpExchangeDb": "ValidConnectionStringToMSSQLDatabase"
+}
+```
 
-//TODO: Specify what settings we store
-
-| Key| Value description|
-| ------------- |:-------------:| -----:|
-| **CfpExchangeDb**| Connection string to MSSQL database |
+**//TODO:** _Specify what other settings/secrets we need_
