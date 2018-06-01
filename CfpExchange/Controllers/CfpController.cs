@@ -46,11 +46,14 @@ namespace CfpExchange.Controllers
 		public IActionResult Browse(int page = 1)
         {
             const int maximumNumberOfItemsPerPage = 10;
+            const int maximumPageToShow = 3000;
+
+            int pageToShow = page <= maximumPageToShow ? page : maximumPageToShow;
 
             var allActiveCfps = _cfpContext.Cfps
 		        .Where(cfp => cfp.CfpEndDate > DateTime.UtcNow)
 		        .OrderBy(cfp => cfp.CfpEndDate)
-                .Skip((page - 1) * maximumNumberOfItemsPerPage)
+                .Skip((pageToShow - 1) * maximumNumberOfItemsPerPage)
 		        .Take(maximumNumberOfItemsPerPage)
 		        .ToList();
 
