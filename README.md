@@ -21,8 +21,10 @@ Create a file in `~/.microsoft/usersecrets/CfpExchangeSecrets/secrets.json` and 
 The file should have the following layout:
 ```json
 {
-    "CfpExchangeDb": "ValidConnectionStringToMSSQLDatabase"
+    "CfpExchangeDb": "ValidConnectionStringToMSSQLDatabase",
+    "TwitterConsumerKey": "key",
+    "TwitterConsumerSecret": "secret",
+    "TwitterOAuthToken": "token",
+    "TwitterOAuthTokenSecret": "tokensecret"
 }
 ```
-
-**//TODO:** _Specify what other settings/secrets we need_

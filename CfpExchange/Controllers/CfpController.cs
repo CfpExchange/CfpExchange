@@ -1,20 +1,25 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using CfpExchange.Data;
 using CfpExchange.Helpers;
 using CfpExchange.Models;
 using CfpExchange.ViewModels;
+using LinqToTwitter;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 namespace CfpExchange.Controllers
 {
 	public class CfpController : Controller
 	{
 		private readonly CfpContext _cfpContext;
+		private readonly IConfiguration _configuration;
 
-		public CfpController(CfpContext cfpContext)
+		public CfpController(CfpContext cfpContext, IConfiguration configuration)
 		{
 			_cfpContext = cfpContext;
+			_configuration = configuration;
 		}
 
 		[HttpPost]
@@ -48,7 +53,7 @@ namespace CfpExchange.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult Submit(SubmittedCfp submittedCfp)
+		public async Task<IActionResult> Submit(SubmittedCfp submittedCfp)
 		{
 			// TODO
 			// Check validity
@@ -75,7 +80,35 @@ namespace CfpExchange.Controllers
 				_cfpContext.Add(cfpToAdd);
 				_cfpContext.SaveChanges();
 
-				// Post to Twitter
+				// Post to Twitter account
+				try
+				{
+					var auth = new SingleUserAuthorizer
+					{
+						CredentialStore = new SingleUserInMemoryCredentialStore
+						{
+							ConsumerKey = _configuration["TwitterConsumerKey"],
+							ConsumerSecret = _configuration["TwitterConsumerSecret"],
+							OAuthToken = _configuration["TwitterOAuthToken"],
+							OAuthTokenSecret = _configuration["TwitterOAuthTokenSecret"]
+						}
+					};
+
+					await auth.AuthorizeAsync();
+
+					var ctx = new TwitterContext(auth);
+
+					var tweetMessage = $"New CFP Added: {cfpToAdd.EventName} closes {cfpToAdd.CfpEndDate.ToLongDateString()} #cfpexchange {cfpToAdd.EventUrl}";
+
+					// TODO substringing is not the best thing, but does the trick for now
+					await ctx.TweetAsync(tweetMessage.Length > 280 ? tweetMessage.Substring(0, 280) : tweetMessage,
+						(decimal)cfpToAdd.EventLocationLat, (decimal)cfpToAdd.EventLocationLng);
+				}
+				catch
+				{
+					// Intentionally left blank, we can probably do something
+					// more useful, but for now if Twitter fails  ¯\_(ツ)_/¯
+				}
 
 				// Send back ID to do whatever at the client-side
 				return Json(cfpToAddId);
