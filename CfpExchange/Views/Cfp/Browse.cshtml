@@ -1,4 +1,6 @@
-﻿@{
+﻿@using Humanizer
+@using Humanizer.Localisation
+@{
     ViewData["Title"] = "Browse";
 }
 
@@ -10,8 +12,22 @@
           <h1>Browse</h1>
         </div>
         <div class="col-lg-8 content">
-            <h3>Sorry, this is still To(Labra)do(odle)!</h3>
-            <img style="max-width: 500px;" src="https://upload.wikimedia.org/wikipedia/en/9/90/Black_Labradoodle.jpeg" />
+            @foreach(var cfp in @Model)
+            {
+            <div class="box list recipes">
+                <div class="by"><i class="fa fa-clock-o" aria-hidden="true"></i> Ends in: @(((TimeSpan)cfp.CfpEndDate.Subtract(DateTime.Now)).Humanize(minUnit: TimeUnit.Hour))</div>
+                <a href="@(Url.Action("details", "cfp", new { id = cfp.Id }))">
+                    <img src="@cfp.EventImage" alt="Event image">
+                </a>
+                <h2><a href="@(Url.Action("details", "cfp", new { id = cfp.Id }))">@cfp.EventName</a>@if (!string.IsNullOrWhiteSpace(cfp.EventLocationName)) 
+                                                                                                     {
+                                                                                                         @Html.Raw($"&nbsp;<small>{@cfp.EventLocationName}</small>");
+                                                                                                     }</h2>
+                <p>@cfp.EventDescription</p>
+                <div class="tag">
+                </div>
+            </div>
+            }
         </div>
       </div>
     </div>
