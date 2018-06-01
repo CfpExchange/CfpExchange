@@ -44,7 +44,12 @@ namespace CfpExchange.Controllers
 
 		public IActionResult Browse()
 		{
-			return View();
+		    var allActiveCfps = _cfpContext.Cfps
+		        .Where(cfp => cfp.CfpEndDate > DateTime.UtcNow)
+		        .OrderBy(cfp => cfp.CfpEndDate)
+		        .ToList();
+
+			return View(allActiveCfps);
 		}
 
 		public IActionResult Submit()
