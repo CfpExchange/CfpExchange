@@ -42,16 +42,25 @@ namespace CfpExchange.Controllers
 			return Json(metadata);
 		}
 
-		public IActionResult Browse()
-		{
-		    var allActiveCfps = _cfpContext.Cfps
+        [HttpGet]
+        public IActionResult Browse(int page = 1)
+        {
+            const int maximumNumberOfItemsPerPage = 10;
+            const int maximumPageToShow = 3000;
+
+            int pageToShow = page <= maximumPageToShow ? page : maximumPageToShow;
+
+            var allActiveCfps = _cfpContext.Cfps
 		        .Where(cfp => cfp.CfpEndDate > DateTime.UtcNow)
 		        .OrderBy(cfp => cfp.CfpEndDate)
+                .Skip((pageToShow - 1) * maximumNumberOfItemsPerPage)
+		        .Take(maximumNumberOfItemsPerPage)
 		        .ToList();
 
-			return View(allActiveCfps);
-		}
+	        return View(new BrowseResponseViewModel(allActiveCfps, pageToShow));
+        }
 
+        [HttpGet]
 		public IActionResult Submit()
 		{
 			return View();
