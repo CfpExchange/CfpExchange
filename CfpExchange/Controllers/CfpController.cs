@@ -43,7 +43,7 @@ namespace CfpExchange.Controllers
 		}
 
         [HttpGet]
-		public IActionResult Browse(int page = 1)
+        public IActionResult Browse(int page = 1)
         {
             const int maximumNumberOfItemsPerPage = 10;
             const int maximumPageToShow = 3000;
@@ -57,8 +57,8 @@ namespace CfpExchange.Controllers
 		        .Take(maximumNumberOfItemsPerPage)
 		        .ToList();
 
-			return View(new BrowseResponseViewModel(allActiveCfps, pageToShow));
-		}
+	        return View(new BrowseResponseViewModel(allActiveCfps, pageToShow));
+        }
 
         [HttpGet]
 		public IActionResult Submit()
