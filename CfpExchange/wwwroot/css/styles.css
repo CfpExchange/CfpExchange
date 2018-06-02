@@ -92,10 +92,10 @@ body {
   padding: 60px 0;
   background-color: #f7f7f7;
 }
-.top h5 {
-  font-size: 1.2rem;
-  margin-bottom: 20px;
-  color: #dadada;
+.top h5, .top h5 a {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: #dadada;
 }
 .top .box {
   padding: 25px;
@@ -190,6 +190,7 @@ body {
   border: 1px solid #dedede;
   background-color: #fff;
   box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);
+  min-height: 180px;
 }
 .box.list.recipes img {
   float: left;

@@ -13,7 +13,10 @@ namespace CfpExchange.Controllers
 {
 	public class CfpController : Controller
 	{
-		private readonly CfpContext _cfpContext;
+	    private const int MaximumPageToShow = 3000;
+	    private const int MaximumNumberOfItemsPerPage = 10;
+
+        private readonly CfpContext _cfpContext;
 		private readonly IConfiguration _configuration;
 
 		public CfpController(CfpContext cfpContext, IConfiguration configuration)
@@ -42,11 +45,38 @@ namespace CfpExchange.Controllers
 			return Json(metadata);
 		}
 
-		public IActionResult Browse()
-		{
-			return View();
-		}
+        [HttpGet]
+        public IActionResult Browse(int page = 1)
+        {
+            int pageToShow = page <= MaximumPageToShow ? page : MaximumPageToShow;
 
+            var allActiveCfps = _cfpContext.Cfps
+		        .Where(cfp => cfp.CfpEndDate > DateTime.UtcNow)
+		        .OrderBy(cfp => cfp.CfpEndDate)
+                .Skip((pageToShow - 1) * MaximumNumberOfItemsPerPage)
+		        .Take(MaximumNumberOfItemsPerPage)
+		        .ToList();
+
+	        return View(new BrowseResponseViewModel(allActiveCfps, pageToShow));
+        }
+
+	    [HttpGet]
+	    public IActionResult Newest(int page = 1)
+	    {
+	        int pageToShow = page <= MaximumPageToShow ? page : MaximumPageToShow;
+
+            var allActiveCfps = _cfpContext.Cfps
+	            .Where(cfp => cfp.CfpEndDate > DateTime.UtcNow)
+                .OrderBy(cfp => cfp.CfpAdded.Date)
+                .ThenBy(cfp => cfp.CfpEndDate.Date)
+	            .Skip((pageToShow - 1) * MaximumNumberOfItemsPerPage)
+	            .Take(MaximumNumberOfItemsPerPage)
+	            .ToList();
+
+	        return View(new NewestResponseViewModel(allActiveCfps, pageToShow));
+	    }
+
+        [HttpGet]
 		public IActionResult Submit()
 		{
 			return View();
