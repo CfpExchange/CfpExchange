@@ -92,10 +92,10 @@ body {
   padding: 60px 0;
   background-color: #f7f7f7;
 }
-.top h5 {
-  font-size: 1.2rem;
-  margin-bottom: 20px;
-  color: #dadada;
+.top h5, .top h5 a {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: #dadada;
 }
 .top .box {
   padding: 25px;

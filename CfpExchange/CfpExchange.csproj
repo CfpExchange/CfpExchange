@@ -22,7 +22,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="wwwroot\js\" />
-    <Folder Include="Views\Cfp\" />
     <Folder Include="wwwroot\images\" />
     <Folder Include="Data\" />
     <Folder Include="Helpers\" />
