@@ -4,16 +4,25 @@ using CfpExchange.Models;
 using CfpExchange.Data;
 using System.Linq;
 using CfpExchange.ViewModels;
+using CfpExchange.Services;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
+using System.Threading.Tasks;
 
 namespace CfpExchange.Controllers
 {
 	public class HomeController : Controller
 	{
 		private readonly CfpContext _cfpContext;
+		private readonly IEmailSender _emailSender;
+		private readonly IConfiguration _configuration;
 
-		public HomeController(CfpContext cfpContext)
+		public HomeController(CfpContext cfpContext, IEmailSender emailSender,
+		                      IConfiguration configuration)
 		{
 			_cfpContext = cfpContext;
+			_emailSender = emailSender;
+			_configuration = configuration;
 		}
 
 		public IActionResult Index()
@@ -46,9 +55,17 @@ namespace CfpExchange.Controllers
 			return View();
 		}
 
-		public IActionResult Contact()
+		public IActionResult Contact(bool mailSent)
 		{
-			return View();
+			return View(mailSent);
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> SendContact(string name, string emailaddress, string subject, string message)
+		{
+			await _emailSender.SendEmailAsync(_configuration["AdminEmailaddress"], $"{name} <{emailaddress}>", subject, message);
+
+			return RedirectToAction("Contact", "Home", new { mailSent = true });
 		}
 
 		public IActionResult Error()

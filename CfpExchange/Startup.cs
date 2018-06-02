@@ -43,6 +43,8 @@ namespace CfpExchange
 				.AddEntityFrameworkStores<CfpContext>()
 				.AddDefaultTokenProviders();
 			
+			services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
+
 			services.ConfigureApplicationCookie(options =>
 			{
 				options.Cookie.SameSite = SameSiteMode.Strict;
@@ -57,8 +59,10 @@ namespace CfpExchange
 
 			services.AddMvc();
 
-            // TODO: Need to replace this with a real solution like sendgrid.
-            services.AddTransient<IEmailSender, MockEmailSender>();
+			if (_environment.IsProduction())
+				services.AddTransient<IEmailSender, MailGunEmailSender>();
+			else
+				services.AddTransient<IEmailSender, MockEmailSender>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
