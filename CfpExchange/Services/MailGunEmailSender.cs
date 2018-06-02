@@ -44,7 +44,7 @@ namespace CfpExchange.Services
 					new KeyValuePair<string, string>("text", body)
 				});
 
-				var result = await client.PostAsync(_emailSettings.RequestUri, content).ConfigureAwait(false);
+				var result = await client.PostAsync(_emailSettings.ApiUri, content).ConfigureAwait(false);
 				var foo = await result.Content.ReadAsStringAsync();
 			}
 
