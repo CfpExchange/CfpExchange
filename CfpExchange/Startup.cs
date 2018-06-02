@@ -59,9 +59,10 @@ namespace CfpExchange
 
 			services.AddMvc();
 
-            // After signing up at MailGun (https://www.mailgun.com/) swap the following two lines:
-			// services.AddTransient<IEmailSender, MailGunEmailSender>();
-            services.AddTransient<IEmailSender, MockEmailSender>();
+			if (_environment.IsProduction())
+				services.AddTransient<IEmailSender, MailGunEmailSender>();
+			else
+				services.AddTransient<IEmailSender, MockEmailSender>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
