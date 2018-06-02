@@ -1,4 +1,4 @@
-﻿@model BrowseResponseViewModel
+﻿@model NewestResponseViewModel
 @using Humanizer
 @using Humanizer.Localisation
 @{
@@ -10,7 +10,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-12 title text-center">
-                <h1>Browse</h1>
+                <h1>Newest CFP's added to this site</h1>
             </div>
             <div class="col-lg-8 content">
                 @if (!Model.CfpList.Any())
@@ -20,7 +20,10 @@
                 @foreach (var cfp in Model.CfpList)
                 {
                     <div class="box list recipes">
-                        <div class="by"><i class="fa fa-clock-o" aria-hidden="true"></i> Ends in: @(((TimeSpan)cfp.CfpEndDate.Subtract(DateTime.Now)).Humanize(minUnit: TimeUnit.Hour))</div>
+                        <div class="by">
+                            <i class="fa fa-clock-o" aria-hidden="true"></i>
+                            Added on: @cfp.CfpAdded.ToShortDateString() - Ends in: @(((TimeSpan)cfp.CfpEndDate.Subtract(DateTime.Now)).Humanize(minUnit: TimeUnit.Hour))
+                        </div>
                         <a href="@(Url.Action("details", "cfp", new {id = cfp.Id}))">
                             <img src="@cfp.EventImage" alt="Event image">
                         </a>
