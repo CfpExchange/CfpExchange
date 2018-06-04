@@ -165,7 +165,7 @@
                     $('#eventUrlPreview').show();
                 },
                 error: function() {
-                    // TODO show manual entry
+                    cfpToSubmit.eventUrl = url;
                 }
             });
         }
