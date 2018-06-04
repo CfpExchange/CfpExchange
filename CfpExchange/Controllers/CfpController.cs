@@ -67,7 +67,7 @@ namespace CfpExchange.Controllers
 
             var allActiveCfps = _cfpContext.Cfps
 	            .Where(cfp => cfp.CfpEndDate > DateTime.UtcNow)
-                .OrderBy(cfp => cfp.CfpAdded.Date)
+                .OrderByDescending(cfp => cfp.CfpAdded.Date)
                 .ThenBy(cfp => cfp.CfpEndDate.Date)
 	            .Skip((pageToShow - 1) * MaximumNumberOfItemsPerPage)
 	            .Take(MaximumNumberOfItemsPerPage)
