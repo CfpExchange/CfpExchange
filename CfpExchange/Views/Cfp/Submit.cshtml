@@ -177,11 +177,12 @@
                     $('#loadMetadataSpinner').hide();
 
                 },
-                error: function(err) {
-                    // TODO show manual entry
+                error: function() {
                     $('#loadMetadataSpinner').hide();
                     $('#metadataError').show();
                     editEventData();
+
+                    cfpToSubmit.eventUrl = url;
                 }
             });
         }
