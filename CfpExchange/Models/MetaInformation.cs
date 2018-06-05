@@ -1,12 +1,31 @@
-﻿using System;
+﻿using System.Net;
 
 namespace CfpExchange.Models
 {
 	public class MetaInformation
 	{
-		public bool HasData { get; set; }
+		private string _title;
+
+		public bool HasError { get; set; }
+		public bool ExternalPageError { get; set; }
+
+		public bool HasData => !string.IsNullOrWhiteSpace(Title) || !string.IsNullOrWhiteSpace(Description)
+								|| !string.IsNullOrWhiteSpace(ImageUrl);
 		public string Url { get; set; }
-		public string Title { get; set; }
+
+		public string Title
+		{
+			get
+			{
+				return WebUtility.HtmlDecode(_title);
+			}
+
+			set
+			{
+				_title = value;
+			}
+		}
+
 		public string Description { get; set; }
 		public string Keywords { get; set; }
 		public string ImageUrl { get; set; }
@@ -15,7 +34,6 @@ namespace CfpExchange.Models
 		public MetaInformation(string url)
 		{
 			Url = url;
-			HasData = false;
 		}
 
 		public MetaInformation(string url, string title, string description, string keywords, string imageUrl, string siteName)

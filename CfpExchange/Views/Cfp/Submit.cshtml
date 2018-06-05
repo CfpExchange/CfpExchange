@@ -21,14 +21,18 @@
             <h1>Required</h1>
             <p>These fields are required and the minimum amount of information for adding a CFP</p>
             <div class="form-group">
-              <label>Event URL</label>
+              <label>Event URL <i class="fa fa-spinner fa-spin" id="loadMetadataSpinner" style="font-size: 24px; display:none;"></i></label>
               <input type="text" class="form-control" onblur="javascript: getMetadata(this.value);">
               <small id="eventUrlHelp" class="form-text text-muted">Enter the URL of the event homepage, we'll try to extract some information from there for you. No worries, you can still tweak it!</small>
             </div>
 
+            <div class="alert alert-warning" id="metadataError" style="display:none;" role="alert">
+                There was a problem loading the event URL. Please double check the URL or enter the details manually.
+            </div>
+            
             <div class="form-group" id="eventUrlPreview" style="display:none;">
                 <a id="eventUrl" class="fragment" href="#" target="_blank">
-                    <img src ="https://placehold.it/116x116" alt="Event image"/> 
+                    <img src ="/images/noimage.svg" style="max-width: 116px; max-height: 116px;" alt="Event image"/> 
                     <h3></h3>
                     <p class="text">
                         
@@ -37,10 +41,7 @@
                 <small id="eventUrlPreviewHelp" class="form-text text-muted"><a href="javascript:editEventData();">Edit this data manually</a></small>
             </div>
 
-            <div class="form-group" id="eventData" style="display:none;">
-            </div>
-
-             <div class="form-group">
+             <div class="form-group" id="eventTitleEntry" style="display:none;">
               <label>Event Title</label>
               <input type="text" class="form-control" id="eventTitle">
               <small id="eventTitleHelp" class="form-text text-muted">Under this title the CFP will be listed</small>
@@ -137,12 +138,21 @@
         }
 
         function getMetadata(url) {
+            $('#loadMetadataSpinner').show();
+            $('#metadataError').hide();
+        
             $.ajax({
                 type: "POST",
-                url: "/cfp/getMetadata",
+                url: "/cfp/getmetadata",
                 data: {"url":url},
                 success: function(metadata) {
-
+                    if (metadata.hasError)
+                    {
+                        $('#loadMetadataSpinner').hide();
+                        $('#metadataError').show();
+                        return;
+                    }
+        
                     cfpToSubmit.eventUrl = metadata.url;
                     cfpToSubmit.eventImageUrl = metadata.imageUrl;
                     cfpToSubmit.eventTitle = metadata.title;
@@ -163,16 +173,22 @@
 
                     $('#eventTitle').attr('value', metadata.title);
                     $('#eventUrlPreview').show();
+
+                    $('#loadMetadataSpinner').hide();
+
                 },
-                error: function() {
+                error: function(err) {
                     // TODO show manual entry
+                    $('#loadMetadataSpinner').hide();
+                    $('#metadataError').show();
+                    editEventData();
                 }
             });
         }
 
         function editEventData() {
             // TODO
-            $('#eventData').show();
+            $('#eventTitleEntry').show();
             $('#eventUrlPreview').hide();
         }
 

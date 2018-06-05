@@ -39,9 +39,6 @@ namespace CfpExchange.Controllers
 			
 			var metadata = MetaScraper.GetMetaDataFromUrl(validatedUrl);
 
-			if (!metadata.HasData)
-				return NotFound();
-
 			return Json(metadata);
 		}
 
