@@ -5,6 +5,7 @@ namespace CfpExchange.Models
 	public class MetaInformation
 	{
 		private string _title;
+		private string _description;
 
 		public bool HasError { get; set; }
 		public bool ExternalPageError { get; set; }
@@ -26,7 +27,19 @@ namespace CfpExchange.Models
 			}
 		}
 
-		public string Description { get; set; }
+		public string Description
+		{
+			get
+			{
+				return WebUtility.HtmlDecode(_description);
+			}
+
+			set
+			{
+				_description = value;
+			}
+		}
+
 		public string Keywords { get; set; }
 		public string ImageUrl { get; set; }
 		public string SiteName { get; set; }
