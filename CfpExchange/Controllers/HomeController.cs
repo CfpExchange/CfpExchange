@@ -8,6 +8,7 @@ using CfpExchange.Services;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
+using System;
 
 namespace CfpExchange.Controllers
 {
@@ -39,7 +40,7 @@ namespace CfpExchange.Controllers
 				indexViewModel.NewestCfp = _cfpContext.Cfps.OrderByDescending(cfp => cfp.CfpAdded).FirstOrDefault();
 
 				// TODO set real random
-				indexViewModel.RandomCfp = _cfpContext.Cfps.FirstOrDefault();
+				indexViewModel.RandomCfp = _cfpContext.Cfps.OrderBy(o => Guid.NewGuid()).Take(1).SingleOrDefault();
 
 				// TODO set real CFP of the day
 				indexViewModel.CfpOfTheDay = _cfpContext.Cfps.FirstOrDefault();
