@@ -34,9 +34,9 @@ namespace CfpExchange
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			if (_environment.IsDevelopment())
-				services.AddDbContext<CfpContext>(opt => opt.UseInMemoryDatabase("Cfps"));
-			else
+			//if (_environment.IsDevelopment())
+			//	services.AddDbContext<CfpContext>(opt => opt.UseInMemoryDatabase("Cfps"));
+			//else
 				services.AddDbContext<CfpContext>(opt => opt.UseSqlServer(Configuration["CfpExchangeDb"]));
 
 			services.AddIdentity<ApplicationUser, IdentityRole>(options => { options.User.RequireUniqueEmail = true; })

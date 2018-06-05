@@ -17,7 +17,7 @@
               <img src="@Model.NewestCfp.EventImage" alt="">
             </a>
             <h3><a href="@(Url.Action("details", "cfp", new { id = Model.NewestCfp.Id }))">@Model.NewestCfp.EventName</a></h3>
-            <p>@($"{Model.NewestCfp.EventDescription.Substring(0, 40)}...")</p>
+            <p>@($"{Model.NewestCfp.EventDescription?.Substring(0, 40)}...")</p>
           </div>
         </div>
             }
@@ -31,7 +31,7 @@
               <img src="@Model.MostViewedCfp.EventImage" alt="">
             </a>
             <h3><a href="@(Url.Action("details", "cfp", new { id = Model.MostViewedCfp.Id }))">@Model.MostViewedCfp.EventName</a></h3>
-            <p>@($"{Model.MostViewedCfp.EventDescription.Substring(0, 40)}...")</p>
+            <p>@($"{Model.MostViewedCfp.EventDescription?.Substring(0, 40)}...")</p>
           </div>
         </div>
             }
@@ -44,7 +44,7 @@
               <img src="@Model.RandomCfp.EventImage" alt="">
             </a>
             <h3><a href="@(Url.Action("details", "cfp", new { id = Model.RandomCfp.Id }))">@Model.RandomCfp.EventName</a></h3>
-            <p>@($"{Model.RandomCfp.EventDescription.Substring(0, 40)}...")</p>
+            <p>@($"{Model.RandomCfp.EventDescription?.Substring(0, 40)}...")</p>
           </div>
         </div>
             }
@@ -74,9 +74,9 @@
                     }</h2>
             <p>@Model.CfpOfTheDay.EventDescription</p>
             <div class="tag">
-              <a href="#">Tech</a>
+              @*<a href="#">Tech</a>
               <a href="#">.NET</a>
-              <a href="#">Development</a>
+              <a href="#">Development</a>*@
             </div>
           </div>
         </div>
@@ -107,9 +107,9 @@
                         }</h2>
                 <p>@cfp.EventDescription</p>
                 <div class="tag">
-                  <a href="#">Awesome</a>
+                  @*<a href="#">Awesome</a>
                   <a href="#">Unicorns</a>
-                  <a href="#">.NET</a>
+                  <a href="#">.NET</a>*@
                 </div>
               </div>
             }
