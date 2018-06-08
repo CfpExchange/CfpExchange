@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Cfp
+@{
     ViewData["Title"] = @Model.EventName + "CFP Details";
 }
 
@@ -15,7 +16,7 @@
         <div class="col-lg-12 text-center">
           <h4>CFP Closes: @Model.CfpEndDate.ToString("MMM dd, yyyy")</h4>
           <h1>@Model.EventName</h1>
-          <div class="by"><i class="fa fa-user" aria-hidden="true"></i> @Model.SubmittedByName</div>
+          @*<div class="by"><i class="fa fa-user" aria-hidden="true"></i> @Model.SubmittedByName</div>*@
         </div>
         <div class="col-lg-8 text-center">
 
@@ -25,7 +26,7 @@
             <div class="row">
               <div class="col-lg-4 col-sm-4">
                 <p>Location:</p>
-                <p><strong><i class="fa fa-map-marker" aria-hidden="true"></i> @Model.EventLocationName</strong>
+                <p><strong><i class="fa fa-map-marker" aria-hidden="true"></i> <a href="http://www.google.com/maps/place/@Model.EventLocationLat,@Model.EventLocationLng" target="_blank">@Model.EventLocationName</a></strong>
                 </p>
               </div>
               <div class="col-lg-4 col-sm-4">
