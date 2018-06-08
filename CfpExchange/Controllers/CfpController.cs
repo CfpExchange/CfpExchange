@@ -74,18 +74,22 @@ namespace CfpExchange.Controllers
 		}
 
 		[HttpGet]
-		public IActionResult Browse(int page = 1)
+		public IActionResult Browse(int page = 1, string searchTerm = "")
 		{
 			int pageToShow = page <= MaximumPageToShow ? page : MaximumPageToShow;
 
+			var lowercaseSearchTerm = searchTerm?.ToLowerInvariant() ?? "";
+
 			var allActiveCfps = _cfpContext.Cfps
 				.Where(cfp => cfp.CfpEndDate > DateTime.UtcNow)
+				.Where(cfp => cfp.EventName.ToLowerInvariant().Contains(lowercaseSearchTerm)
+					|| cfp.EventLocationName.ToLowerInvariant().Contains(lowercaseSearchTerm))
 				.OrderBy(cfp => cfp.CfpEndDate)
 				.Skip((pageToShow - 1) * MaximumNumberOfItemsPerPage)
 				.Take(MaximumNumberOfItemsPerPage)
 				.ToList();
 
-			return View(new BrowseResponseViewModel(allActiveCfps, pageToShow));
+			return View(new BrowseResponseViewModel(allActiveCfps, pageToShow, searchTerm));
 		}
 
 		[HttpGet]
