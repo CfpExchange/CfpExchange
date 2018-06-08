@@ -73,10 +73,93 @@
                     <a href="#">Development</a>
                     <a href="#">Azure</a>*@
             </div>
+            <div class="blog-comment">
+            <hr>
+
+            <div class="alert alert-success" role="alert" id="issue-success" style="display:none;">
+                Your issue was sent succesfully! If needed, we will get back to you shortly and/or correct the issue.<br />
+                Thank you for your attention to detail!
+            </div>
+
+            <div class="alert alert-danger" role="alert" id="issue-error" style="display:none;">
+                There was an error sending your issue. Please check all the fields carefully and try again.
+            </div>
+                
+            <div class="reply" id="issue-form">
+              <h3>Report issue</h3>
+                <p class="comment-form-comment">
+                  <textarea class="form-control" placeholder="For example: close date is wrong, URL is missing, etc." id="comment" name="comment" cols="45" rows="5" required="required" aria-required="true"></textarea>
+                </p>
+                <div class="row">
+                  <div class="col-md-6">
+                    <p class="comment-form-author">
+                      <label for="author">Name <span class="required">*</span>
+                      </label>
+                      <input class="form-control" id="author" name="author" type="text" value="" size="30" maxlength="245" aria-required="true" required="required">
+                    </p>
+                  </div>
+                  <div class="col-md-6">
+                    <p class="comment-form-email">
+                      <label for="email">Email <span class="required">*</span>
+                      </label>
+                      <input class="form-control" id="email" name="email" type="text" value="" size="30" maxlength="100" aria-required="true" required="required">
+                    </p>
+                  </div>
+                </div>
+                <p class="form-submit">
+                    <i class="fa fa-spinner fa-spin" id="sendIssueSpinner" style="font-size: 24px; display:none;"></i><input class="btn btn-submit btn-block" name="submit" type="submit" id="submit" value="Send issue" onclick="javascript:ReportIssue();">
+                </p>
+            </div>
+          </div>
         </div>
     </div>
 </div>
 </div>
 @section Scripts {
     <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5ad705ab67da4ff7"></script>
+    <script type="text/javascript" src="/js/custom.js"></script>
+
+    <script type="text/javascript">
+    var issue = {};
+    issue.cfpId = '@Model.Id';
+    issue.name = null;
+    issue.emailAddress = null;
+    issue.description = null;
+
+    function ReportIssue()
+    {
+        $('#issue-error').hide();
+        $('#submit').hide();
+        $('#sendIssueSpinner').show();
+
+        issue.name = $('#author').val();
+        issue.emailAddress = $('#email').val();
+        issue.description = $('#comment').val();
+
+        //  TODO: check empty fields
+        if (issue.name === '' || issue.emailAddress === '' || issue.description === '' || !validateEmail(issue.emailAddress))
+        {
+            $('#submit').show();
+            $('#sendIssueSpinner').hide();
+            $('#issue-error').show();
+            return;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/cfp/sendreportissue",
+            data: {issue},
+            success: function() {
+                $('#issue-form').hide();
+                $('#issue-success').show();
+            },
+            error: function() {
+                // TODO: Show error message
+                $('#submit').show();
+                $('#sendIssueSpinner').hide();
+                $('#issue-error').show();
+            }
+        });
+    }
+    </script>
 }

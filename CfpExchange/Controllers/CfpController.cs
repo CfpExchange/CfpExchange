@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using CfpExchange.Data;
 using CfpExchange.Helpers;
 using CfpExchange.Models;
+using CfpExchange.Services;
 using CfpExchange.ViewModels;
 using LinqToTwitter;
 using Microsoft.AspNetCore.Mvc;
@@ -18,11 +19,14 @@ namespace CfpExchange.Controllers
 
         private readonly CfpContext _cfpContext;
 		private readonly IConfiguration _configuration;
+		private readonly IEmailSender _emailSender;
 
-		public CfpController(CfpContext cfpContext, IConfiguration configuration)
+		public CfpController(CfpContext cfpContext, IConfiguration configuration,
+			IEmailSender emailSender)
 		{
 			_cfpContext = cfpContext;
 			_configuration = configuration;
+			_emailSender = emailSender;
 		}
 
 		[HttpPost]
@@ -160,6 +164,23 @@ namespace CfpExchange.Controllers
 			_cfpContext.SaveChanges();
 			 
 			return View(selectedCfp);
+		}
+
+		public async Task<IActionResult> SendReportIssue(Issue issue)
+		{
+			if (ModelState.IsValid)
+			{
+				var bodyText = $"An issue was reported for CFP: https://cfp.exchange/cfp/details/{issue.CfpId}"
+					+ Environment.NewLine + $"Issue: {issue.Description}";
+				
+				await _emailSender.SendEmailAsync(_configuration["AdminEmailaddress"],
+					$"{issue.Name} <{issue.EmailAddress}>", "Issue with CFP", bodyText);
+				
+				return Ok();
+			}
+
+			// TODO: return invalid model
+			return BadRequest();
 		}
 	}
 }
