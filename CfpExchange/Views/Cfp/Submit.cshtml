@@ -22,8 +22,12 @@
             <p>These fields are required and the minimum amount of information for adding a CFP</p>
             <div class="form-group">
               <label>Event URL <i class="fa fa-spinner fa-spin" id="loadMetadataSpinner" style="font-size: 24px; display:none;"></i></label>
-              <input type="text" class="form-control" onblur="javascript: getMetadata(this.value);">
+              <input type="text" class="form-control" onblur="javascript: getMetadata(this.value); checkDuplicates(this.value);">
               <small id="eventUrlHelp" class="form-text text-muted">Enter the URL of the event homepage, we'll try to extract some information from there for you. No worries, you can still tweak it!</small>
+            </div>
+
+            <div class="alert alert-warning" id="possibleDuplicatesWarning" style="display: none;" role="alert">
+                It looks like this CFP might already be added! Please check out these CFPs with a similar event link before adding this CFP to our system. Result(s): <ul class="list-inline" id="duplicatesResult"></ul>
             </div>
 
             <div class="alert alert-warning" id="metadataError" style="display:none;" role="alert">
@@ -192,6 +196,35 @@
                     editEventData();
 
                     cfpToSubmit.eventUrl = url;
+                }
+            });
+        }
+
+        function checkDuplicates(url) {
+            $('#possibleDuplicatesWarning').hide();
+        
+            $.ajax({
+                type: "POST",
+                url: "/cfp/checkduplicates",
+                data: {"url":url},
+                success: function(result) {
+                    // TODO do something with result
+                    if (result.isKnown)
+                    {
+                        var duplicatesText = '';
+        
+                        for (i = 0; i < result.similarCfps.length; i++)
+                        {
+                            duplicatesText = duplicatesText + '<li class="list-inline-item"><a href="https://cfp.exchange/cfp/details/' + result.similarCfps[i].id + '" target="_blank">' + result.similarCfps[i].eventName + '</a></li>';
+                        }
+        
+                        $('#duplicatesResult').html(duplicatesText);
+                        $('#possibleDuplicatesWarning').show();
+                    }
+                },
+                error: function() {
+                    // This functionality is nice, but not blocking if it fails
+                    $('#possibleDuplicatesWarning').hide();
                 }
             });
         }

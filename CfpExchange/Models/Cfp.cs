@@ -12,7 +12,7 @@ namespace CfpExchange.Models
 		public string EventLocationName { get; set; }
 		public double EventLocationLat { get; set; }
 		public double EventLocationLng { get; set; }
-		public string EventUrl { get; set; }
+		public string EventUrl { get; set; } = String.Empty;
 
 		private string _eventImage;
 		public string EventImage
@@ -34,7 +34,7 @@ namespace CfpExchange.Models
 		public DateTime CfpEndDate { get; set; }
 		public DateTime CfpAdded { get; set; }
 
-		public string CfpUrl { get; set; }
+		public string CfpUrl { get; set; } = String.Empty;
 
 		public int Views { get; set; }
 		public int ClicksToCfpUrl { get; set; }

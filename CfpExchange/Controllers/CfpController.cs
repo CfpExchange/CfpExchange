@@ -14,10 +14,10 @@ namespace CfpExchange.Controllers
 {
 	public class CfpController : Controller
 	{
-	    private const int MaximumPageToShow = 3000;
-	    private const int MaximumNumberOfItemsPerPage = 10;
+		private const int MaximumPageToShow = 3000;
+		private const int MaximumNumberOfItemsPerPage = 10;
 
-        private readonly CfpContext _cfpContext;
+		private readonly CfpContext _cfpContext;
 		private readonly IConfiguration _configuration;
 		private readonly IEmailSender _emailSender;
 
@@ -40,44 +40,71 @@ namespace CfpExchange.Controllers
 			if (!validatedUrl.StartsWith("http://", StringComparison.Ordinal)
 				&& !validatedUrl.StartsWith("https://", StringComparison.Ordinal))
 				validatedUrl = $"http://{validatedUrl}";
-			
+
 			var metadata = MetaScraper.GetMetaDataFromUrl(validatedUrl);
 
 			return Json(metadata);
 		}
 
-        [HttpGet]
-        public IActionResult Browse(int page = 1)
-        {
-            int pageToShow = page <= MaximumPageToShow ? page : MaximumPageToShow;
+		[HttpPost]
+		public IActionResult CheckDuplicates(string url)
+		{
+			if (string.IsNullOrWhiteSpace(url))
+				return NotFound();
 
-            var allActiveCfps = _cfpContext.Cfps
-		        .Where(cfp => cfp.CfpEndDate > DateTime.UtcNow)
-		        .OrderBy(cfp => cfp.CfpEndDate)
-                .Skip((pageToShow - 1) * MaximumNumberOfItemsPerPage)
-		        .Take(MaximumNumberOfItemsPerPage)
-		        .ToList();
+			var validatedUrl = url.ToLower();
 
-	        return View(new BrowseResponseViewModel(allActiveCfps, pageToShow));
-        }
+			if (!validatedUrl.StartsWith("http://", StringComparison.Ordinal)
+				&& !validatedUrl.StartsWith("https://", StringComparison.Ordinal))
+				validatedUrl = $"http://{validatedUrl}";
 
-	    [HttpGet]
-	    public IActionResult Newest(int page = 1)
-	    {
-	        int pageToShow = page <= MaximumPageToShow ? page : MaximumPageToShow;
+			Uri.TryCreate(validatedUrl, UriKind.Absolute, out var parsedUri);
 
-            var allActiveCfps = _cfpContext.Cfps
-	            .Where(cfp => cfp.CfpEndDate > DateTime.UtcNow)
-                .OrderByDescending(cfp => cfp.CfpAdded.Date)
-                .ThenBy(cfp => cfp.CfpEndDate.Date)
-	            .Skip((pageToShow - 1) * MaximumNumberOfItemsPerPage)
-	            .Take(MaximumNumberOfItemsPerPage)
-	            .ToList();
+			var alreadyInDatabase = _cfpContext.Cfps
+				.Where(cfp => cfp.CfpEndDate > DateTime.UtcNow)
+				.Where(c => c.EventUrl.ToLowerInvariant().Contains(parsedUri.Host) || c.CfpUrl.ToLowerInvariant().Contains(parsedUri.Host));
 
-	        return View(new NewestResponseViewModel(allActiveCfps, pageToShow));
-	    }
+			var result = new
+			{
+				IsKnown = alreadyInDatabase.Any(),
+				SimilarCfps = alreadyInDatabase.ToArray()
+			};
 
-        [HttpGet]
+			return Json(result);
+		}
+
+		[HttpGet]
+		public IActionResult Browse(int page = 1)
+		{
+			int pageToShow = page <= MaximumPageToShow ? page : MaximumPageToShow;
+
+			var allActiveCfps = _cfpContext.Cfps
+				.Where(cfp => cfp.CfpEndDate > DateTime.UtcNow)
+				.OrderBy(cfp => cfp.CfpEndDate)
+				.Skip((pageToShow - 1) * MaximumNumberOfItemsPerPage)
+				.Take(MaximumNumberOfItemsPerPage)
+				.ToList();
+
+			return View(new BrowseResponseViewModel(allActiveCfps, pageToShow));
+		}
+
+		[HttpGet]
+		public IActionResult Newest(int page = 1)
+		{
+			int pageToShow = page <= MaximumPageToShow ? page : MaximumPageToShow;
+
+			var allActiveCfps = _cfpContext.Cfps
+				.Where(cfp => cfp.CfpEndDate > DateTime.UtcNow)
+				.OrderByDescending(cfp => cfp.CfpAdded.Date)
+				.ThenBy(cfp => cfp.CfpEndDate.Date)
+				.Skip((pageToShow - 1) * MaximumNumberOfItemsPerPage)
+				.Take(MaximumNumberOfItemsPerPage)
+				.ToList();
+
+			return View(new NewestResponseViewModel(allActiveCfps, pageToShow));
+		}
+
+		[HttpGet]
 		public IActionResult Submit()
 		{
 			return View();
@@ -153,7 +180,7 @@ namespace CfpExchange.Controllers
 		{
 			if (id == Guid.Empty)
 				return RedirectToAction("index", "home");
-			
+
 			var selectedCfp = _cfpContext.Cfps.SingleOrDefault(cfp => cfp.Id == id);
 
 			if (selectedCfp == null)
@@ -162,7 +189,7 @@ namespace CfpExchange.Controllers
 
 			selectedCfp.Views++;
 			_cfpContext.SaveChanges();
-			 
+
 			return View(selectedCfp);
 		}
 
@@ -172,10 +199,10 @@ namespace CfpExchange.Controllers
 			{
 				var bodyText = $"An issue was reported for CFP: https://cfp.exchange/cfp/details/{issue.CfpId}"
 					+ Environment.NewLine + $"Issue: {issue.Description}";
-				
+
 				await _emailSender.SendEmailAsync(_configuration["AdminEmailaddress"],
 					$"{issue.Name} <{issue.EmailAddress}>", "Issue with CFP", bodyText);
-				
+
 				return Ok();
 			}
 
