@@ -31,6 +31,8 @@ namespace CfpExchange.Data
 					EventLocationName = "Antwerp, Belgium",
 					EventDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
 					CfpEndDate = DateTime.Now.AddDays(100),
+					CfpUrl = "www.example.com",
+					EventUrl = "https://www.techorama.be",
 					EventImage = "https://techorama.nl/wp-content/uploads/sites/2/2017/10/TVrobot@4x.svg"
 				});
 
