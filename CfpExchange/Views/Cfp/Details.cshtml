@@ -3,6 +3,7 @@
     ViewData["Title"] = @Model.EventName + "CFP Details";
 
     var cfpUrl = string.IsNullOrWhiteSpace(Model.CfpUrl) ? Model.EventUrl : Model.CfpUrl;
+    cfpUrl = Url.Action("OutgoingCfpLink", "Cfp", new { id = Model.Id, url = cfpUrl });
 }
 <!-- CFP details-->
 <div class="recipe-detail">
@@ -13,7 +14,7 @@
                     <div class="addthis_inline_share_toolbox"></div>
                     <small id="shareButtons" class="form-text text-muted">Share this CFP</small>
                 </div>
-                <a href="@cfpUrl" class="btn btn-lg float-right" style="background-color: #DD3326;color: white;">Go to CFP <i class="fa fa-external-link"></i></a>
+                <a href="@cfpUrl" target="_blank" class="btn btn-lg float-right" style="background-color: #DD3326;color: white;">Go to CFP <i class="fa fa-external-link"></i></a>
             </div>
         </div>
         <div class="row justify-content-center">
@@ -88,6 +89,12 @@
                     <p>Viewed:</p>
                     <p>
                         <strong>@Model.Views times</strong>
+                    </p>
+                </div>
+                <div>
+                    <p>CFP clicked:</p>
+                    <p>
+                        <strong>@Model.ClicksToCfpUrl times</strong>
                     </p>
                 </div>
             </div>

@@ -228,6 +228,24 @@ namespace CfpExchange.Controllers
 			return BadRequest();
 		}
 
+		[HttpGet]
+		public IActionResult OutgoingCfpLink(Guid id, string url)
+		{
+			try
+			{
+				var linkedCfp = _cfpContext.Cfps.Single(cfp => cfp.Id == id);
+				linkedCfp.ClicksToCfpUrl++;
+
+				var foo = _cfpContext.SaveChanges();
+			}
+			catch
+			{
+				// Intentionally left blank, should be a show-stopper
+			}
+
+			return Redirect(url);
+		}
+
 		private string ValidateImageUri(string eventImageUrl)
 		{
 			if (eventImageUrl == Constants.NoEventImageUrl)
