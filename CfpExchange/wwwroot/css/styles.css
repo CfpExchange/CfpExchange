@@ -142,6 +142,7 @@ body {
   border: 1px solid #dedede;
   background-color: #fff;
   box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);
+  height: 95%;
 }
 .box.grid.recipes .by {
   padding: 10px 15px;
@@ -165,6 +166,8 @@ body {
 }
 .box.grid.recipes img {
   width: 100%;
+  max-height: 150px;
+  object-fit: cover;
   margin-bottom: 30px;
 }
 .box.grid.recipes .tag {
