@@ -7,27 +7,30 @@
 <!-- CFP details-->
 <div class="recipe-detail">
     <div class="container">
-        <div class="row" style="margin-bottom:15px;">
+        <div class="row" style="margin-bottom: 15px;">
             <div class="col-lg-12">
                 <div class="float-left">
                     <div class="addthis_inline_share_toolbox"></div>
                     <small id="shareButtons" class="form-text text-muted">Share this CFP</small>
                 </div>
-                <a href="@cfpUrl" class="btn btn-lg float-right" style="background-color:#DD3326; color:white;">Go to CFP <i class="fa fa-external-link"></i></a>
+                <a href="@cfpUrl" class="btn btn-lg float-right" style="background-color: #DD3326;color: white;">Go to CFP <i class="fa fa-external-link"></i></a>
             </div>
         </div>
         <div class="row justify-content-center">
             <div class="col-lg-12 text-center">
                 <h4>@Model.EventName</h4>
                 <h1>CFP Closes: @Model.CfpEndDate.ToString("MMM dd, yyyy")</h1>
-                @*<div class="by"><i class="fa fa-user" aria-hidden="true"></i> @Model.SubmittedByName</div>*@
+                @if (!string.IsNullOrWhiteSpace(Model.SubmittedByName))
+                {
+                    <div class="by"><i class="fa fa-user" aria-hidden="true"></i> @Model.SubmittedByName</div>
+                }
             </div>
             <div class="col-lg-8 text-center">
-                <img src="@Model.EventImage" class="img-fluid" style="max-width: 100%;max-height:300px;object-fit:cover;" alt="Event image">
+                <img src="@Model.EventImage" class="img-fluid" style="max-width: 100%; max-height: 300px;object-fit: cover;" alt="Event image">
                 <div class="info">
                     <div class="row">
                         <div class="col-lg-4 col-sm-4">
-                            <p>Location:</p>
+                            <p>Event Location:</p>
                             <p>
                                 <strong><i class="fa fa-map-marker" aria-hidden="true"></i> <a href="http://www.google.com/maps/place/@Model.EventLocationLat,@Model.EventLocationLng" target="_blank">@Model.EventLocationName</a></strong>
                             </p>
@@ -37,12 +40,12 @@
                             <p>
                                 <strong>
                                     @if (@Model.EventStartDate != default(DateTime) && @Model.EventEndDate != default(DateTime))
-                                    {
-                                        @($"<i class=\"fa fa-clock-o\" aria-hidden=\"true\"></i> {Model.EventStartDate.ToShortDateString()} - {@Model.EventEndDate.ToShortDateString()}");
-                                    }
+                        {
+                            @Html.Raw($"<i class=\"fa fa-clock-o\" aria-hidden=\"true\"></i> {Model.EventStartDate.ToShortDateString()} - {@Model.EventEndDate.ToShortDateString()}");
+                        }
                                     else if (@Model.EventStartDate == @Model.EventEndDate && @Model.EventStartDate != default(DateTime) && @Model.EventEndDate != default(DateTime))
                                     {
-                                        @($"<i class=\"fa fa-clock-o\" aria-hidden=\"true\"></i> {Model.EventStartDate.ToShortDateString()}");
+                                        @Html.Raw($"<i class=\"fa fa-clock-o\" aria-hidden=\"true\"></i> {Model.EventStartDate.ToShortDateString()}");
                                     }
                                     else
                                     {
@@ -59,9 +62,9 @@
                         </p>
                     </div>
                     <div class="col-lg-4 col-sm-4">
-                        <p>Added:</p>
+                        <p>Provides T&amp;E:</p>
                         <p>
-                            <strong><i class="fa fa-clock-o" aria-hidden="true"></i> @Model.CfpAdded.ToShortDateString()</strong>
+                            <strong>@Model.ProvidedExpenses</strong>
                         </p>
                     </div>
                 </div>
@@ -73,15 +76,31 @@
                     <a href="#">Development</a>
                     <a href="#">Azure</a>*@
             </div>
+            <div class="nutrition-facts clearfix">
+            <h3>Good to know</h3>
+                <div>
+                    <p>CFP added:</p>
+                    <p>
+                        <strong>@Model.CfpAdded.ToShortDateString()</strong>
+                    </p>
+                </div>
+                <div>
+                    <p>Viewed:</p>
+                    <p>
+                        <strong>@Model.Views times</strong>
+                    </p>
+                </div>
+            </div>
+                
             <div class="blog-comment">
             <hr>
 
-            <div class="alert alert-success" role="alert" id="issue-success" style="display:none;">
+            <div class="alert alert-success" role="alert" id="issue-success" style="display: none;">
                 Your issue was sent succesfully! If needed, we will get back to you shortly and/or correct the issue.<br />
                 Thank you for your attention to detail!
             </div>
 
-            <div class="alert alert-danger" role="alert" id="issue-error" style="display:none;">
+            <div class="alert alert-danger" role="alert" id="issue-error" style="display: none;">
                 There was an error sending your issue. Please check all the fields carefully and try again.
             </div>
                 
@@ -107,7 +126,8 @@
                   </div>
                 </div>
                 <p class="form-submit">
-                    <i class="fa fa-spinner fa-spin" id="sendIssueSpinner" style="font-size: 24px; display:none;"></i><input class="btn btn-submit btn-block" name="submit" type="submit" id="submit" value="Send issue" onclick="javascript:ReportIssue();">
+                    <i class="fa fa-spinner fa-spin" id="sendIssueSpinner" style="font-size: 24px;display: none;"></i>
+                    <input class="btn btn-submit btn-block" name="submit" type="submit" id="submit" value="Send issue" onclick="javascript:ReportIssue();">
                 </p>
             </div>
           </div>

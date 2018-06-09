@@ -7,6 +7,7 @@ using CfpExchange.Models;
 using CfpExchange.Services;
 using CfpExchange.ViewModels;
 using LinqToTwitter;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
@@ -20,13 +21,15 @@ namespace CfpExchange.Controllers
 		private readonly CfpContext _cfpContext;
 		private readonly IConfiguration _configuration;
 		private readonly IEmailSender _emailSender;
+		private readonly IHostingEnvironment _hostingEnvironment;
 
 		public CfpController(CfpContext cfpContext, IConfiguration configuration,
-			IEmailSender emailSender)
+			IEmailSender emailSender, IHostingEnvironment env)
 		{
 			_cfpContext = cfpContext;
 			_configuration = configuration;
 			_emailSender = emailSender;
+			_hostingEnvironment = env;
 		}
 
 		[HttpPost]
@@ -42,6 +45,9 @@ namespace CfpExchange.Controllers
 				validatedUrl = $"http://{validatedUrl}";
 
 			var metadata = MetaScraper.GetMetaDataFromUrl(validatedUrl);
+
+			// Double check image URL
+			metadata.ImageUrl = ValidateImageUri(metadata.ImageUrl);
 
 			return Json(metadata);
 		}
@@ -129,13 +135,18 @@ namespace CfpExchange.Controllers
 					Id = cfpToAddId,
 					EventName = submittedCfp.EventTitle,
 					EventUrl = submittedCfp.EventUrl,
-					EventImage = submittedCfp.EventImageUrl,
+					EventImage = ValidateImageUri(submittedCfp.EventImageUrl),
 					EventDescription = submittedCfp.EventDescription,
 					EventLocationName = submittedCfp.LocationName,
 					EventLocationLat = submittedCfp.LocationLat,
 					EventLocationLng = submittedCfp.LocationLng,
 					CfpEndDate = submittedCfp.CfpEndDate,
-					CfpAdded = DateTime.Now
+					CfpAdded = DateTime.Now,
+					CfpUrl = submittedCfp.CfpUrl,
+					EventStartDate = submittedCfp.EventStartDate ?? default(DateTime),
+					EventEndDate = submittedCfp.EventEndDate ?? default(DateTime),
+					ProvidedExpenses = submittedCfp.ProvidedExpenses,
+					SubmittedByName = submittedCfp.SubmittedByName
 				};
 
 				// Save CFP
@@ -162,9 +173,12 @@ namespace CfpExchange.Controllers
 
 					var tweetMessage = $"New CFP Added: {cfpToAdd.EventName} closes {cfpToAdd.CfpEndDate.ToLongDateString()} #cfpexchange {cfpToAdd.EventUrl}";
 
-					// TODO substringing is not the best thing, but does the trick for now
-					await ctx.TweetAsync(tweetMessage.Length > 280 ? tweetMessage.Substring(0, 280) : tweetMessage,
-						(decimal)cfpToAdd.EventLocationLat, (decimal)cfpToAdd.EventLocationLng);
+					if (_hostingEnvironment.IsProduction())
+					{
+						// TODO substringing is not the best thing, but does the trick for now
+						await ctx.TweetAsync(tweetMessage.Length > 280 ? tweetMessage.Substring(0, 280) : tweetMessage,
+							(decimal)cfpToAdd.EventLocationLat, (decimal)cfpToAdd.EventLocationLng);
+					}
 				}
 				catch
 				{
@@ -212,6 +226,19 @@ namespace CfpExchange.Controllers
 
 			// TODO: return invalid model
 			return BadRequest();
+		}
+
+		private string ValidateImageUri(string eventImageUrl)
+		{
+			if (eventImageUrl == Constants.NoEventImageUrl)
+				return eventImageUrl;
+			
+			string imageUri = Constants.NoEventImageUrl;
+
+			if (Uri.TryCreate(eventImageUrl, UriKind.Absolute, out var parsedUri))
+				imageUri = parsedUri.ToString();
+
+			return imageUri;
 		}
 	}
 }

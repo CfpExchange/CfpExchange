@@ -28,6 +28,7 @@
     <Folder Include="wwwroot\js\plugins\bootstrap-datepicker\" />
     <Folder Include="wwwroot\css\plugins\" />
     <Folder Include="wwwroot\css\plugins\bootstrap-datepicker\" />
+    <Folder Include="Enums\" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="appsettings.json">

@@ -36,7 +36,7 @@
             
             <div class="form-group" id="eventUrlPreview" style="display:none;">
                 <a id="eventUrl" class="fragment" href="#" target="_blank">
-                    <img src ="/images/noimage.svg" style="max-width: 116px; max-height: 116px;" alt="Event image"/> 
+                    <img src ="@CfpExchange.Helpers.Constants.NoEventImageUrl" style="max-width: 116px; max-height: 116px;" alt="Event image"/> 
                     <h3></h3>
                     <p class="text">
                         
@@ -69,9 +69,15 @@
                 <input class="form-control" id="eventLocation" type="text">
                 <small id="eventLocationHelp" class="form-text text-muted">Where does the event take place?</small>
             </div>
-
+              
             <h1>Nice to have</h1>
             <p>By providing this information you will help other speakers to find out more about the event, but is not absolutely necessary</p>
+
+            <div class="form-group">
+                <label>Your name</label>
+                <input class="form-control" id="submitterName" type="text">
+                <small id="submittedNameHelp" class="form-text text-muted">If you want the credits, enter your name</small>
+            </div>
 
             <div class="form-group">
               <label>CFP url</label>
@@ -94,15 +100,16 @@
 
             <div class="form-group">
                 <label>Provides Travel &amp; Expenses</label>
-                <select class="js-search-category form-control" name="eventTandE" data-placeholder="Choose option">
-                    <option value="1">Unknown</option>
+                <select class="js-search-category form-control" name="eventTandE" id="eventTandE" data-placeholder="Choose option">
+                    <option value="0">Unknown</option>
+                    <option value="1">None</option>
                     <option value="2">Travel &amp; Expenses</option>
                     <option value="3">Only travel</option>
                     <option value="4">Only expenses</option>
 
                   </select>
             </div>
-
+              
             <button type="submit" class="btn btn-submit" onclick="javascript:submitCfp();">Submit CFP</button>
           </div>
         </div>
@@ -124,7 +131,12 @@
         cfpToSubmit.locationLat = null;
         cfpToSubmit.locationLng = null;
         cfpToSubmit.cfpEndDate = null;
-    
+        cfpToSubmit.eventStartDate = null;
+        cfpToSubmit.eventEndDate = null;
+        cfpToSubmit.cfpUrl = null;
+        cfpToSubmit.ProvidedExpenses = null;
+        cfpToSubmit.submittedByName = null;
+
         function submitCfp()
         {
             // TODO validate
@@ -133,11 +145,13 @@
                 alert('Please search for a location and select a value from the dropdown');
                 return;
             }
-            
-            // TODO get all data when user did not follow form fields
+
             cfpToSubmit.eventTitle = $('#eventTitle').val();
             cfpToSubmit.eventDescription = $('#eventDescription').val();
-    
+            cfpToSubmit.cfpUrl = $('#eventCfpDirectUrl').val();
+            cfpToSubmit.ProvidedExpenses = $('#eventTandE').val();
+            cfpToSubmit.submittedByName = $('#submitterName').val();
+        
             $.ajax({
                 type: "POST",
                 url: "/cfp/submit",
@@ -242,12 +256,15 @@
                 startDate: '0d'
             }).on('changeDate', function(e) {
                 $('#eventEndDate').datepicker('setStartDate', e.date);
-            });;
+                cfpToSubmit.eventStartDate = e.date.toISOString();
+            });
 
             $('#eventEndDate').datepicker({
                 startView: 1,
                 startDate: '0d'
-            })
+            }).on('changeDate', function(e) {
+                cfpToSubmit.eventEndDate = e.date.toISOString();
+            });
 
             $('#eventCfpCloseDate').datepicker({
                 startView: 1,

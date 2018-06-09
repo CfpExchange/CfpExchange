@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using CfpExchange.Enums;
 
 namespace CfpExchange.ViewModels
 {
@@ -27,5 +28,20 @@ namespace CfpExchange.ViewModels
 		[Required]
 		[DataType(DataType.Date)]
 		public DateTime CfpEndDate { get; set; }
+
+		[DataType(DataType.Date)]
+		public DateTime? EventStartDate { get; set; } = default(DateTime);
+
+		[DataType(DataType.Date)]
+		public DateTime? EventEndDate { get; set; } = default(DateTime);
+
+		[DataType(DataType.Url)]
+		public string CfpUrl { get; set; }
+
+		[EnumDataType(typeof(Expenses))]
+		public Expenses ProvidedExpenses { get; set; }
+
+		[DataType(DataType.Text)]
+		public string SubmittedByName { get; set; }
 	}
 }

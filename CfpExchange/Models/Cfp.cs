@@ -1,5 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using CfpExchange.Enums;
+using CfpExchange.Helpers;
 
 namespace CfpExchange.Models
 {
@@ -19,7 +21,7 @@ namespace CfpExchange.Models
 		{
 			get
 			{
-				return string.IsNullOrWhiteSpace(_eventImage) ? "/images/noimage.svg" : _eventImage;
+				return string.IsNullOrWhiteSpace(_eventImage) ? Constants.NoEventImageUrl : _eventImage;
 			}
 
 			set
@@ -33,6 +35,7 @@ namespace CfpExchange.Models
 		public DateTime CfpStartDate { get; set; }
 		public DateTime CfpEndDate { get; set; }
 		public DateTime CfpAdded { get; set; }
+		public Expenses ProvidedExpenses { get; set; }
 
 		public string CfpUrl { get; set; } = String.Empty;
 
