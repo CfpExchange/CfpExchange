@@ -18,13 +18,6 @@
     <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <Content Remove="wwwroot\css\site.css" />
-    <Content Remove="wwwroot\css\plugins\bootstrap-toggle\bootstrap-toggle.min.css" />
-    <Content Remove="wwwroot\css\plugins\bootstrap-toggle\bootstrap2-toggle.min.css" />
-    <Content Remove="wwwroot\js\plugins\bootstrap-toggle\bootstrap-toggle.min.js" />
-    <Content Remove="wwwroot\js\plugins\bootstrap-toggle\bootstrap2-toggle.min.js" />
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="wwwroot\js\" />
     <Folder Include="wwwroot\images\" />
     <Folder Include="Data\" />
@@ -46,12 +39,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Data\DatabaseInitializer.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="wwwroot\css\plugins\bootstrap-toggle\bootstrap-toggle.min.css" />
-    <None Include="wwwroot\css\plugins\bootstrap-toggle\bootstrap2-toggle.min.css" />
-    <None Include="wwwroot\js\plugins\bootstrap-toggle\bootstrap-toggle.min.js" />
-    <None Include="wwwroot\js\plugins\bootstrap-toggle\bootstrap2-toggle.min.js" />
   </ItemGroup>
 </Project>
 
