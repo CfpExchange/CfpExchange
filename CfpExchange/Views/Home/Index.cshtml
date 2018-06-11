@@ -11,7 +11,7 @@
             @if (@Model.NewestCfp != null)
             {
                 <div class="col-lg-4">
-                    <h5><i class="fa fa-smile-o" aria-hidden="true"></i> @Html.ActionLink("Newest CFP", "Newest", "Cfp")</h5>
+                    <h5><i class="fa fa-smile-o" aria-hidden="true"></i> Newest CFP</h5>
                     <div class="box clearfix">
                         <a href="@(Url.Action("details", "cfp", new { id = Model.NewestCfp.Id }))">
                             <img src="@Model.NewestCfp.EventImage" alt="Event image" style="object-fit:cover;">
