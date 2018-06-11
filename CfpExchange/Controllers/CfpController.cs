@@ -140,11 +140,11 @@ namespace CfpExchange.Controllers
 					EventLocationName = submittedCfp.LocationName,
 					EventLocationLat = submittedCfp.LocationLat,
 					EventLocationLng = submittedCfp.LocationLng,
-					CfpEndDate = submittedCfp.CfpEndDate,
+					CfpEndDate = submittedCfp.CfpEndDate.Date,
 					CfpAdded = DateTime.Now,
 					CfpUrl = submittedCfp.CfpUrl,
-					EventStartDate = submittedCfp.EventStartDate ?? default(DateTime),
-					EventEndDate = submittedCfp.EventEndDate ?? default(DateTime),
+					EventStartDate = submittedCfp.EventStartDate?.Date ?? default(DateTime),
+					EventEndDate = submittedCfp.EventEndDate?.Date ?? default(DateTime),
 					ProvidedExpenses = submittedCfp.ProvidedExpenses,
 					SubmittedByName = submittedCfp.SubmittedByName
 				};

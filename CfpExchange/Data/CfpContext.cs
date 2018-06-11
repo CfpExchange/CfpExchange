@@ -33,7 +33,10 @@ namespace CfpExchange.Data
 					CfpEndDate = DateTime.Now.AddDays(100),
 					CfpUrl = "www.example.com",
 					EventUrl = "https://www.techorama.be",
-					EventImage = "https://techorama.nl/wp-content/uploads/sites/2/2017/10/TVrobot@4x.svg"
+					EventImage = "https://techorama.nl/wp-content/uploads/sites/2/2017/10/TVrobot@4x.svg",
+					EventStartDate = DateTime.Now.AddDays(1),
+					EventEndDate = DateTime.Now.AddDays(2),
+					ProvidedExpenses = Enums.Expenses.Reimbursements
 				});
 
 				context.Cfps.Add(new Cfp
@@ -46,7 +49,10 @@ namespace CfpExchange.Data
 					EventLocationName = "Ede, The Netherlands",
 					EventDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
 					CfpEndDate = DateTime.Now.AddDays(10),
-					EventImage = "https://techorama.nl/wp-content/uploads/sites/2/2017/10/TVrobot@4x.svg"
+					EventImage = "https://techorama.nl/wp-content/uploads/sites/2/2017/10/TVrobot@4x.svg",
+					EventStartDate = DateTime.Now.AddDays(1),
+					EventEndDate = DateTime.Now.AddDays(1),
+					ProvidedExpenses = Enums.Expenses.None
 				});
 
 				context.Cfps.Add(new Cfp
@@ -96,7 +102,8 @@ namespace CfpExchange.Data
 					SubmittedByName = "Gerald",
 					EventLocationName = "Zeist, The Netherlands",
 					EventDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-					CfpEndDate = DateTime.Now.AddDays(7)
+					CfpEndDate = DateTime.Now.AddDays(7),
+					ProvidedExpenses = Enums.Expenses.Unknown
 				});
 
 				context.SaveChanges();

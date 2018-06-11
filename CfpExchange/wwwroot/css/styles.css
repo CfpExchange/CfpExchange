@@ -200,6 +200,7 @@ body {
   width: 100px;
   height: 100px;
   margin-left: 20px;
+  object-fit: cover !important;
 }
 .box.list.recipes h2 {
   font-size: 1.2rem;
@@ -443,7 +444,7 @@ body {
   margin-bottom: 0;
 }
 .recipe-detail .info p strong {
-  font-size: 1rem;
+  font-size: 0.95rem;
   color: #fff;
 }
 .recipe-detail .ingredient-direction {

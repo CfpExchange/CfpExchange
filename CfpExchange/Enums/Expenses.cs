@@ -4,8 +4,6 @@
 	{
 		Unknown,
 		None,
-		TravelAndExpenses,
-		Travel,
-		Expenses
+		Reimbursements
 	}
 }
