@@ -13,6 +13,9 @@
     <!-- COMMON TAGS -->
     <meta charset="utf-8">
     <title>CFP Exchange</title>
+
+    @if (!IsSectionDefined("SharingMetaTags"))
+    {
     <!-- Search Engine -->
     <meta name="description" content="CFP Exchange tries to gather current CFPs from events around the world by crowd-sourcing them from the community.">
     @*<meta name="image" content="aaa">*@
@@ -35,12 +38,14 @@
     <meta name="og:site_name" content="CFP Exchange">
     <meta name="og:locale" content="en_US">
     <meta name="og:type" content="website">
+    }
+    else
+    {
+        @RenderSection("SharingMetaTags")
+    }
 
     <title>@ViewData["Title"] - CFP Exchange</title>
 
-    <!--    <environment include="Development">-->
-    <!--    </environment>
-      <environment exclude="Development">-->
     <!---Font Icon-->
     <link href="/css/font-awesome.min.css" rel="stylesheet">
 
@@ -49,7 +54,7 @@
     <link href="/css/select2.min.css" rel="stylesheet">
     <link href="/css/styles.css" rel="stylesheet">
     @RenderSection("Styles", required: false)
-    <!--    </environment>-->
+
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-43277628-7"></script>
     <script>window.dataLayer = window.dataLayer || [];
@@ -78,47 +83,22 @@ gtag('config', 'UA-43277628-7');</script>
             <div class="collapse navbar-collapse justify-content-center" id="navbarNavDropdown">
                 <ul class="navbar-nav">
                     <li class="nav-item @(currentAction == "index" ? "active" : "")">
-                        <a class="nav-link" href="/">Home</a>
+                        <a class="nav-link" href="@Url.Action("", "home")">Home</a>
+                    </li>
+                    <li class="nav-item dropdown @(currentAction == "newest" || currentAction == "browse" ? "active" : "")">
+                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">CFPs
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="@Url.Action("newest", "cfp")">Newest</a>
+                            <a class="dropdown-item" href="@Url.Action("browse", "cfp")">Browse all</a>
+                        </div>
                     </li>
                     <li class="nav-item @(currentAction == "about" ? "active" : "")">
-                        <a class="nav-link" href="/home/about">About</a>
+                        <a class="nav-link" href="@Url.Action("about", "home")">About</a>
                     </li>
                     <li class="nav-item @(currentAction == "contact" ? "active" : "")">
-                        <a class="nav-link" href="/home/contact">Contact</a>
+                        <a class="nav-link" href="@Url.Action("contact", "home")">Contact</a>
                     </li>
-                    <!--<li class="nav-item dropdown active">
-                      <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-
-                          Demo
-
-                        </a>
-                      <div class="dropdown-menu">
-                        <a class="dropdown-item" href="homepage-1.html">Homepage-1</a>
-                        <a class="dropdown-item" href="homepage-2.html">Homepage-2</a>
-                      </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-
-                          Recipes
-
-                        </a>
-                      <div class="dropdown-menu">
-                        <a class="dropdown-item" href="browse-recipes.html">Browse Recipes</a>
-                        <a class="dropdown-item" href="recipe-detail.html">Recipe Detail</a>
-                      </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-
-                          Pages
-
-                        </a>
-                      <div class="dropdown-menu">
-                        <a class="dropdown-item" href="typography.html">Typography</a>
-                        <a class="dropdown-item" href="contact.html">Contact</a>
-                      </div>
-                    </li>-->
                     <li class="nav-item btn-submit-recipe">
                         <a class="nav-link" href="@(Url.Action("submit", "cfp"))"><i class="fa fa-paper-plane" aria-hidden="true"></i> Submit CFP</a>
                     </li>
@@ -148,10 +128,13 @@ gtag('config', 'UA-43277628-7');</script>
                     <h5>CFPs</h5>
                     <ul>
                         <li>
+                            <a href="@(Url.Action("newest", "cfp" ))">Newest CFPs</a>
+                        </li>
+                        <li>
                             <a href="@(Url.Action("browse", "cfp"))">Browse CFPs</a>
                         </li>
                         <li>
-                            <a href="@(Url.Action("submit", "cfp"))">Submit Recipe</a>
+                            <a href="@(Url.Action("submit", "cfp"))">Submit CFP</a>
                         </li>
                     </ul>
                 </div>

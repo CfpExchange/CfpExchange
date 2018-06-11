@@ -205,3 +205,29 @@
     }
     </script>
 }
+
+@section SharingMetaTags
+{
+    <!-- Search Engine -->
+    <meta name="description" content="@Model.EventName CFP, close date: @Model.CfpEndDate.ToString("MMM dd, yyyy")">
+    <meta name="image" content="@Model.EventImage">
+    <!-- Schema.org for Google -->
+    <meta itemprop="name" content="@Model.EventName on CFP Exchange">
+    <meta itemprop="description" content="@Model.EventDescription">
+    <meta itemprop="image" content="@Model.EventImage">
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="@Model.EventName on CFP Exchange">
+    <meta name="twitter:description" content="@Model.EventDescription">
+    <meta name="twitter:site" content="@@cfp_exchange">
+    <!-- Maximum dimension: 1024px x 512px; minimum dimension: 440px x 220px -->
+    <meta name="twitter:image:src" content="@Model.EventImage">
+    <!-- Open Graph general (Facebook, Pinterest & Google+) -->
+    <meta name="og:title" content="@Model.EventName on CFP Exchange">
+    <meta name="og:description" content="@Model.EventDescription">
+    <!-- Recommended dimension: 1200px x 630px; minimum dimension: 600px x 315px -->
+    <meta name="og:image" content="@Model.EventImage">
+    <meta name="og:site_name" content="CFP Exchange">
+    <meta name="og:locale" content="en_US">
+    <meta name="og:type" content="website">
+}
