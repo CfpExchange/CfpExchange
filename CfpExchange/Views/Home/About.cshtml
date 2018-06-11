@@ -3,18 +3,60 @@
 }
 
 <!-- Page-->
-  <div class="page contact">
+<div class="page contact">
     <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-lg-12 title text-center">
-          <h1>About</h1>
+        <div class="row justify-content-center">
+            <div class="col-lg-12 title text-center">
+                <h1>About</h1>
+            </div>
+            <div class="col-lg-8 content">
+                As a speaker I always struggle to find all the CFPs that are out there. When I get notified about an awesome event, it's usually too late and the CFP is already closed! 👎<br /><br />
+                In an attempt to overcome this I, <a href="https://gerald.verslu.is" target="_blank">Gerald Versluis</a>, have created this website! With this application I would like to provide you with a portal
+                that allows you to submit any CFP to any event, but maybe even more important: enable you to find open CFPs to awesome events! WHOA!<br /><br />
+                If you have reached this website right now, be prepared for some rough edges. I'm busy setting things up, most of the stuff should work but you can run into some unfinished features or bugs, don't let that stop you though! But in the meanwhile please don't hesitate to let me know what you think and reach out to me at <a href="mailto:gerald@verslu.is">gerald@verslu.is</a> or Twitter: <a href="https://twitter.com/jfversluis" target="_blank">@@jfversluis</a>.
+            </div>
         </div>
-        <div class="col-lg-8 content">
-          As a speaker I always struggle to find all the CFPs that are out there. When I get notified about an awesome event, it's usually too late and the CFP is already closed! 👎<br /><br />
-          In an attempt to overcome this I, <a href="https://gerald.verslu.is" target="_blank">Gerald Versluis</a>, have created this website! With this application I would like to provide you with a portal
-that allows you to submit any CFP to any event, but maybe even more important: enable you to find open CFPs to awesome events! WHOA!<br /><br />
-If you have reached this website right now, you're a bit too early. I'm busy setting things up. But in the meanwhile please don't hesitate to let me know what you think and reach out to me at <a href="mailto:gerald@verslu.is">gerald@verslu.is</a> or Twitter: <a href="https://twitter.com/jfversluis" target="_blank">@@jfversluis</a>.
+        <div class="row justify-content-center" style="margin-top: 20px;">
+            <div class="col-lg-12 title text-center">
+                <h2>Contributors</h2>
+            </div>
+            <div class="col-lg-8 content">
+                Of course, all of this could not be done without our wonderful contributors. Thank you! <br />
+                <br />
+                <i class="fa fa-spinner fa-spin" id="loadMetadataSpinner" style="font-size: 24px; display:none;"></i>
+                <div id="githubContributors" class="d-flex flex-wrap" style="display:none;">
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
+</div>
+@section Scripts
+{
+    <script type="text/javascript">
+        function getContributors() {
+            $('#loadMetadataSpinner').show();
+
+            $.ajax({
+                type: "GET",
+                url: "https://api.github.com/repos/jfversluis/cfpexchange/contributors",
+                success: function(result) {
+                    for (i = 0; i < result.length; i++) {
+                        $('#githubContributors').append('<div class="card" style="width: 12rem; margin:10px;"><img class="card-img-top" src="' + result[i].avatar_url + '" alt="' + result[i].login  + ' avatar"><div class="card-body"><h5 class="card-title">' + result[i].login  + '</h5><p class="card-text"></p><a href="' + result[i].html_url  + '" class="btn btn-primary"><i class="fa fa-github" aria-hidden="true"></i> profile</a></div></div>');
+                    }
+
+                    $('#githubContributors').show();
+                    $('#loadMetadataSpinner').hide();
+                },
+                error: function() {
+                    // TODO: Maybe show an error message or link to Github contributors page?
+                    $('#githubContributors').hide();
+                    $('#loadMetadataSpinner').hide();
+                }
+            });
+        }
+
+        $(document).ready(new function() {
+                    getContributors();
+        });
+   </script>
+}
