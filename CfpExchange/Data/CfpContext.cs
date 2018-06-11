@@ -36,7 +36,7 @@ namespace CfpExchange.Data
 					EventImage = "https://techorama.nl/wp-content/uploads/sites/2/2017/10/TVrobot@4x.svg",
 					EventStartDate = DateTime.Now.AddDays(1),
 					EventEndDate = DateTime.Now.AddDays(2),
-					ProvidedExpenses = Enums.Expenses.Reimbursements
+					ProvidedExpenses = Enums.Reimbursements.OffersTravelAssistance
 				});
 
 				context.Cfps.Add(new Cfp
@@ -52,7 +52,7 @@ namespace CfpExchange.Data
 					EventImage = "https://techorama.nl/wp-content/uploads/sites/2/2017/10/TVrobot@4x.svg",
 					EventStartDate = DateTime.Now.AddDays(1),
 					EventEndDate = DateTime.Now.AddDays(1),
-					ProvidedExpenses = Enums.Expenses.None
+					ProvidedExpenses = Enums.Reimbursements.None
 				});
 
 				context.Cfps.Add(new Cfp
@@ -78,7 +78,7 @@ namespace CfpExchange.Data
 					EventLocationLat = 51.5073509,
 					EventLocationLng = -0.127758299999982,
 					EventDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-					CfpEndDate = DateTime.Now.AddHours(2)
+					CfpEndDate = DateTime.Now.AddHours(-1)
 				});
 
 				context.Cfps.Add(new Cfp
@@ -103,7 +103,7 @@ namespace CfpExchange.Data
 					EventLocationName = "Zeist, The Netherlands",
 					EventDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
 					CfpEndDate = DateTime.Now.AddDays(7),
-					ProvidedExpenses = Enums.Expenses.Unknown
+					ProvidedExpenses = Enums.Reimbursements.Unknown
 				});
 
 				context.SaveChanges();

@@ -4,6 +4,8 @@
 
     var cfpUrl = string.IsNullOrWhiteSpace(Model.CfpUrl) ? Model.EventUrl : Model.CfpUrl;
     cfpUrl = Url.Action("OutgoingCfpLink", "Cfp", new { id = Model.Id, url = cfpUrl });
+
+    var cfpClosed = DateTime.UtcNow < Model.CfpEndDate;
 }
 <!-- CFP details-->
 <div class="recipe-detail">
@@ -14,13 +16,23 @@
                     <div class="addthis_inline_share_toolbox"></div>
                     <small id="shareButtons" class="form-text text-muted">Share this CFP</small>
                 </div>
-                <a href="@cfpUrl" target="_blank" class="btn btn-lg float-right" style="background-color: #DD3326;color: white;">Go to CFP <i class="fa fa-external-link"></i></a>
+                @if (!cfpClosed)
+                {
+                    <a href="@cfpUrl" target="_blank" class="btn btn-lg float-right" style="background-color: #DD3326;color: white;">Go to CFP <i class="fa fa-external-link"></i></a>
+                }
             </div>
         </div>
         <div class="row justify-content-center">
             <div class="col-lg-12 text-center">
                 <h4>@Model.EventName</h4>
-                <h1>CFP Closes: @Model.CfpEndDate.ToString("MMM dd, yyyy")</h1>
+                @if (!cfpClosed)
+                {
+                    <h1>CFP Closes: @Model.CfpEndDate.ToString("MMM dd, yyyy")</h1>
+                }
+                else
+                {
+                    <h1>Sorry, CFP closed on @Model.CfpEndDate.ToString("MMM dd, yyyy")</h1>
+                }
                 @if (!string.IsNullOrWhiteSpace(Model.SubmittedByName))
                 {
                     <div class="by"><i class="fa fa-user" aria-hidden="true"></i> @Model.SubmittedByName</div>
@@ -63,9 +75,12 @@
                         </p>
                     </div>
                     <div class="col-lg-4 col-sm-4">
-                        <p>Provides T&amp;E:</p>
+                        <p>Offers travel assistance:</p>
                         <p>
-                            <strong>@Model.ProvidedExpenses</strong>
+                            <strong>@if (Model.ProvidedExpenses == CfpExchange.Enums.Reimbursements.OffersTravelAssistance)
+                            { <text>Yes</text> }
+                            else
+                            { <text>No/Unknown</text> }</strong>
                         </p>
                     </div>
                 </div>

@@ -1,9 +1,9 @@
 ﻿namespace CfpExchange.Enums
 {
-	public enum Expenses
+	public enum Reimbursements
 	{
 		Unknown,
 		None,
-		Reimbursements
+		OffersTravelAssistance
 	}
 }

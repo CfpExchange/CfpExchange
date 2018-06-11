@@ -19,6 +19,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\css\site.css" />
+    <Content Remove="wwwroot\css\plugins\bootstrap-toggle\bootstrap-toggle.min.css" />
+    <Content Remove="wwwroot\css\plugins\bootstrap-toggle\bootstrap2-toggle.min.css" />
+    <Content Remove="wwwroot\js\plugins\bootstrap-toggle\bootstrap-toggle.min.js" />
+    <Content Remove="wwwroot\js\plugins\bootstrap-toggle\bootstrap2-toggle.min.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="wwwroot\js\" />
@@ -29,6 +33,8 @@
     <Folder Include="wwwroot\css\plugins\" />
     <Folder Include="wwwroot\css\plugins\bootstrap-datepicker\" />
     <Folder Include="Enums\" />
+    <Folder Include="wwwroot\css\plugins\bootstrap-toggle\" />
+    <Folder Include="wwwroot\js\plugins\bootstrap-toggle\" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="appsettings.json">
@@ -40,6 +46,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Data\DatabaseInitializer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="wwwroot\css\plugins\bootstrap-toggle\bootstrap-toggle.min.css" />
+    <None Include="wwwroot\css\plugins\bootstrap-toggle\bootstrap2-toggle.min.css" />
+    <None Include="wwwroot\js\plugins\bootstrap-toggle\bootstrap-toggle.min.js" />
+    <None Include="wwwroot\js\plugins\bootstrap-toggle\bootstrap2-toggle.min.js" />
   </ItemGroup>
 </Project>
 

@@ -35,7 +35,7 @@ namespace CfpExchange.Models
 		public DateTime CfpStartDate { get; set; }
 		public DateTime CfpEndDate { get; set; }
 		public DateTime CfpAdded { get; set; }
-		public Expenses ProvidedExpenses { get; set; }
+		public Reimbursements ProvidedExpenses { get; set; }
 
 		public string CfpUrl { get; set; } = String.Empty;
 

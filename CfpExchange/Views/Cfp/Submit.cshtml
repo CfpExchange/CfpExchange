@@ -99,13 +99,15 @@
             </div>
 
             <div class="form-group">
-                <label>Provides Travel &amp; Expenses</label>
-                <select class="js-search-category form-control" name="eventTandE" id="eventTandE" data-placeholder="Choose option">
+                <label>Offers Travel Assistance</label>
+                <input id="offersTravelAssistance" type="checkbox" data-toggle="toggle" value="2" data-on="Yes" data-off="No" data-onstyle="success" data-offstyle="danger"/>
+                @*<select class="js-search-category form-control" name="eventTandE" id="eventTandE" data-placeholder="Choose option">
                     <option value="0">Unknown</option>
                     <option value="1">None</option>
-                    <option value="2">Reimbursements</option>
-
-                  </select>
+                    <option value="2">Travel &amp; reimbursements</option>
+                    <option value="3">Only travel</option>
+                    <option value="4">Only reimbursements</option>
+                  </select>*@
             </div>
               
             <button type="submit" class="btn btn-submit" onclick="javascript:submitCfp();">Submit CFP</button>
@@ -118,6 +120,7 @@
 @section Scripts {
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgVGJaXfyAu25OCrj3xu7RI0GQvzQY4p4&libraries=places&language=en"></script>
     <script src="/js/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+    <script src="/js/plugins/bootstrap-toggle/bootstrap-toggle.min.js"></script>
 
     <script type="text/javascript">
         var cfpToSubmit = {};
@@ -132,7 +135,7 @@
         cfpToSubmit.eventStartDate = null;
         cfpToSubmit.eventEndDate = null;
         cfpToSubmit.cfpUrl = null;
-        cfpToSubmit.ProvidedExpenses = null;
+        cfpToSubmit.providesReimbursements = null;
         cfpToSubmit.submittedByName = null;
 
         function submitCfp()
@@ -147,7 +150,9 @@
             cfpToSubmit.eventTitle = $('#eventTitle').val();
             cfpToSubmit.eventDescription = $('#eventDescription').val();
             cfpToSubmit.cfpUrl = $('#eventCfpDirectUrl').val();
-            cfpToSubmit.ProvidedExpenses = $('#eventTandE').val();
+            cfpToSubmit.providesReimbursements = $('#offersTravelAssistance').is(":checked")
+                ? $('#offersTravelAssistance').val() : "0";
+        
             cfpToSubmit.submittedByName = $('#submitterName').val();
         
             $.ajax({
@@ -251,7 +256,8 @@
         $(document).ready(function() {
             $('#eventStartDate').datepicker({
                 startView: 1,
-                startDate: '0d'
+                startDate: '0d',
+                autoclose: true
             }).on('changeDate', function(e) {
                 $('#eventEndDate').datepicker('setStartDate', e.date);
                 cfpToSubmit.eventStartDate = e.date.toISOString();
@@ -259,14 +265,16 @@
 
             $('#eventEndDate').datepicker({
                 startView: 1,
-                startDate: '0d'
+                startDate: '0d',
+                autoclose: true
             }).on('changeDate', function(e) {
                 cfpToSubmit.eventEndDate = e.date.toISOString();
             });
 
             $('#eventCfpCloseDate').datepicker({
                 startView: 1,
-                startDate: '0d'
+                startDate: '0d',
+                autoclose: true
             }).on('changeDate', function(e) {
                 cfpToSubmit.cfpEndDate = e.date.toISOString();
             });
@@ -293,4 +301,5 @@
 
 @section Styles {
     <link href="/css/plugins/bootstrap-datepicker/bootstrap-datepicker3.min.css" rel="stylesheet">
+    <link href="/css/plugins/bootstrap-toggle/bootstrap-toggle.min.css" rel="stylesheet">
 }
