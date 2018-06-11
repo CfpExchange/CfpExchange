@@ -5,7 +5,7 @@
     var cfpUrl = string.IsNullOrWhiteSpace(Model.CfpUrl) ? Model.EventUrl : Model.CfpUrl;
     cfpUrl = Url.Action("OutgoingCfpLink", "Cfp", new { id = Model.Id, url = cfpUrl });
 
-    var cfpClosed = DateTime.UtcNow < Model.CfpEndDate;
+    var cfpClosed = DateTime.UtcNow > Model.CfpEndDate;
 }
 <!-- CFP details-->
 <div class="recipe-detail">
