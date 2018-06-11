@@ -43,9 +43,11 @@ namespace CfpExchange.Controllers
 				indexViewModel.RandomCfp = _cfpContext.Cfps.OrderBy(o => Guid.NewGuid()).Take(1).SingleOrDefault();
 
 				// TODO set real CFP of the day
-				indexViewModel.CfpOfTheDay = _cfpContext.Cfps.FirstOrDefault();
+				//indexViewModel.CfpOfTheDay = _cfpContext.Cfps.FirstOrDefault();
 
-				indexViewModel.CfpList = _cfpContext.Cfps.OrderBy(cfp => cfp.CfpEndDate).Take(10).ToArray();
+				indexViewModel.CfpList = _cfpContext.Cfps
+					.Where(cfp => cfp.CfpEndDate > DateTime.UtcNow)
+					.OrderBy(cfp => cfp.CfpEndDate).Take(9).ToArray();
 			}
 
 			return View(indexViewModel);

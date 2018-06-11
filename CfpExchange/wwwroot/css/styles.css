@@ -101,6 +101,7 @@ body {
   padding: 25px;
   background-color: #fff;
   box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);
+  height: 80%;
 }
 .top .box h3 {
   font-size: 1.2rem;
