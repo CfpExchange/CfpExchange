@@ -21,7 +21,7 @@
                 <h2>Contributors</h2>
             </div>
             <div class="col-lg-8 content">
-                Of course, all of this could not be done without our wonderful contributors. Thank you! <br />
+                Of course, all of this could not be done without our wonderful contributors. Thank you! 👏<br />
                 <br />
                 <i class="fa fa-spinner fa-spin" id="loadMetadataSpinner" style="font-size: 24px; display:none;"></i>
                 <div id="githubContributors" class="d-flex flex-wrap" style="display:none;">
@@ -41,7 +41,7 @@
                 url: "https://api.github.com/repos/jfversluis/cfpexchange/contributors",
                 success: function(result) {
                     for (i = 0; i < result.length; i++) {
-                        $('#githubContributors').append('<div class="card" style="width: 12rem; margin:10px;"><img class="card-img-top" src="' + result[i].avatar_url + '" alt="' + result[i].login  + ' avatar"><div class="card-body"><h5 class="card-title">' + result[i].login  + '</h5><p class="card-text"></p><a href="' + result[i].html_url  + '" class="btn btn-primary"><i class="fa fa-github" aria-hidden="true"></i> profile</a></div></div>');
+                        $('#githubContributors').append('<div class="card" style="width: 12rem; margin:10px;"><img class="card-img-top" src="' + result[i].avatar_url + '" alt="' + result[i].login  + ' avatar"><div class="card-body"><h5 class="card-title">' + result[i].login  + '</h5><p class="card-text"></p><a href="' + result[i].html_url  + '" target="_blank" class="btn btn-primary"><i class="fa fa-github" aria-hidden="true"></i> profile</a></div></div>');
                     }
 
                     $('#githubContributors').show();
