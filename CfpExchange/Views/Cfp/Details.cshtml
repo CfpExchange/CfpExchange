@@ -45,7 +45,14 @@
                         <div class="col-lg-3 col-sm-3">
                             <p><i class="fa fa-map-marker" aria-hidden="true"></i> Event Location:</p>
                             <p>
+                                @if (Model.EventLocationLat != 0 && Model.EventLocationLng != 0)
+                                {
                                 <strong><a href="http://www.google.com/maps/place/@Model.EventLocationLat,@Model.EventLocationLng" target="_blank">@Model.EventLocationName</a></strong>
+                                }
+                                else
+                                {
+                                <strong>@Model.EventLocationName</strong>
+                                }
                             </p>
                         </div>
                         <div class="col-lg-3 col-sm-3">
@@ -118,7 +125,7 @@
             </div>
                 
             <div class="blog-comment">
-            <hr>
+            @*<hr>*@
 
             <div class="alert alert-success" role="alert" id="issue-success" style="display: none;">
                 Your issue was sent succesfully! If needed, we will get back to you shortly and/or correct the issue.<br />
