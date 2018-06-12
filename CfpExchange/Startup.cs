@@ -2,7 +2,6 @@ using System;
 using CfpExchange.Data;
 using CfpExchange.Models;
 using CfpExchange.Services;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -10,16 +9,21 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace CfpExchange
 {
 	public class Startup
 	{
 		private IHostingEnvironment _environment;
-   
-		public Startup(IHostingEnvironment env)
+		private readonly ILogger _logger;
+
+		public IConfiguration Configuration { get; }
+
+		public Startup(IHostingEnvironment env, ILoggerFactory loggerFactory)
 		{
 			_environment = env;
+			_logger = loggerFactory.CreateLogger<Startup>();
 
 			Configuration = new ConfigurationBuilder()
 				.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
@@ -28,8 +32,6 @@ namespace CfpExchange
 				.AddUserSecrets<Startup>()
 				.Build();
 		}
-
-		public IConfiguration Configuration { get; }
 
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
@@ -68,6 +70,19 @@ namespace CfpExchange
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IHostingEnvironment env)
 		{
+			try
+			{
+				using (var serviceScope = app.ApplicationServices
+					.GetRequiredService<IServiceScopeFactory>().CreateScope())
+				{
+					serviceScope.ServiceProvider.GetService<CfpContext>().Database.Migrate();
+				}
+			}
+			catch (Exception ex)
+			{
+				_logger.LogError(ex, "Failed to migrate or seed database");
+			}
+
 			if (env.IsDevelopment())
 			{
 				app.UseDeveloperExceptionPage();

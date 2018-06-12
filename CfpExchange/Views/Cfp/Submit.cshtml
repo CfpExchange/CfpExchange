@@ -36,11 +36,9 @@
             
             <div class="form-group" id="eventUrlPreview" style="display:none;">
                 <a id="eventUrl" class="fragment" href="#" target="_blank">
-                    <img src ="@CfpExchange.Helpers.Constants.NoEventImageUrl" style="max-width: 116px; max-height: 116px;" alt="Event image"/> 
+                    <img src ="@CfpExchange.Helpers.Constants.NoEventImageUrl" style="max-width: 116px; max-height: 116px;overflow:hidden;" alt="Event image"/> 
                     <h3></h3>
-                    <p class="text">
-                        
-                    </p>
+                    <p class="text"></p>
                 </a>
                 <small id="eventUrlPreviewHelp" class="form-text text-muted"><a href="javascript:editEventData();">Edit this data manually</a></small>
             </div>
@@ -99,15 +97,21 @@
             </div>
 
             <div class="form-group">
-                <label>Offers Travel Assistance</label>
-                <input id="offersTravelAssistance" type="checkbox" data-toggle="toggle" value="2" data-on="Yes" data-off="No" data-onstyle="success" data-offstyle="danger"/>
-                @*<select class="js-search-category form-control" name="eventTandE" id="eventTandE" data-placeholder="Choose option">
+                <label>Offers Accommodation</label>
+                <select class="js-search-category form-control" name="accommodation" id="accommodation" data-placeholder="Choose option">
                     <option value="0">Unknown</option>
-                    <option value="1">None</option>
-                    <option value="2">Travel &amp; reimbursements</option>
-                    <option value="3">Only travel</option>
-                    <option value="4">Only reimbursements</option>
-                  </select>*@
+                    <option value="1">No</option>
+                    <option value="2">Yes</option>
+                  </select>
+            </div>
+
+            <div class="form-group">
+                <label>Offers Travel Assistance</label>
+                <select class="js-search-category form-control" name="travelassistance" id="travelassistance" data-placeholder="Choose option">
+                    <option value="0">Unknown</option>
+                    <option value="1">No</option>
+                    <option value="2">Yes</option>
+                  </select>
             </div>
               
             <button type="submit" class="btn btn-submit" onclick="javascript:submitCfp();">Submit CFP</button>
@@ -135,7 +139,8 @@
         cfpToSubmit.eventStartDate = null;
         cfpToSubmit.eventEndDate = null;
         cfpToSubmit.cfpUrl = null;
-        cfpToSubmit.providesReimbursements = null;
+        cfpToSubmit.providesAccommodation = null;
+        cfpToSubmit.providesTravelAssistance = null;
         cfpToSubmit.submittedByName = null;
 
         function submitCfp()
@@ -150,8 +155,8 @@
             cfpToSubmit.eventTitle = $('#eventTitle').val();
             cfpToSubmit.eventDescription = $('#eventDescription').val();
             cfpToSubmit.cfpUrl = $('#eventCfpDirectUrl').val();
-            cfpToSubmit.providesReimbursements = $('#offersTravelAssistance').is(":checked")
-                ? $('#offersTravelAssistance').val() : "0";
+            cfpToSubmit.providesAccommodation = $('#accommodation').val();
+            cfpToSubmit.providesTravelAssistance = $('#travelassistance').val();
         
             cfpToSubmit.submittedByName = $('#submitterName').val();
         
@@ -178,6 +183,7 @@
                     if (metadata.hasError)
                     {
                         $('#loadMetadataSpinner').hide();
+        
                         $('#metadataError').show();
                         return;
                     }
@@ -207,7 +213,7 @@
                     $('#loadMetadataSpinner').hide();
 
                 },
-                error: function() {
+                error: function(err) {
                     $('#loadMetadataSpinner').hide();
                     $('#metadataError').show();
                     editEventData();

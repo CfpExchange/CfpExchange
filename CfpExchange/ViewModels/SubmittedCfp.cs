@@ -38,8 +38,11 @@ namespace CfpExchange.ViewModels
 		[DataType(DataType.Url)]
 		public string CfpUrl { get; set; }
 
-		[EnumDataType(typeof(Reimbursements))]
-		public Reimbursements ProvidesReimbursements { get; set; }
+		[EnumDataType(typeof(Accommodation))]
+		public Accommodation ProvidesAccommodation { get; set; }
+
+		[EnumDataType(typeof(TravelAssistence))]
+		public TravelAssistence ProvidesTravelAssistance { get; set; }
 
 		[DataType(DataType.Text)]
 		public string SubmittedByName { get; set; }

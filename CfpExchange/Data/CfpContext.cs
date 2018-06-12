@@ -36,7 +36,8 @@ namespace CfpExchange.Data
 					EventImage = "https://techorama.nl/wp-content/uploads/sites/2/2017/10/TVrobot@4x.svg",
 					EventStartDate = DateTime.Now.AddDays(1),
 					EventEndDate = DateTime.Now.AddDays(2),
-					ProvidedExpenses = Enums.Reimbursements.OffersTravelAssistance
+					ProvidesAccommodation = Enums.Accommodation.Unknown,
+					ProvidesTravelAssistance = Enums.TravelAssistence.Yes
 				});
 
 				context.Cfps.Add(new Cfp
@@ -52,7 +53,8 @@ namespace CfpExchange.Data
 					EventImage = "https://techorama.nl/wp-content/uploads/sites/2/2017/10/TVrobot@4x.svg",
 					EventStartDate = DateTime.Now.AddDays(1),
 					EventEndDate = DateTime.Now.AddDays(1),
-					ProvidedExpenses = Enums.Reimbursements.None
+					ProvidesAccommodation = Enums.Accommodation.No,
+					ProvidesTravelAssistance = Enums.TravelAssistence.Unknown
 				});
 
 				context.Cfps.Add(new Cfp
@@ -64,7 +66,9 @@ namespace CfpExchange.Data
 					SubmittedByName = "Gerald",
 					EventLocationName = "Minnesota, USA",
 					EventDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-					CfpEndDate = DateTime.Now.AddDays(1)
+					CfpEndDate = DateTime.Now.AddDays(1),
+					ProvidesAccommodation = Enums.Accommodation.Yes,
+					ProvidesTravelAssistance = Enums.TravelAssistence.Yes
 				});
 
 				context.Cfps.Add(new Cfp
@@ -78,7 +82,9 @@ namespace CfpExchange.Data
 					EventLocationLat = 51.5073509,
 					EventLocationLng = -0.127758299999982,
 					EventDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-					CfpEndDate = DateTime.Now.AddHours(-1)
+					CfpEndDate = DateTime.Now.AddHours(-1),
+					ProvidesAccommodation = Enums.Accommodation.No,
+					ProvidesTravelAssistance = Enums.TravelAssistence.No
 				});
 
 				context.Cfps.Add(new Cfp
@@ -103,7 +109,8 @@ namespace CfpExchange.Data
 					EventLocationName = "Zeist, The Netherlands",
 					EventDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
 					CfpEndDate = DateTime.Now.AddDays(7),
-					ProvidedExpenses = Enums.Reimbursements.Unknown
+					ProvidesAccommodation = Enums.Accommodation.Unknown,
+					ProvidesTravelAssistance = Enums.TravelAssistence.Unknown
 				});
 
 				context.SaveChanges();

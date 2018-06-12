@@ -5,7 +5,7 @@ namespace CfpExchange.Services
 {
 	public class MockEmailSender : IEmailSender
 	{
-		private ILogger _logger;
+		private readonly ILogger _logger;
 
 		public MockEmailSender(ILoggerFactory loggerFactory)
 		{

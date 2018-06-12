@@ -145,7 +145,8 @@ namespace CfpExchange.Controllers
 					CfpUrl = submittedCfp.CfpUrl,
 					EventStartDate = submittedCfp.EventStartDate?.Date ?? default(DateTime),
 					EventEndDate = submittedCfp.EventEndDate?.Date ?? default(DateTime),
-					ProvidedExpenses = submittedCfp.ProvidesReimbursements,
+					ProvidesAccommodation = submittedCfp.ProvidesAccommodation,
+					ProvidesTravelAssistance = submittedCfp.ProvidesTravelAssistance,
 					SubmittedByName = submittedCfp.SubmittedByName
 				};
 

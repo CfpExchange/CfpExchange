@@ -34,11 +34,12 @@ namespace CfpExchange.Models
 		public DateTime EventEndDate { get; set; }
 		public DateTime CfpStartDate { get; set; }
 		public DateTime CfpEndDate { get; set; }
+		public DateTime CfpDecisionDate { get; set; }
 		public DateTime CfpAdded { get; set; }
-		public Reimbursements ProvidedExpenses { get; set; }
-
+		public Accommodation ProvidesAccommodation { get; set; }
+		public TravelAssistence ProvidesTravelAssistance { get; set; }
 		public string CfpUrl { get; set; } = String.Empty;
-
+		public string Remarks { get; set; }
 		public int Views { get; set; }
 		public int ClicksToCfpUrl { get; set; }
 		public string SubmittedByName { get; set; }
