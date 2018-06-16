@@ -192,7 +192,7 @@ namespace CfpExchange.Controllers
 			}
 
 			// Add invalid model
-			return BadRequest();
+			return BadRequest(submittedCfp);
 		}
 
 		public IActionResult Details(Guid id)

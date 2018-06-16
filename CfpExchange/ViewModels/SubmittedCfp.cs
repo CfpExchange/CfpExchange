@@ -6,7 +6,7 @@ namespace CfpExchange.ViewModels
 {
 	public class SubmittedCfp
 	{
-		[Required]
+		[Required(ErrorMessage ="The event URL is required")]
 		[DataType(DataType.Url)]
 		public string EventUrl { get; set; }
 
@@ -25,7 +25,7 @@ namespace CfpExchange.ViewModels
 		public double LocationLat { get; set; }
 		public double LocationLng { get; set; }
 
-		[Required]
+		[Required(ErrorMessage ="The CFP end date is required")]
 		[DataType(DataType.Date)]
 		public DateTime CfpEndDate { get; set; }
 
