@@ -31,6 +31,7 @@ The file should have the following layout:
 	    "ApiKey": "MailGunApiKey",
 	    "ApiUri": "https://api.mailgun.net/v3/yourdomain.com/messages",
 	    "From": "No-Reply CFP Exchange <no-reply@cfp.exchange>"
-	}
+	},
+    "GoogleTimezoneApiKey": "key"
 }
 ```

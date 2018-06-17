@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using CfpExchange.Data;
 using CfpExchange.Helpers;
@@ -10,6 +11,7 @@ using LinqToTwitter;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 
 namespace CfpExchange.Controllers
 {
@@ -130,6 +132,18 @@ namespace CfpExchange.Controllers
 				// Map
 				var cfpToAddId = Guid.NewGuid();
 
+				string timezone;
+
+				try
+				{
+					timezone = await GetTimezone(submittedCfp.LocationLat, submittedCfp.LocationLng);
+				}
+				catch
+				{
+					// Intentionally left blank, just for event to calendar
+					// If it fails, sucks for you
+				}
+
 				var cfpToAdd = new Cfp
 				{
 					Id = cfpToAddId,
@@ -193,6 +207,17 @@ namespace CfpExchange.Controllers
 
 			// Add invalid model
 			return BadRequest(submittedCfp);
+		}
+
+		private async Task<string> GetTimezone(double lat, double lng)
+		{
+			using (var httpClient = new HttpClient())
+			{
+				var resultJson = await httpClient.GetStringAsync($"https://maps.googleapis.com/maps/api/timezone/json?location={lat},{lng}&timestamp={DateTime.Now.Ticks}&key={_configuration["GoogleTimezoneApiKey"]}");
+				var result = JsonConvert.DeserializeObject<dynamic>(resultJson);
+
+				return result.timeZoneId;
+			}
 		}
 
 		public IActionResult Details(Guid id)

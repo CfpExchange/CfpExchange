@@ -872,3 +872,11 @@ footer .btn {
 .validation-summary-valid {
     display: none;
 }
+
+.addeventatc .addeventatc_icon {
+    top: 17px !important;
+}
+
+.addeventatc {
+    visibility: hidden;
+}

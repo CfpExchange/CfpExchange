@@ -2,7 +2,7 @@
 @using Humanizer
 @using Humanizer.Localisation
 @{
-    ViewData["Title"] = "Browse";
+    ViewData["Title"] = "Newest";
 }
 
 <!-- Page-->
@@ -15,7 +15,7 @@
             <div class="col-lg-8 content">
                 @if (!Model.CfpList.Any())
                 {
-                        <p>No entries to show you, for now.</p>
+                    <p>No entries to show you, for now.</p>
                 }
                 @foreach (var cfp in Model.CfpList)
                 {

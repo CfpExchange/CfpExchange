@@ -71,10 +71,11 @@ namespace CfpExchange.Data
 					ProvidesTravelAssistance = Enums.TravelAssistence.Yes
 				});
 
+				// Give this one a static GUID to be able to access it
 				context.Cfps.Add(new Cfp
 				{
 					EventName = "NDC London",
-					Id = Guid.NewGuid(),
+					Id = new Guid("d238d46f-055a-44fd-ad99-840a4741635f"),
 					Views = 23,
 					CfpAdded = DateTime.Now,
 					SubmittedByName = "Gerald",
@@ -82,7 +83,7 @@ namespace CfpExchange.Data
 					EventLocationLat = 51.5073509,
 					EventLocationLng = -0.127758299999982,
 					EventDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-					CfpEndDate = DateTime.Now.AddHours(-1),
+					CfpEndDate = DateTime.Now.AddHours(-24),
 					ProvidesAccommodation = Enums.Accommodation.No,
 					ProvidesTravelAssistance = Enums.TravelAssistence.No
 				});

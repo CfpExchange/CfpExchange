@@ -32,8 +32,11 @@ namespace CfpExchange.Models
 
 		public DateTime EventStartDate { get; set; }
 		public DateTime EventEndDate { get; set; }
+		public string EventTimezone { get; set; }
+
 		public DateTime CfpStartDate { get; set; }
 		public DateTime CfpEndDate { get; set; }
+
 		public DateTime CfpDecisionDate { get; set; }
 		public DateTime CfpAdded { get; set; }
 		public Accommodation ProvidesAccommodation { get; set; }
