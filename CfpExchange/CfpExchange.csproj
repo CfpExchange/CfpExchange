@@ -29,7 +29,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\css\plugins\bootstrap-toggle\bootstrap2-toggle.min.css" />
-    <Content Remove="wwwroot\images\exchang100x100.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="appsettings.json">
@@ -43,7 +42,7 @@
     <Compile Remove="Data\DatabaseInitializer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="wwwroot\images\exchang100x100.png" />
+    <None Include="wwwroot\images\exchange100x100.png" />
   </ItemGroup>
 </Project>
 
