@@ -1,5 +1,6 @@
 using System;
 using CfpExchange.Data;
+using CfpExchange.Middleware;
 using CfpExchange.Models;
 using CfpExchange.Services;
 using Microsoft.AspNetCore.Builder;
@@ -86,10 +87,12 @@ namespace CfpExchange
 			if (env.IsDevelopment())
 			{
 				app.UseDeveloperExceptionPage();
+				app.UseSitemapMiddleware();
 			}
 			else
 			{
 				app.UseExceptionHandler("/Home/Error");
+				app.UseSitemapMiddleware("https://cfp.exchange");
 			}
 
 			app.UseStaticFiles();

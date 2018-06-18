@@ -26,9 +26,11 @@
     <Folder Include="wwwroot\css\plugins\" />
     <Folder Include="wwwroot\css\plugins\bootstrap-datepicker\" />
     <Folder Include="Enums\" />
+    <Folder Include="Middleware\" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\css\plugins\bootstrap-toggle\bootstrap2-toggle.min.css" />
+    <Content Remove="wwwroot\robots.txt" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="appsettings.json">
@@ -43,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="wwwroot\images\exchange100x100.png" />
+    <None Include="wwwroot\robots.txt" />
   </ItemGroup>
 </Project>
 
