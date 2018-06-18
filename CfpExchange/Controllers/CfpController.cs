@@ -131,8 +131,7 @@ namespace CfpExchange.Controllers
 			{
 				// Map
 				var cfpToAddId = Guid.NewGuid();
-
-				string timezone;
+				var timezone = string.Empty;
 
 				try
 				{
@@ -161,7 +160,8 @@ namespace CfpExchange.Controllers
 					EventEndDate = submittedCfp.EventEndDate?.Date ?? default(DateTime),
 					ProvidesAccommodation = submittedCfp.ProvidesAccommodation,
 					ProvidesTravelAssistance = submittedCfp.ProvidesTravelAssistance,
-					SubmittedByName = submittedCfp.SubmittedByName
+					SubmittedByName = submittedCfp.SubmittedByName,
+					EventTimezone = timezone
 				};
 
 				// Save CFP
