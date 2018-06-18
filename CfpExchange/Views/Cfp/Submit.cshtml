@@ -26,8 +26,6 @@
               <label>Event URL <i class="fa fa-spinner fa-spin" id="loadMetadataSpinner" style="font-size: 24px;display: none;"></i></label>
                 @Html.EditorFor(model => model.EventUrl, new { htmlAttributes = new { @class = "form-control", onBlur = "javascript: getMetadata(this.value); checkDuplicates(this.value);" } })
                 @Html.ValidationMessageFor(model => model.EventUrl, "", new { @class = "text-danger" })
-              @*<input type="text" asp-for="EventUrl" class="form-control" onblur="javascript: getMetadata(this.value); checkDuplicates(this.value);">
-              <span asp-validation-for="EventUrl" class="text-danger"></span>*@
               <small id="eventUrlHelp" class="form-text text-muted">Enter the URL of the event homepage, we'll try to extract some information from there for you. No worries, you can still tweak it!</small>
             </div>
 
@@ -343,5 +341,4 @@
 
 @section Styles {
     <link href="/css/plugins/bootstrap-datepicker/bootstrap-datepicker3.min.css" rel="stylesheet">
-    <link href="/css/plugins/bootstrap-toggle/bootstrap-toggle.min.css" rel="stylesheet">
 }
