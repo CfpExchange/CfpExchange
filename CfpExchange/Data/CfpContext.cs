@@ -82,7 +82,7 @@ namespace CfpExchange.Data
 					EventLocationName = "London, UK",
 					EventLocationLat = 51.5073509,
 					EventLocationLng = -0.127758299999982,
-					EventDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+					EventDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit2.",
 					CfpEndDate = DateTime.Now.AddHours(-24),
 					ProvidesAccommodation = Enums.Accommodation.No,
 					ProvidesTravelAssistance = Enums.TravelAssistence.No
@@ -100,18 +100,35 @@ namespace CfpExchange.Data
 					CfpEndDate = DateTime.Now.AddDays(20)
 				});
 
+				// Give this one a static GUID to be able to access it
 				context.Cfps.Add(new Cfp
 				{
 					EventName = "SDN Event",
-					Id = Guid.NewGuid(),
+					Id = new Guid("dd3f7150-c9a7-46ed-9481-9246aed2329d"),
 					Views = 42,
 					CfpAdded = DateTime.Now,
 					SubmittedByName = "Gerald",
 					EventLocationName = "Zeist, The Netherlands",
-					EventDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+					EventDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit2.",
 					CfpEndDate = DateTime.Now.AddDays(7),
 					ProvidesAccommodation = Enums.Accommodation.Unknown,
 					ProvidesTravelAssistance = Enums.TravelAssistence.Unknown
+				});
+
+				// Give this one a static GUID to be able to access it
+				context.Cfps.Add(new Cfp
+				{
+					EventName = "SDN Event duplicate",
+					Id = new Guid("30eb1e5c-5959-4685-b2bb-36d816023007"),
+					Views = 3,
+					CfpAdded = DateTime.Now,
+					SubmittedByName = "Gerald",
+					EventLocationName = "Zeist, The Netherlands",
+					EventDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit1.",
+					CfpEndDate = DateTime.Now.AddDays(4),
+					ProvidesAccommodation = Enums.Accommodation.Unknown,
+					ProvidesTravelAssistance = Enums.TravelAssistence.Unknown,
+					DuplicateOfId = new Guid("dd3f7150-c9a7-46ed-9481-9246aed2329d")
 				});
 
 				context.SaveChanges();

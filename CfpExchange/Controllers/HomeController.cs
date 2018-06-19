@@ -19,7 +19,7 @@ namespace CfpExchange.Controllers
 		private readonly IConfiguration _configuration;
 
 		public HomeController(CfpContext cfpContext, IEmailSender emailSender,
-		                      IConfiguration configuration)
+			IConfiguration configuration)
 		{
 			_cfpContext = cfpContext;
 			_emailSender = emailSender;
@@ -34,13 +34,18 @@ namespace CfpExchange.Controllers
 			if (_cfpContext.Cfps.Any())
 			{
 				var maxViews = _cfpContext.Cfps.Max(cfp => cfp.Views);
-				indexViewModel.MostViewedCfp = _cfpContext.Cfps.FirstOrDefault(cfp => cfp.Views == maxViews);
+				indexViewModel.MostViewedCfp = _cfpContext.Cfps
+					.Where(cfp => cfp.CfpEndDate > DateTime.UtcNow)
+					.Where(cfp => cfp.DuplicateOfId == null).FirstOrDefault(cfp => cfp.Views == maxViews);
 
 				// Set latest Cfp
-				indexViewModel.NewestCfp = _cfpContext.Cfps.OrderByDescending(cfp => cfp.CfpAdded).FirstOrDefault();
+				indexViewModel.NewestCfp = _cfpContext.Cfps
+					.Where(cfp => cfp.CfpEndDate > DateTime.UtcNow)
+					.Where(cfp => cfp.DuplicateOfId == null).OrderByDescending(cfp => cfp.CfpAdded).FirstOrDefault();
 
 				// Set random
-				indexViewModel.RandomCfp = _cfpContext.Cfps.OrderBy(o => Guid.NewGuid()).Take(1).SingleOrDefault();
+				indexViewModel.RandomCfp = _cfpContext.Cfps.Where(cfp => cfp.CfpEndDate > DateTime.UtcNow)
+					.Where(cfp => cfp.DuplicateOfId == null).OrderBy(o => Guid.NewGuid()).Take(1).SingleOrDefault();
 
 				// TODO set real CFP of the day
 				//indexViewModel.CfpOfTheDay = _cfpContext.Cfps.FirstOrDefault();

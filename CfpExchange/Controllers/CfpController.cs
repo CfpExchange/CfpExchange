@@ -90,6 +90,7 @@ namespace CfpExchange.Controllers
 
 			var allActiveCfps = _cfpContext.Cfps
 				.Where(cfp => cfp.CfpEndDate > DateTime.UtcNow)
+				.Where(cfp => cfp.DuplicateOfId == null)
 				.Where(cfp => cfp.EventName.ToLowerInvariant().Contains(lowercaseSearchTerm)
 					|| cfp.EventLocationName.ToLowerInvariant().Contains(lowercaseSearchTerm))
 				.OrderBy(cfp => cfp.CfpEndDate)
@@ -107,6 +108,7 @@ namespace CfpExchange.Controllers
 
 			var allActiveCfps = _cfpContext.Cfps
 				.Where(cfp => cfp.CfpEndDate > DateTime.UtcNow)
+				.Where(cfp => cfp.DuplicateOfId == null)
 				.OrderByDescending(cfp => cfp.CfpAdded.Date)
 				.ThenBy(cfp => cfp.CfpEndDate.Date)
 				.Skip((pageToShow - 1) * MaximumNumberOfItemsPerPage)
@@ -230,6 +232,11 @@ namespace CfpExchange.Controllers
 			if (selectedCfp == null)
 				// TODO to error page?
 				return RedirectToAction("index", "home");
+
+			if (selectedCfp.DuplicateOfId != null && selectedCfp.DuplicateOfId != Guid.Empty)
+			{
+				return RedirectToAction("details", "cfp", new { id = selectedCfp.DuplicateOfId });
+			}
 
 			selectedCfp.Views++;
 			_cfpContext.SaveChanges();
