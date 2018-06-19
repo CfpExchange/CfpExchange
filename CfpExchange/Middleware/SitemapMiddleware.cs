@@ -84,7 +84,7 @@ namespace CfpExchange.Middleware
 			string rootUrl = "http://localhost:5000")
 		{
 			var serviceScope = app.ApplicationServices
-			                      .GetRequiredService<IServiceScopeFactory>().CreateScope();
+				.GetRequiredService<IServiceScopeFactory>().CreateScope();
 			
 				return app.UseMiddleware<SitemapMiddleware>(rootUrl, serviceScope.ServiceProvider.GetService<CfpContext>());
 			

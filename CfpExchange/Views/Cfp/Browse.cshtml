@@ -20,7 +20,7 @@
                         @if (!string.IsNullOrWhiteSpace(Model.SearchTerm))
                         {
                             <form action="@Url.Action("Browse", "Cfp")" method="get">
-                                <input type="hidden" value="" name="searchTerm" class="form-control" placeholder="Search by keyword">
+                                <input type="hidden" value="" name="searchTerm">
                                 <button type="submit" class="btn">Clear search</button>
                             </form>
                         }
@@ -54,7 +54,7 @@
                                 @Html.Raw($"&nbsp;<small>{@cfp.EventLocationName}</small>");
                             }
                         </h2>
-                        <p>@cfp.EventDescription</p>
+                        <p>@cfp.ShortDescription</p>
                         <div class="tag">
                         </div>
                     </div>

@@ -49,28 +49,28 @@
              <div class="form-group" id="eventTitleEntry" style="display: none;">
               <label>Event Title</label>
               <input type="text" class="form-control" id="eventTitle">
-              <small id="eventTitleHelp" class="form-text text-muted">Under this title the CFP will be listed</small>
+              @*<small id="eventTitleHelp" class="form-text text-muted">Under this title the CFP will be listed</small>*@
             </div>
 
             <div class="form-group" id="eventDescriptionEntry" style="display: none;">
               <label>Event Description</label>
               <textarea rows="3" class="form-control" id="eventDescription">
               </textarea>
-              <small id="eventDescriptionHelp" class="form-text text-muted">A short description of the event and why you</small>
+              @*<small id="eventDescriptionHelp" class="form-text text-muted">A short description of the event and why you</small>*@
             </div>
 
             <div class="form-group">
                 <label>CFP Close Date</label>
                 <input asp-for="CfpEndDate" class="form-control col-lg-12" id="eventCfpCloseDate" type="text" readonly>
                 <span asp-validation-for="CfpEndDate" class="text-danger"></span>
-                <small id="eventCfpCloseDateHelp" class="form-text text-muted">When does the CFP close?</small>
+                @*<small id="eventCfpCloseDateHelp" class="form-text text-muted">When does the CFP close?</small>*@
             </div>
 
             <div class="form-group">
                 <label>Event Location</label>
                 <input asp-for="LocationName" class="form-control" id="eventLocation" type="text">
                 <span asp-validation-for="LocationName" style="display: none;" id="locationErrorMessage" class="text-danger">Please search for a location and select a value from the dropdown</span>
-                <small id="eventLocationHelp" class="form-text text-muted">Where does the event take place?</small>
+                @*<small id="eventLocationHelp" class="form-text text-muted">Where does the event take place?</small>*@
             </div>
               
             <h1>Nice to have</h1>
@@ -79,13 +79,13 @@
             <div class="form-group">
                 <label>Your name</label>
                 <input class="form-control" id="submitterName" type="text">
-                <small id="submittedNameHelp" class="form-text text-muted">If you want the credits, enter your name</small>
+                @*<small id="submittedNameHelp" class="form-text text-muted">If you want the credits, enter your name</small>*@
             </div>
 
             <div class="form-group">
-              <label>CFP url</label>
+              <label>Direct CFP url</label>
               <input type="text" class="form-control" id="eventCfpDirectUrl">
-              <small id="eventTitleHelp" class="form-text text-muted">Is there a direct link to the CFP portal? Please let us know here!</small>
+              @*<small id="eventTitleHelp" class="form-text text-muted">Is there a direct link to the CFP portal? Please let us know here!</small>*@
             </div>
 
             <div class="form-group">
@@ -98,7 +98,7 @@
                         <input class="form-control col-lg-12" id="eventEndDate" type="text" placeholder="End date" readonly>
                     </div>
                 </div>
-                <small id="eventDatesHelp" class="form-text text-muted">When does the event take place?</small>
+                @*<small id="eventDatesHelp" class="form-text text-muted">When does the event take place?</small>*@
             </div>
 
             <div class="form-group">

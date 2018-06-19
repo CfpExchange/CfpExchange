@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using CfpExchange.Enums;
 using CfpExchange.Helpers;
 
@@ -46,5 +47,29 @@ namespace CfpExchange.Models
 		public int Views { get; set; }
 		public int ClicksToCfpUrl { get; set; }
 		public string SubmittedByName { get; set; }
+
+		[NotMapped]
+		public string ShortDescription
+		{
+			get
+			{
+				if (EventDescription.Length > 140)
+					return $"{EventDescription.Substring(0, 140)}...";
+
+				return EventDescription;
+			}
+		}
+
+		[NotMapped]
+		public string ReallyShortDescription
+		{
+			get
+			{
+				if (EventDescription.Length > 40)
+					return $"{EventDescription.Substring(0, 40)}...";
+
+				return EventDescription;
+			}
+		}
 	}
 }

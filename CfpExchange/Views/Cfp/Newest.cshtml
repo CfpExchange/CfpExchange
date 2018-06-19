@@ -31,11 +31,10 @@
                             <a href="@(Url.Action("details", "cfp", new {id = cfp.Id}))">@cfp.EventName</a>
                             @if (!string.IsNullOrWhiteSpace(cfp.EventLocationName))
                             {
-                                @Html.Raw($"&nbsp;<small>{@cfp.EventLocationName}</small>")
-                                ;
+                                @Html.Raw($"&nbsp;<small>{@cfp.EventLocationName}</small>");
                             }
                         </h2>
-                        <p>@cfp.EventDescription</p>
+                        <p>@cfp.ShortDescription</p>
                         <div class="tag">
                         </div>
                     </div>

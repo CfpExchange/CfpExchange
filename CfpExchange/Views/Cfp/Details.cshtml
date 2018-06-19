@@ -2,7 +2,7 @@
 @using Humanizer
 @using Humanizer.Localisation
 @{
-    ViewData["Title"] = @Model.EventName + "CFP Details";
+    ViewData["Title"] = @Model.EventName + " event CFP Details";
 
     var cfpUrl = string.IsNullOrWhiteSpace(Model.CfpUrl) ? Model.EventUrl : Model.CfpUrl;
     cfpUrl = Url.Action("OutgoingCfpLink", "Cfp", new { id = Model.Id, url = cfpUrl });

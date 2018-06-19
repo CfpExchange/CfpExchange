@@ -39,7 +39,7 @@ namespace CfpExchange.Controllers
 				// Set latest Cfp
 				indexViewModel.NewestCfp = _cfpContext.Cfps.OrderByDescending(cfp => cfp.CfpAdded).FirstOrDefault();
 
-				// TODO set real random
+				// Set random
 				indexViewModel.RandomCfp = _cfpContext.Cfps.OrderBy(o => Guid.NewGuid()).Take(1).SingleOrDefault();
 
 				// TODO set real CFP of the day

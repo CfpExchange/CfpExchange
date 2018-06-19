@@ -29,7 +29,6 @@
     <Folder Include="Middleware\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Remove="wwwroot\css\plugins\bootstrap-toggle\bootstrap2-toggle.min.css" />
     <Content Remove="wwwroot\robots.txt" />
   </ItemGroup>
   <ItemGroup>
