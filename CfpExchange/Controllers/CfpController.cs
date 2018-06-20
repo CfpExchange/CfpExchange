@@ -110,7 +110,7 @@ namespace CfpExchange.Controllers
 				.Take(MaximumNumberOfItemsPerPage)
 				.ToList();
 
-			return View(new BrowseResponseViewModel(allActiveCfps, pageToShow, searchTerm));
+			return View(new BrowseResponseViewModel(allActiveCfps, pageToShow, searchTerm, eventdate));
 		}
 
 		[HttpGet]

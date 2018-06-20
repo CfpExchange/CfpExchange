@@ -42,7 +42,7 @@
                                 <button type="submit" class="btn">Search CFP</button>
                         </div>
                         </form>
-                        @if (!string.IsNullOrWhiteSpace(Model.SearchTerm) || (!string.IsNullOrWhiteSpace(ViewContext.HttpContext.Request.Query["eventdate"]) && ViewContext.HttpContext.Request.Query["eventdate"] != "0"))
+                        @if (!string.IsNullOrWhiteSpace(Model.SearchTerm) || (!string.IsNullOrWhiteSpace(Model.EventDate) && Model.EventDate != "0"))
                         {
                             <form action="@Url.Action("browse", "cfp")" method="get">
                                 <input type="hidden" value="" name="searchTerm">
@@ -97,12 +97,12 @@
                 <div class="tab-pane active">
                     @if (Model.CurrentPage > 1)
                     {
-                        @Html.ActionLink("Previous", "Browse", new { page = Model.CurrentPage - 1, searchTerm = Model.SearchTerm }, new { @class = "btn-load pull-left" })
+                        @Html.ActionLink("Previous", "Browse", new { page = Model.CurrentPage - 1, searchTerm = Model.SearchTerm, eventdate = Model.EventDate }, new { @class = "btn-load pull-left" })
                     }
 
                     @if (Model.CfpList.Any())
                     {
-                        @Html.ActionLink("Next", "Browse", new { page = Model.CurrentPage + 1, searchTerm = Model.SearchTerm }, new { @class = "btn-load pull-right" })
+                        @Html.ActionLink("Next", "Browse", new { page = Model.CurrentPage + 1, searchTerm = Model.SearchTerm, eventdate = Model.EventDate }, new { @class = "btn-load pull-right" })
                     }
                 </div>
             </div>
