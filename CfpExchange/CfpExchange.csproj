@@ -30,11 +30,6 @@
     <Folder Include="wwwroot\images\social\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Remove="wwwroot\robots.txt" />
-    <Content Remove="wwwroot\images\social\twitter.png" />
-    <Content Remove="wwwroot\images\social\fb.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Update="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
