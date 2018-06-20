@@ -9,18 +9,44 @@
         <div class="row">
             <div class="col-lg-12">
                 <h2>Browse CFPs</h2>
+                <form action="@Url.Action("browse", "cfp")" method="get">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label>Event date in</label>
+                            <select class="js-search-category form-control" name="eventdate" data-placeholder="Event date in">
+                                <option value="0">All</option>
+
+                                @for (var i=0; i<=12; i++)
+                                {
+                                    var newDateTime = DateTime.Now.AddMonths(i);
+                                    var selectedOption = "";
+
+                                    if (ViewContext.HttpContext.Request.Query.ContainsKey("eventdate") && ViewContext.HttpContext.Request.Query["eventdate"].ToString() == $"{@newDateTime.Year}-{@newDateTime.Month}")
+                                    {
+                                        <option value="@newDateTime.Year-@newDateTime.Month" selected="selected">@newDateTime.ToString("MMMM") @newDateTime.Year</option>
+                                    }
+                                    else
+                                    { 
+                                        <option value="@newDateTime.Year-@newDateTime.Month">@newDateTime.ToString("MMMM") @newDateTime.Year</option>
+                                    }
+                                }
+                             </select>
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="form-group">
-                            <form action="@Url.Action("Browse", "Cfp")" method="get">
                                 <input type="text" value="@Model.SearchTerm" name="searchTerm" class="form-control" placeholder="Search by keyword">
                                 <button type="submit" class="btn">Search CFP</button>
-                            </form>
                         </div>
-                        @if (!string.IsNullOrWhiteSpace(Model.SearchTerm))
+                        </form>
+                        @if (!string.IsNullOrWhiteSpace(Model.SearchTerm) || (!string.IsNullOrWhiteSpace(ViewContext.HttpContext.Request.Query["eventdate"]) && ViewContext.HttpContext.Request.Query["eventdate"] != "0"))
                         {
-                            <form action="@Url.Action("Browse", "Cfp")" method="get">
+                            <form action="@Url.Action("browse", "cfp")" method="get">
                                 <input type="hidden" value="" name="searchTerm">
+                                <input type="hidden" value="0" name="eventdate">
                                 <button type="submit" class="btn">Clear search</button>
                             </form>
                         }
@@ -42,8 +68,15 @@
                 }
                 @foreach (var cfp in Model.CfpList)
                 {
+                    var eventDate = "<i class=\"fa fa-question\"></i>";
+
+                    if (cfp.EventStartDate != default(DateTime))
+                    {
+                        eventDate = @cfp.EventStartDate.ToString("MMM yyyy");
+                    }
+
                     <div class="box list recipes">
-                        <div class="by"><i class="fa fa-clock-o" aria-hidden="true"></i> Ends in: @(((TimeSpan)cfp.CfpEndDate.Subtract(DateTime.Now)).Humanize(minUnit: TimeUnit.Hour))</div>
+                        <div class="by"><i class="fa fa-clock-o" aria-hidden="true"></i> Ends in: @(((TimeSpan)cfp.CfpEndDate.Subtract(DateTime.Now)).Humanize(minUnit: TimeUnit.Hour))<div class="float-right">Event date: @Html.Raw(eventDate)</div></div>
                         <a href="@(Url.Action("details", "cfp", new {id = cfp.Id}))">
                             <img src="@cfp.EventImage" alt="Event image" style="object-fit:cover;">
                         </a>
@@ -76,3 +109,7 @@
         </div>
     </div>
 </div>
+@section Scripts
+{
+    <script src="/js/plugins/select2.min.js"></script>
+}

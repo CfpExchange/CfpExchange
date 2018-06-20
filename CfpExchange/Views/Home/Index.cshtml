@@ -140,9 +140,15 @@
             {
                 foreach (var cfp in @Model.CfpList)
                 {
+                    var eventDate = "<i class=\"fa fa-question\"></i>";
+
+                    if (cfp.EventStartDate != default(DateTime))
+                    {
+                        eventDate = @cfp.EventStartDate.ToString("MMM yyyy");
+                    }
                     <div class="col-lg-4 col-sm-6">
                         <div class="box grid recipes">
-                            <div class="by">@*<i class="fa fa-clock-o" aria-hidden="true"></i>*@Ends in: @(((TimeSpan)cfp.CfpEndDate.Subtract(DateTime.Now)).Humanize(minUnit: TimeUnit.Hour))</div>
+                            <div class="by">@*<i class="fa fa-clock-o" aria-hidden="true"></i>*@Ends: @(((TimeSpan)cfp.CfpEndDate.Subtract(DateTime.Now)).Humanize(minUnit: TimeUnit.Hour))<div class="float-right">Event: @Html.Raw(eventDate)</div></div>
                             <a href="@(Url.Action("details", "cfp", new { id = cfp.Id }))">
                                 <img src="@cfp.EventImage" alt="Event image">
                             </a>

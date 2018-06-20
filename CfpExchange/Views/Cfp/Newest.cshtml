@@ -19,10 +19,18 @@
                 }
                 @foreach (var cfp in Model.CfpList)
                 {
+                    var eventDate = "<i class=\"fa fa-question\"></i>";
+
+                    if (cfp.EventStartDate != default(DateTime))
+                    {
+                        eventDate = @cfp.EventStartDate.ToString("MMM yyyy");
+                    }
+
                     <div class="box list recipes">
                         <div class="by">
                             <i class="fa fa-clock-o" aria-hidden="true"></i>
                             Added on: @cfp.CfpAdded.ToShortDateString() - Ends in: @(((TimeSpan)cfp.CfpEndDate.Subtract(DateTime.Now)).Humanize(minUnit: TimeUnit.Hour))
+                            <div class="float-right">Event date: @Html.Raw(eventDate)</div>
                         </div>
                         <a href="@(Url.Action("details", "cfp", new {id = cfp.Id}))">
                             <img src="@cfp.EventImage" alt="Event image">
@@ -44,12 +52,12 @@
                 <div class="tab-pane active">
                     @if (Model.CurrentPage > 1)
                     {
-                        @Html.ActionLink("Previous", "Browse", new {page = Model.CurrentPage - 1}, new {@class = "btn pull-left"})
+                        @Html.ActionLink("Previous", "newest", new {page = Model.CurrentPage - 1}, new {@class = "btn pull-left"})
                     }
                     
                     @if (Model.CfpList.Any())
                     {
-                        @Html.ActionLink("Next", "Browse", new {page = Model.CurrentPage + 1}, new {@class = "btn pull-right"})
+                        @Html.ActionLink("Next", "newest", new {page = Model.CurrentPage + 1}, new {@class = "btn pull-right"})
                     }
                 </div>
             </div>

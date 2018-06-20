@@ -1,14 +1,13 @@
-﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
-using CfpExchange.Models;
-using CfpExchange.Data;
+﻿using System;
+using System.Diagnostics;
 using System.Linq;
-using CfpExchange.ViewModels;
-using CfpExchange.Services;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
-using System;
+using CfpExchange.Data;
+using CfpExchange.Models;
+using CfpExchange.Services;
+using CfpExchange.ViewModels;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 namespace CfpExchange.Controllers
 {
@@ -46,9 +45,6 @@ namespace CfpExchange.Controllers
 				// Set random
 				indexViewModel.RandomCfp = _cfpContext.Cfps.Where(cfp => cfp.CfpEndDate > DateTime.UtcNow)
 					.Where(cfp => cfp.DuplicateOfId == null).OrderBy(o => Guid.NewGuid()).Take(1).SingleOrDefault();
-
-				// TODO set real CFP of the day
-				//indexViewModel.CfpOfTheDay = _cfpContext.Cfps.FirstOrDefault();
 
 				indexViewModel.CfpList = _cfpContext.Cfps
 					.Where(cfp => cfp.CfpEndDate > DateTime.UtcNow)

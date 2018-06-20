@@ -51,8 +51,8 @@ namespace CfpExchange.Data
 					EventDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
 					CfpEndDate = DateTime.Now.AddDays(10),
 					EventImage = "https://techorama.nl/wp-content/uploads/sites/2/2017/10/TVrobot@4x.svg",
-					EventStartDate = DateTime.Now.AddDays(1),
-					EventEndDate = DateTime.Now.AddDays(1),
+					EventStartDate = DateTime.Now.AddMonths(1),
+					EventEndDate = DateTime.Now.AddMonths(1).AddDays(2),
 					ProvidesAccommodation = Enums.Accommodation.No,
 					ProvidesTravelAssistance = Enums.TravelAssistence.Unknown
 				});

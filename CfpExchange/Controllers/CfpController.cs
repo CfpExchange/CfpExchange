@@ -82,17 +82,29 @@ namespace CfpExchange.Controllers
 		}
 
 		[HttpGet]
-		public IActionResult Browse(int page = 1, string searchTerm = "")
+		public IActionResult Browse(int page = 1, string eventdate = "0", string searchTerm = "")
 		{
 			int pageToShow = page <= MaximumPageToShow ? page : MaximumPageToShow;
 
 			var lowercaseSearchTerm = searchTerm?.ToLowerInvariant() ?? "";
+
+			var startDateTime = DateTime.UtcNow;
+			var endDateTime = DateTime.UtcNow.AddYears(10);
+
+			if (eventdate != "0")
+			{
+				if (DateTime.TryParseExact(eventdate, "yyyy-M", Culture.US, System.Globalization.DateTimeStyles.None, out startDateTime))
+				{
+					endDateTime = startDateTime.AddMonths(1).AddDays(-1);
+				}
+			}
 
 			var allActiveCfps = _cfpContext.Cfps
 				.Where(cfp => cfp.CfpEndDate > DateTime.UtcNow)
 				.Where(cfp => cfp.DuplicateOfId == null)
 				.Where(cfp => cfp.EventName.ToLowerInvariant().Contains(lowercaseSearchTerm)
 					|| cfp.EventLocationName.ToLowerInvariant().Contains(lowercaseSearchTerm))
+				.Where(cfp => cfp.EventStartDate == default(DateTime) || cfp.EventEndDate == default(DateTime) || cfp.EventStartDate >= startDateTime && cfp.EventEndDate <= endDateTime)
 				.OrderBy(cfp => cfp.CfpEndDate)
 				.Skip((pageToShow - 1) * MaximumNumberOfItemsPerPage)
 				.Take(MaximumNumberOfItemsPerPage)
