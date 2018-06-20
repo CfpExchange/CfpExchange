@@ -200,7 +200,7 @@ namespace CfpExchange.Controllers
 
 					var ctx = new TwitterContext(auth);
 
-					var tweetMessage = $"New CFP Added: {cfpToAdd.EventName} closes {cfpToAdd.CfpEndDate.ToLongDateString()} #cfpexchange {cfpToAdd.EventUrl}";
+					var tweetMessage = $"New CFP Added: {cfpToAdd.EventName} closes {cfpToAdd.CfpEndDate.ToLongDateString()} #cfpexchange {Url.Action("details", "cfp", new { id = cfpToAddId }, "https", "cfp.exchange")}";
 
 					if (_hostingEnvironment.IsProduction())
 					{
