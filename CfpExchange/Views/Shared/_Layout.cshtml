@@ -13,29 +13,29 @@
 
     @if (!IsSectionDefined("SharingMetaTags"))
     {
-    <!-- Search Engine -->
-    <meta name="description" content="CFP Exchange tries to gather current CFPs from events around the world by crowd-sourcing them from the community.">
-    <meta name="keywords" content="CFP, call for papers, session, submit, conference, tech, speaker, public speaking, exchange, crowd">
-    @*<meta name="image" content="aaa">*@
-    <!-- Schema.org for Google -->
-    <meta itemprop="name" content="CFP Exchange">
-    <meta itemprop="description" content="CFP Exchange tries to gather current CFPs from events around the world by crowd-sourcing them from the community.">
-    <meta itemprop="image" content="aaa">
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="CFP Exchange">
-    <meta name="twitter:description" content="CFP Exchange tries to gather current CFPs from events around the world by crowd-sourcing them from the community.">
-    <meta name="twitter:site" content="@@cfp_exchange">
-    <!-- Maximum dimension: 1024px x 512px; minimum dimension: 440px x 220px -->
-    @*<meta name="twitter:image:src" content="aaa">*@
-    <!-- Open Graph general (Facebook, Pinterest & Google+) -->
-    <meta name="og:title" content="CFP Exchange">
-    <meta name="og:description" content="CFP Exchange tries to gather current CFPs from events around the world by crowd-sourcing them from the community.">
-    <!-- Recommended dimension: 1200px x 630px; minimum dimension: 600px x 315px -->
-    @*<meta name="og:image" content="aaa">*@
-    <meta name="og:site_name" content="CFP Exchange">
-    <meta name="og:locale" content="en_US">
-    <meta name="og:type" content="website">
+        <!-- Search Engine -->
+        <meta name="description" content="CFP Exchange tries to gather current CFPs from events around the world by crowd-sourcing them from the community.">
+        <meta name="keywords" content="CFP, call for papers, session, submit, conference, tech, speaker, public speaking, exchange, crowd">
+        <meta name="image" content="@(CfpExchange.Helpers.Constants.WebsiteRootUrl)images/social/fb.png">
+        <!-- Schema.org for Google -->
+        <meta itemprop="name" content="CFP Exchange">
+        <meta itemprop="description" content="CFP Exchange tries to gather current CFPs from events around the world by crowd-sourcing them from the community.">
+        <meta itemprop="image" content="aaa">
+        <!-- Twitter -->
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:title" content="CFP Exchange">
+        <meta name="twitter:description" content="CFP Exchange tries to gather current CFPs from events around the world by crowd-sourcing them from the community.">
+        <meta name="twitter:site" content="@@cfp_exchange">
+        <!-- Maximum dimension: 1024px x 512px; minimum dimension: 440px x 220px -->
+        <meta name="twitter:image:src" content="@(CfpExchange.Helpers.Constants.WebsiteRootUrl)images/social/twitter.png">
+        <!-- Open Graph general (Facebook, Pinterest & Google+) -->
+        <meta name="og:title" content="CFP Exchange">
+        <meta name="og:description" content="CFP Exchange tries to gather current CFPs from events around the world by crowd-sourcing them from the community.">
+        <!-- Recommended dimension: 1200px x 630px; minimum dimension: 600px x 315px -->
+        <meta name="og:image" content="@(CfpExchange.Helpers.Constants.WebsiteRootUrl)images/social/fb.png">
+        <meta name="og:site_name" content="CFP Exchange">
+        <meta name="og:locale" content="en_US">
+        <meta name="og:type" content="website">
     }
     else
     {

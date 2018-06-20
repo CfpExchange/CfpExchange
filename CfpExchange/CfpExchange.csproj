@@ -27,9 +27,12 @@
     <Folder Include="wwwroot\css\plugins\bootstrap-datepicker\" />
     <Folder Include="Enums\" />
     <Folder Include="Middleware\" />
+    <Folder Include="wwwroot\images\social\" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\robots.txt" />
+    <Content Remove="wwwroot\images\social\twitter.png" />
+    <Content Remove="wwwroot\images\social\fb.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="appsettings.json">
@@ -46,6 +49,8 @@
     <None Include="wwwroot\images\exchange100x100.png" />
     <None Include="wwwroot\images\exchange50x50.png" />
     <None Include="wwwroot\robots.txt" />
+    <None Include="wwwroot\images\social\twitter.png" />
+    <None Include="wwwroot\images\social\fb.png" />
   </ItemGroup>
 </Project>
 
