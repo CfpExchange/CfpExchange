@@ -8,6 +8,9 @@
     "administratorLogin": {
       "value": "cfpexchangeadministrator"
     },
+    "administratorLoginPassword": {
+      "value": "somePassword!"
+    },
     "sqlServerName": {
       "value": "cfpexchange-text"
     },
@@ -16,6 +19,6 @@
     },
     "websiteName": {
       "value": "cfpexchange-test"
-    } 
+    }
   }
 }
