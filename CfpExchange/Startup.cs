@@ -41,7 +41,7 @@ namespace CfpExchange
 			if (_environment.IsDevelopment())
 				services.AddDbContext<CfpContext>(opt => opt.UseInMemoryDatabase("Cfps"));
 			else
-				services.AddDbContext<CfpContext>(opt => opt.UseSqlServer(Configuration["CfpExchangeDb"]));
+				services.AddDbContext<CfpContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("CfpExchangeDb")));
 
 			services.AddIdentity<ApplicationUser, IdentityRole>(options => { options.User.RequireUniqueEmail = true; })
 				.AddEntityFrameworkStores<CfpContext>()
