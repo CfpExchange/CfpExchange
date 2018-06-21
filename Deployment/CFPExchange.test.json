@@ -3,13 +3,19 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "hostingPlanName": {
-      "value": null
+      "value": "cfpexchange-test"
     },
     "administratorLogin": {
-      "value": null
+      "value": "cfpexchangeadministrator"
+    },
+    "sqlServerName": {
+      "value": "cfpexchange-text"
     },
     "databaseName": {
-      "value": null
-    }
+      "value": "cfpexchange-test"
+    },
+    "websiteName": {
+      "value": "cfpexchange-test"
+    } 
   }
 }
