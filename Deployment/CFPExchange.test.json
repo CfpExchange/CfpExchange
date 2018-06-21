@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "hostingPlanName": {
+      "value": "cfpexchange-test"
+    },
+    "administratorLogin": {
+      "value": "cfpexchangeadministrator"
+    },
+    "administratorLoginPassword": {
+      "value": "SomePasswordToBeFilledOutByYourFavouriteDeploymentTool"
+    },
+    "sqlServerName": {
+      "value": "cfpexchange-test"
+    },
+    "databaseName": {
+      "value": "cfpexchange-test"
+    },
+    "websiteName": {
+      "value": "cfpexchange-test"
+    }
+  }
+}
