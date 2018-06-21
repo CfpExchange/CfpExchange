@@ -21,17 +21,19 @@ Create a file in `~/.microsoft/usersecrets/CfpExchangeSecrets/secrets.json` and 
 The file should have the following layout:
 ```json
 {
-    "CfpExchangeDb": "ValidConnectionStringToMSSQLDatabase",
     "TwitterConsumerKey": "key",
     "TwitterConsumerSecret": "secret",
     "TwitterOAuthToken": "token",
     "TwitterOAuthTokenSecret": "tokensecret",
     "AdminEmailaddress": "you@yourdomain.com",
     "EmailSettings": {
-	    "ApiKey": "MailGunApiKey",
-	    "ApiUri": "https://api.mailgun.net/v3/yourdomain.com/messages",
-	    "From": "No-Reply CFP Exchange <no-reply@cfp.exchange>"
-	},
-    "GoogleTimezoneApiKey": "key"
+        "ApiKey": "MailGunApiKey",
+        "ApiUri": "https://api.mailgun.net/v3/yourdomain.com/messages",
+        "From": "No-Reply CFP Exchange <no-reply@cfp.exchange>"
+    },
+    "GoogleTimezoneApiKey": "key",
+    "ConnectionStrings": {
+        "CfpExchangeDb":  "YourConnectionString" 
+    } 
 }
 ```
