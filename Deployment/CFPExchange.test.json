@@ -9,10 +9,10 @@
       "value": "cfpexchangeadministrator"
     },
     "administratorLoginPassword": {
-      "value": "somePassword!"
+      "value": "SomePasswordToBeFilledOutByYourFavouriteDeploymentTool"
     },
     "sqlServerName": {
-      "value": "cfpexchange-text"
+      "value": "cfpexchange-test"
     },
     "databaseName": {
       "value": "cfpexchange-test"

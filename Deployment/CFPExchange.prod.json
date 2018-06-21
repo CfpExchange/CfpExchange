@@ -3,19 +3,22 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "hostingPlanName": {
-      "value": null
+      "value": "cfpexchange"
     },
     "administratorLogin": {
-      "value": null
+      "value": "cfpexchangeadministrator"
+    },
+    "administratorLoginPassword": {
+      "value": "SomePasswordToBeFilledOutByYourFavouriteDeploymentTool"
     },
     "sqlServerName": {
-      "value": null
+      "value": "cfpexchange"
     },
     "databaseName": {
-      "value": null
+      "value": "cfpexchange"
     },
-    "webSiteName": {
-      "value": null 
-    } 
+    "websiteName": {
+      "value": "cfpexchange"
+    }
   }
 }
