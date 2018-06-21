@@ -1,5 +1,6 @@
 using System;
 using CfpExchange.Data;
+using CfpExchange.Helpers;
 using CfpExchange.Middleware;
 using CfpExchange.Models;
 using CfpExchange.Services;
@@ -88,11 +89,14 @@ namespace CfpExchange
 			{
 				app.UseDeveloperExceptionPage();
 				app.UseSitemapMiddleware();
+				app.UseRssMiddleware();
 			}
 			else
 			{
 				app.UseExceptionHandler("/Home/Error");
-				app.UseSitemapMiddleware("https://cfp.exchange");
+				app.UseSitemapMiddleware(Constants.WebsiteRootUrl);
+				app.UseRssMiddleware(Constants.WebsiteRootUrl);
+
 			}
 
 			app.UseStaticFiles();
