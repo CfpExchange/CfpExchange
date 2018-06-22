@@ -19,6 +19,12 @@
     },
     "websiteName": {
       "value": "cfpexchange"
+    },
+    "AD.TenantId": {
+      "value": "YourTenantId"
+    },
+    "AD.ObjectId": {
+      "value": "YourAADObjectID"
     }
   }
 }

@@ -83,10 +83,10 @@
     "websiteName": {
       "type": "string"
     },
-    "tenantId": {
+    "AD.TenantId": {
       "type": "string"
     },
-    "objectId": {
+    "AD.ObjectId": {
       "type": "string"
     }
   },
@@ -411,15 +411,15 @@
       "location": "West Europe",
       "tags": {},
       "properties": {
-        "tenantId": "[parameters('tenantId')]",
+        "tenantId": "[parameters('AD.TenantId')]",
         "sku": {
           "family": "A",
           "name": "standard"
         },
         "accessPolicies": [
           {
-            "tenantId": "[parameters('tenantId')]",
-            "objectId": "[parameters('objectId')]",
+            "tenantId": "[parameters('AD.TenantId')]",
+            "objectId": "[parameters('AD.ObjectId')]",
             "permissions": {
               "keys": [],
               "secrets": [

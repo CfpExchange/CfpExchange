@@ -20,10 +20,10 @@
     "websiteName": {
       "value": "cfpexchange-test"
     },
-    "tenantId": {
+    "AD.TenantId": {
       "value": "YourTenantId"
     },
-    "objectId": {
+    "AD.ObjectId": {
       "value": "YourAADObjectID"
     }
   }
