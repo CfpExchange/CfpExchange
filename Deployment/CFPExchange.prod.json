@@ -19,6 +19,18 @@
     },
     "websiteName": {
       "value": "cfpexchange"
+    },
+    "AD.TenantId": {
+      "value": "YourTenantId"
+    },
+    "AD.ObjectId": {
+      "value": "YourAADObjectID"
+    },
+    "servicebusNamespace": {
+      "value": "cfpexchange-bus"
+    },
+    "serviceBusQueueName": {
+      "value": "eventimages"
     }
   }
 }
