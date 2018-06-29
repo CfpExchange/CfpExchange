@@ -2,6 +2,9 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+    "resourcegroup": {
+      "type": "string"
+    },
     "hostingPlanName": {
       "type": "string",
       "minLength": 1
@@ -93,8 +96,17 @@
       "type": "string"
     },
     "serviceBusQueueName": {
-      "type": "string" 
-    } 
+      "type": "string"
+    },
+    "vaultName": {
+      "type": "string"
+    },
+    "servicebusQueueConnectionString": {
+      "type": "securestring"
+    },
+    "FeatureToggle.HostOwnImages": {
+      "type": "bool"
+    }
   },
   "resources": [
     {
@@ -188,6 +200,21 @@
               "value": "[concat('Data Source=tcp:', reference(resourceId('Microsoft.Sql/servers/', parameters('sqlserverName'))).fullyQualifiedDomainName, ',1433;Initial Catalog=', parameters('databaseName'), ';User Id=', parameters('administratorLogin'), '@', parameters('sqlserverName'), ';Password=', parameters('administratorLoginPassword'), ';')]",
               "type": "SQLServer"
             }
+          }
+        },
+        {
+          "name": "appsettings",
+          "type": "config",
+          "apiVersion": "2015-08-01",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/Sites/', parameters('webSiteName'))]"
+          ],
+          "tags": {
+            "displayName": "appSettings"
+          },
+          "properties": {
+            "ServicebusQueueConnectionString": "[parameters('servicebusQueueConnectionString')]",
+            "FeatureToggle.HostOwnImages": "[parameters('FeatureToggle.HostOwnImages')]"
           }
         }
       ]
@@ -411,7 +438,7 @@
       }
     },
     {
-      "name": "cfpexchange-vault",
+      "name": "parameters('vaultName')",
       "type": "Microsoft.KeyVault/vaults",
       "apiVersion": "2016-10-01",
       "location": "West Europe",
