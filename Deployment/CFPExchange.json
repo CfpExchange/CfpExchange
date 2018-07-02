@@ -101,9 +101,6 @@
     "vaultName": {
       "type": "string"
     },
-    "servicebusQueueConnectionString": {
-      "type": "securestring"
-    },
     "FeatureToggle.HostOwnImages": {
       "type": "bool"
     }
@@ -213,7 +210,14 @@
             "displayName": "appSettings"
           },
           "properties": {
-            "ServicebusQueueConnectionString": "[parameters('servicebusQueueConnectionString')]",
+            "ServicebusQueueConnectionString": {
+              "reference": {
+                "keyVault": {
+                  "id": "[resourceId(subscription().subscriptionId,  parameters('resourcegroup'), 'Microsoft.KeyVault/vaults', parameters('vaultName'))]"
+                },
+                "secretName": "ServicebusQueueConnectionString"
+              }
+            },
             "FeatureToggle.HostOwnImages": "[parameters('FeatureToggle.HostOwnImages')]"
           }
         }

@@ -38,14 +38,6 @@
     "vaultName": {
       "value": "cfpexchange-vault"
     },
-    "servicebusQueueConnectionString": {
-      "reference": {
-        "keyVault": {
-          "id": "[resourceId(subscription().subscriptionId,  parameters('resourcegroup'), 'Microsoft.KeyVault/vaults', parameters('vaultName'))]"
-        },
-        "secretName": "ServicebusQueueConnectionString"
-      }
-    },
     "FeatureToggle.HostOwnImages": {
       "value": true
     }
