@@ -101,9 +101,6 @@
     "vaultName": {
       "type": "string"
     },
-    "servicebusQueueConnectionString": {
-      "type": "securestring"
-    },
     "FeatureToggle.HostOwnImages": {
       "type": "bool"
     }
