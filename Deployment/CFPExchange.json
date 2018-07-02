@@ -479,7 +479,9 @@
       "sku": {
         "name": "Basic"
       },
-      "properties": {},
+      "properties": {
+        "defaultMessageTimeToLive": "14.00:00:00"
+      },
       "resources": [
         {
           "apiVersion": "2017-04-01",
