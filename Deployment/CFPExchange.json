@@ -491,7 +491,7 @@
           ],
           "properties": {
             "path": "[parameters('serviceBusQueueName')]",
-            "defaultMessageTimeToLive": "14.00:00:00"
+            "defaultMessageTimeToLive": "P0Y0M0DT0H30M0S"
           }
         }
       ]
