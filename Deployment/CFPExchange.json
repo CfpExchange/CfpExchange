@@ -480,7 +480,6 @@
         "name": "Basic"
       },
       "properties": {
-        "defaultMessageTimeToLive": "14.00:00:00"
       },
       "resources": [
         {
@@ -491,7 +490,8 @@
             "[concat('Microsoft.ServiceBus/namespaces/', parameters('serviceBusNamespace'))]"
           ],
           "properties": {
-            "path": "[parameters('serviceBusQueueName')]"
+            "path": "[parameters('serviceBusQueueName')]",
+            "defaultMessageTimeToLive": "14.00:00:00"
           }
         }
       ]
