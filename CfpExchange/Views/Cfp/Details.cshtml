@@ -103,7 +103,7 @@
                 </div>
             </div>
 
-            <p>@Model.EventDescription</p>
+            <p>@Model.EventDescription?.Replace("\n", "<br />")</p>
             <div class="tag">&nbsp;
                 @*<a href="#">.NET</a>
                     <a href="#">Development</a>
@@ -138,7 +138,7 @@
                     <span class="end">@Model.EventEndDate.ToString("MM/dd/yyyy")</span>
                     <span class="timezone">@Model.EventTimezone</span>
                     <span class="title">@Model.EventName</span>
-                    <span class="description">@Model.EventDescription.Replace("\n", "<br />")</span>
+                    <span class="description">@Model.EventDescription?.Replace("\n", "<br />")</span>
                     <span class="location">@Model.EventLocationName</span>
                     <span class="all_day_event">true</span>
                     <span class="date_format">MM/DD/YYYY</span>
