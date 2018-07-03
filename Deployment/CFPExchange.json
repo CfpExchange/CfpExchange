@@ -210,7 +210,14 @@
             "displayName": "appSettings"
           },
           "properties": {
-            "ServicebusQueueConnectionString": "someValue",
+            "ServicebusQueueConnectionString": {
+              "reference": {
+                "keyVault": {
+                  "id": "[resourceId(subscription().subscriptionId,  parameters('resourcegroup'), 'Microsoft.KeyVault/vaults', parameters('vaultName'))]"
+                },
+                "secretName": "ServicebusQueueConnectionString"
+              }
+            },
             "FeatureToggle.HostOwnImages": "[parameters('FeatureToggle.HostOwnImages')]"
           }
         }
