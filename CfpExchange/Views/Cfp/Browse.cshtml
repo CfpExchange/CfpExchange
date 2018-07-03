@@ -20,7 +20,6 @@
                                 @for (var i=0; i<=12; i++)
                                 {
                                     var newDateTime = DateTime.Now.AddMonths(i);
-                                    var selectedOption = "";
 
                                     if (ViewContext.HttpContext.Request.Query.ContainsKey("eventdate") && ViewContext.HttpContext.Request.Query["eventdate"].ToString() == $"{@newDateTime.Year}-{@newDateTime.Month}")
                                     {
@@ -111,5 +110,6 @@
 </div>
 @section Scripts
 {
+    <script src="/js/scripts.js"></script>
     <script src="/js/plugins/select2.min.js"></script>
 }

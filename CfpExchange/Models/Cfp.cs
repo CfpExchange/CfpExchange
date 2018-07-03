@@ -54,7 +54,7 @@ namespace CfpExchange.Models
 		{
 			get
 			{
-				if (EventDescription.Length > 140)
+				if (EventDescription?.Length > 140)
 					return $"{EventDescription.Substring(0, 140)}...";
 
 				return EventDescription;
@@ -66,7 +66,7 @@ namespace CfpExchange.Models
 		{
 			get
 			{
-				if (EventDescription.Length > 40)
+				if (EventDescription?.Length > 40)
 					return $"{EventDescription.Substring(0, 40)}...";
 
 				return EventDescription;

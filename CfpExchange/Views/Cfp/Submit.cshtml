@@ -52,6 +52,11 @@
               @*<small id="eventTitleHelp" class="form-text text-muted">Under this title the CFP will be listed</small>*@
             </div>
 
+            <div class="form-group" id="eventImageEntry" style="display: none;">
+              <label>Event Image URL</label>
+              <input type="text" class="form-control" id="eventImage">
+            </div>
+
             <div class="form-group" id="eventDescriptionEntry" style="display: none;">
               <label>Event Description</label>
               <textarea rows="3" class="form-control" id="eventDescription">
@@ -171,6 +176,7 @@
             }
 
             cfpToSubmit.eventTitle = $('#eventTitle').val();
+            cfpToSubmit.eventImageUrl = $('#eventImage').val();
             cfpToSubmit.eventDescription = $('#eventDescription').val();
             cfpToSubmit.cfpUrl = $('#eventCfpDirectUrl').val();
             cfpToSubmit.providesAccommodation = $('#accommodation').val();
@@ -186,8 +192,9 @@
                     var url = '@Url.Action("Details", "cfp", new { id = "__id__" })';
                     window.location.href = url.replace('__id__', resultId);
                 },
-                error: function(err) {
-                    alert(err);
+                error: function(jqXHR, textStatus, errorThrown) {
+                    // TODO need something better than this
+                    alert('Whoops, something went wrong! Error: ' + errorThrown);
                 }
             });
         }
@@ -232,6 +239,7 @@
                     $('#eventUrlPreview p').html(metadata.description);
 
                     $('#eventTitle').attr('value', metadata.title);
+                    $('#eventImage').attr('value', metadata.imageUrl);
                     $('#eventDescription').val(metadata.description);
                     $('#eventUrlPreview').show();
 
@@ -283,6 +291,7 @@
         function editEventData() {
             // TODO
             $('#eventTitleEntry').show();
+            $('#eventImageEntry').show();
             $('#eventDescriptionEntry').show();
             $('#eventUrlPreview').hide();
         }
@@ -290,6 +299,7 @@
         function hideEditEventData() {
             // TODO
             $('#eventTitleEntry').hide();
+            $('#eventImageEntry').hide();
             $('#eventDescriptionEntry').hide();
         }
 
