@@ -198,28 +198,6 @@
               "type": "SQLServer"
             }
           }
-        },
-        {
-          "name": "appsettings",
-          "type": "config",
-          "apiVersion": "2015-08-01",
-          "dependsOn": [
-            "[resourceId('Microsoft.Web/Sites/', parameters('webSiteName'))]"
-          ],
-          "tags": {
-            "displayName": "appSettings"
-          },
-          "properties": {
-            "ServicebusQueueConnectionString": {"reference": {
-                "keyVault": {
-                  "id": "[resourceId(subscription().subscriptionId,  parameters('resourcegroup'), 'Microsoft.KeyVault/vaults', parameters('vaultName'))]"
-                },
-                "secretName": "ServicebusQueueConnectionString"
-              }
-
-            },
-            "FeatureToggle.HostOwnImages": "[parameters('FeatureToggle.HostOwnImages')]"
-          }
         }
       ]
     },
@@ -479,8 +457,7 @@
       "sku": {
         "name": "Basic"
       },
-      "properties": {
-      },
+      "properties": {},
       "resources": [
         {
           "apiVersion": "2017-04-01",
@@ -490,8 +467,7 @@
             "[concat('Microsoft.ServiceBus/namespaces/', parameters('serviceBusNamespace'))]"
           ],
           "properties": {
-            "path": "[parameters('serviceBusQueueName')]",
-            "defaultMessageTimeToLive": "P0Y0M0DT0H30M0S"
+            "path": "[parameters('serviceBusQueueName')]"
           }
         }
       ]
