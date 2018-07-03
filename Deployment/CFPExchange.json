@@ -467,7 +467,8 @@
             "[concat('Microsoft.ServiceBus/namespaces/', parameters('serviceBusNamespace'))]"
           ],
           "properties": {
-            "path": "[parameters('serviceBusQueueName')]"
+            "path": "[parameters('serviceBusQueueName')]",
+            "defaultMessageTimeToLive": "P0Y0M0DT0H30M0S"
           }
         }
       ]
