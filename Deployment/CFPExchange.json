@@ -106,6 +106,7 @@
     }
   },
   "variables": {
+    "sharedTemplateUrl": "[uri(deployment().properties.templateLink.uri, 'appservice.json')]"
   },
   "resources": [
     {
@@ -115,7 +116,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[uri(deployment().templateLink.uri, 'appservice.json')]",
+          "uri": "[variables('sharedTemplateUrl')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
