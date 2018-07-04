@@ -106,7 +106,7 @@
     }
   },
   "variables": {
-    "sharedTemplateUrl": "[uri(deployment().properties.templateLink.uri, 'appservice.json')]"
+    "sharedTemplateUrl": "[uri(deployment().properties.templateLink.uri, 'shared-resources.json')]"
   },
   "resources": [
     {
