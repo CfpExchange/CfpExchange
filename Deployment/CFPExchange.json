@@ -115,7 +115,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[uri(deployment().properties.templateLink.uri, 'appservice.json')]",
+          "uri": "[uri(deployment().templateLink.uri, 'appservice.json')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
