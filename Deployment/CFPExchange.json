@@ -106,17 +106,16 @@
     }
   },
   "variables": {
-    "sharedTemplateUrl": "[uri(deployment().properties.templateLink.uri, 'shared-resources.json')]"
   },
   "resources": [
     {
-      "apiVersion": "2017-05-10",
-      "name": "linkedTemplate",
+      "apiVersion": "2015-01-01",
+      "name": "nestedTemplate",
       "type": "Microsoft.Resources/deployments",
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[variables('sharedTemplateUrl')]",
+          "uri": "https://gist.githubusercontent.com/Jandev/8902701fb486ea132010605d11b1eeab/raw/5aed6939e7b1d2a9eda05df405a3a319c46c890d/appservice%2520cfpexchange",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
@@ -152,6 +151,14 @@
           },
           "FeatureToggle.HostOwnImages": {
             "value": "[parameters('FeatureToggle.HostOwnImages')]"
+          },
+          "servicebusQueueConnectionString": {
+            "reference": {
+              "keyVault": {
+                "id": "[resourceId(subscription().subscriptionId,  parameters('resourcegroup'), 'Microsoft.KeyVault/vaults', parameters('vaultName'))]"
+              },
+              "secretName": "ServicebusQueueConnectionString"
+            }
           }
         }
       }
