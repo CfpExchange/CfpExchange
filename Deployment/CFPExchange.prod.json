@@ -40,6 +40,9 @@
     },
     "FeatureToggle.HostOwnImages": {
       "value": false
+    },
+    "templateBaseUri": {
+      "value": "https://the-base-uri-where-your-nested-templates-are-stored/"
     }
   }
 }
