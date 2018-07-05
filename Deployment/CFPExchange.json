@@ -103,6 +103,9 @@
     },
     "FeatureToggle.HostOwnImages": {
       "type": "bool"
+    },
+    "templateBaseUri": {
+      "type": "string"
     }
   },
   "variables": {
@@ -115,7 +118,7 @@
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "https://gist.githubusercontent.com/Jandev/8902701fb486ea132010605d11b1eeab/raw/5aed6939e7b1d2a9eda05df405a3a319c46c890d/appservice%2520cfpexchange",
+          "uri": "[concat(parameters('templateBaseUri'), 'complete-solution.json')]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
@@ -140,11 +143,29 @@
           "databaseName": {
             "value": "[parameters('databaseName')]"
           },
+          "collation": {
+            "value": "[parameters('collation')]"
+          },
+          "edition": {
+            "value": "[parameters('edition')]"
+          },
+          "maxSizeBytes": {
+            "value": "[parameters('maxSizeBytes')]"
+          },
+          "requestedServiceObjectiveName": {
+            "value": "[parameters('requestedServiceObjectiveName')]"
+          },
           "administratorLogin": {
             "value": "[parameters('administratorLogin')]"
           },
           "administratorLoginPassword": {
             "value": "[parameters('administratorLoginPassword')]"
+          },
+          "servicebusNamespace": {
+            "value": "[parameters('servicebusNamespace')]"
+          },
+          "serviceBusQueueName": {
+            "value": "[parameters('serviceBusQueueName')]"
           },
           "vaultName": {
             "value": "[parameters('vaultName')]"
@@ -163,53 +184,6 @@
         }
       }
     },
-    {
-      "name": "[parameters('sqlserverName')]",
-      "type": "Microsoft.Sql/servers",
-      "location": "[resourceGroup().location]",
-      "tags": {
-        "displayName": "SqlServer"
-      },
-      "apiVersion": "2014-04-01-preview",
-      "properties": {
-        "administratorLogin": "[parameters('administratorLogin')]",
-        "administratorLoginPassword": "[parameters('administratorLoginPassword')]"
-      },
-      "resources": [
-        {
-          "name": "[parameters('databaseName')]",
-          "type": "databases",
-          "location": "[resourceGroup().location]",
-          "tags": {
-            "displayName": "Database"
-          },
-          "apiVersion": "2014-04-01-preview",
-          "dependsOn": [
-            "[resourceId('Microsoft.Sql/servers/', parameters('sqlserverName'))]"
-          ],
-          "properties": {
-            "edition": "[parameters('edition')]",
-            "collation": "[parameters('collation')]",
-            "maxSizeBytes": "[parameters('maxSizeBytes')]",
-            "requestedServiceObjectiveName": "[parameters('requestedServiceObjectiveName')]"
-          }
-        },
-        {
-          "type": "firewallrules",
-          "apiVersion": "2014-04-01-preview",
-          "dependsOn": [
-            "[resourceId('Microsoft.Sql/servers/', parameters('sqlserverName'))]"
-          ],
-          "location": "[resourceGroup().location]",
-          "name": "AllowAllWindowsAzureIps",
-          "properties": {
-            "endIpAddress": "0.0.0.0",
-            "startIpAddress": "0.0.0.0"
-          }
-        }
-      ]
-    },
-    
     {
       "name": "[parameters('vaultName')]",
       "type": "Microsoft.KeyVault/vaults",
@@ -238,31 +212,6 @@
         ],
         "enabledForTemplateDeployment": true
       }
-    },
-    {
-      "name": "[parameters('servicebusNamespace')]",
-      "type": "Microsoft.ServiceBus/namespaces",
-      "apiVersion": "2017-04-01",
-      "location": "West Europe",
-      "kind": "Messaging",
-      "sku": {
-        "name": "Basic"
-      },
-      "properties": {},
-      "resources": [
-        {
-          "apiVersion": "2017-04-01",
-          "name": "[parameters('serviceBusQueueName')]",
-          "type": "Queues",
-          "dependsOn": [
-            "[concat('Microsoft.ServiceBus/namespaces/', parameters('serviceBusNamespace'))]"
-          ],
-          "properties": {
-            "path": "[parameters('serviceBusQueueName')]",
-            "defaultMessageTimeToLive": "P0Y0M0DT0H30M0S"
-          }
-        }
-      ]
     }
   ]
 }
