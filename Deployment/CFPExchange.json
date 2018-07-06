@@ -82,6 +82,12 @@
     },
     "websiteName": {
       "type": "string"
+    },
+    "AD.TenantId": {
+      "type": "string"
+    },
+    "AD.ObjectId": {
+      "type": "string"
     }
   },
   "resources": [
@@ -396,6 +402,35 @@
       },
       "properties": {
         "ApplicationId": "[parameters('webSiteName')]"
+      }
+    },
+    {
+      "name": "cfpexchange-vault",
+      "type": "Microsoft.KeyVault/vaults",
+      "apiVersion": "2016-10-01",
+      "location": "West Europe",
+      "tags": {},
+      "properties": {
+        "tenantId": "[parameters('AD.TenantId')]",
+        "sku": {
+          "family": "A",
+          "name": "standard"
+        },
+        "accessPolicies": [
+          {
+            "tenantId": "[parameters('AD.TenantId')]",
+            "objectId": "[parameters('AD.ObjectId')]",
+            "permissions": {
+              "keys": [],
+              "secrets": [
+                "get"
+              ],
+              "certificates": [],
+              "storage": []
+            }
+          }
+        ],
+        "enabledForTemplateDeployment": true
       }
     }
   ]
