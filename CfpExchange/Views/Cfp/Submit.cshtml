@@ -88,6 +88,11 @@
             </div>
 
             <div class="form-group">
+                <label>Event Twitter handle</label>
+                <input class="form-control" id="eventTwitterHandle" type="text">
+            </div>
+
+            <div class="form-group">
               <label>Direct CFP url</label>
               <input type="text" class="form-control" id="eventCfpDirectUrl">
               @*<small id="eventTitleHelp" class="form-text text-muted">Is there a direct link to the CFP portal? Please let us know here!</small>*@
@@ -154,6 +159,7 @@
         cfpToSubmit.providesAccommodation = null;
         cfpToSubmit.providesTravelAssistance = null;
         cfpToSubmit.submittedByName = null;
+        cfpToSubmit.eventTwitterHandle = null;
 
         function submitCfp()
         {
@@ -181,9 +187,10 @@
             cfpToSubmit.cfpUrl = $('#eventCfpDirectUrl').val();
             cfpToSubmit.providesAccommodation = $('#accommodation').val();
             cfpToSubmit.providesTravelAssistance = $('#travelassistance').val();
-        
             cfpToSubmit.submittedByName = $('#submitterName').val();
-        
+            cfpToSubmit.eventTwitterHandle = $('#eventTwitterHandle').val();
+
+            $('#submitCfpButton').prop('disabled', true);
             $.ajax({
                 type: "POST",
                 url: "/cfp/submit",
@@ -195,6 +202,7 @@
                 error: function(jqXHR, textStatus, errorThrown) {
                     // TODO need something better than this
                     alert('Whoops, something went wrong! Error: ' + errorThrown);
+                    $('#submitCfpButton').prop('disabled', false);
                 }
             });
         }

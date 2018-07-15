@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -176,6 +177,7 @@ namespace CfpExchange.Controllers
 					ProvidesAccommodation = submittedCfp.ProvidesAccommodation,
 					ProvidesTravelAssistance = submittedCfp.ProvidesTravelAssistance,
 					SubmittedByName = submittedCfp.SubmittedByName,
+					EventTwitterHandle = submittedCfp.EventTwitterHandle,
 					EventTimezone = timezone
 				};
 
@@ -186,40 +188,7 @@ namespace CfpExchange.Controllers
 				// Post to Twitter account
 				try
 				{
-					var auth = new SingleUserAuthorizer
-					{
-						CredentialStore = new SingleUserInMemoryCredentialStore
-						{
-							ConsumerKey = _configuration["TwitterConsumerKey"],
-							ConsumerSecret = _configuration["TwitterConsumerSecret"],
-							OAuthToken = _configuration["TwitterOAuthToken"],
-							OAuthTokenSecret = _configuration["TwitterOAuthTokenSecret"]
-						}
-					};
-
-					await auth.AuthorizeAsync();
-
-					var ctx = new TwitterContext(auth);
-
-					var tweetMessageBuilder = new StringBuilder();
-					tweetMessageBuilder.AppendLine($" New CFP Added: {cfpToAdd.EventName}");
-					tweetMessageBuilder.AppendLine($"⏳ Closes: {cfpToAdd.CfpEndDate.ToLongDateString()}");
-
-					if (cfpToAdd.EventStartDate != default(DateTime) && cfpToAdd.EventStartDate.Date == cfpToAdd.EventEndDate.Date)
-						tweetMessageBuilder.AppendLine($" Event: {cfpToAdd.EventStartDate.ToString("MMM dd")}");
-					else if (cfpToAdd.EventStartDate != default(DateTime))
-						tweetMessageBuilder.AppendLine($" Event: {cfpToAdd.EventStartDate.ToString("MMM dd")} - {cfpToAdd.EventEndDate.ToString("MMM dd")}");
-					
-					tweetMessageBuilder.AppendLine($"#cfp #cfpexchange {Url.Action("details", "cfp", new { id = cfpToAddId }, "https", "cfp.exchange")}");
-
-					var tweetMessage = tweetMessageBuilder.ToString();
-
-					if (_hostingEnvironment.IsProduction())
-					{
-						// TODO substringing is not the best thing, but does the trick for now
-						await ctx.TweetAsync(tweetMessage.Length > 280 ? tweetMessage.Substring(0, 280) : tweetMessage,
-							(decimal)cfpToAdd.EventLocationLat, (decimal)cfpToAdd.EventLocationLng, true);
-					}
+					await PostNewCfpTweet(cfpToAdd);
 				}
 				catch
 				{
@@ -233,6 +202,59 @@ namespace CfpExchange.Controllers
 
 			// Add invalid model
 			return BadRequest(submittedCfp);
+		}
+
+		private async Task PostNewCfpTweet(Cfp cfpToAdd)
+		{
+			var auth = new SingleUserAuthorizer
+			{
+				CredentialStore = new SingleUserInMemoryCredentialStore
+				{
+					ConsumerKey = _configuration["TwitterConsumerKey"],
+					ConsumerSecret = _configuration["TwitterConsumerSecret"],
+					OAuthToken = _configuration["TwitterOAuthToken"],
+					OAuthTokenSecret = _configuration["TwitterOAuthTokenSecret"]
+				}
+			};
+
+			await auth.AuthorizeAsync();
+
+			var ctx = new TwitterContext(auth);
+
+			var tweetMessageBuilder = new StringBuilder();
+			if (!string.IsNullOrWhiteSpace(cfpToAdd.EventTwitterHandle))
+			{
+				var twitterHandle = cfpToAdd.EventTwitterHandle;
+
+				if (!twitterHandle.StartsWith('@'))
+					twitterHandle = "@" + twitterHandle;
+
+				tweetMessageBuilder.AppendLine($" New CFP Added: {cfpToAdd.EventName} ({twitterHandle}) ");
+			}
+			else
+				tweetMessageBuilder.AppendLine($" New CFP Added: {cfpToAdd.EventName}");
+
+			tweetMessageBuilder.AppendLine($"⏳ Closes: {cfpToAdd.CfpEndDate.ToLongDateString()}");
+
+			if (cfpToAdd.EventStartDate != default(DateTime) && cfpToAdd.EventStartDate.Date == cfpToAdd.EventEndDate.Date)
+				tweetMessageBuilder.AppendLine($" Event: {cfpToAdd.EventStartDate.ToString("MMM dd")}");
+			else if (cfpToAdd.EventStartDate != default(DateTime))
+				tweetMessageBuilder.AppendLine($" Event: {cfpToAdd.EventStartDate.ToString("MMM dd")} - {cfpToAdd.EventEndDate.ToString("MMM dd")}");
+
+			tweetMessageBuilder.AppendLine($"#cfp #cfpexchange {Url.Action("details", "cfp", new { id = cfpToAdd.Id }, "https", "cfp.exchange")}");
+
+			var tweetMessage = tweetMessageBuilder.ToString();
+
+			if (_hostingEnvironment.IsProduction())
+			{
+				// TODO substringing is not the best thing, but does the trick for now
+				await ctx.TweetAsync(tweetMessage.Length > 280 ? tweetMessage.Substring(0, 280) : tweetMessage,
+					(decimal)cfpToAdd.EventLocationLat, (decimal)cfpToAdd.EventLocationLng, true);
+			}
+			else
+			{
+				Debug.WriteLine(tweetMessage);
+			}
 		}
 
 		private async Task<string> GetTimezone(double lat, double lng)

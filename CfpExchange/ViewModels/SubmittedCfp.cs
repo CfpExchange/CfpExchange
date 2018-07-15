@@ -46,5 +46,8 @@ namespace CfpExchange.ViewModels
 
 		[DataType(DataType.Text)]
 		public string SubmittedByName { get; set; }
+
+		[DataType(DataType.Text)]
+		public string EventTwitterHandle { get; set; }
 	}
 }
