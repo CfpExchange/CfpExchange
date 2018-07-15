@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using CfpExchange.Data;
 using CfpExchange.Helpers;
@@ -200,13 +201,24 @@ namespace CfpExchange.Controllers
 
 					var ctx = new TwitterContext(auth);
 
-					var tweetMessage = $"New CFP Added: {cfpToAdd.EventName} closes {cfpToAdd.CfpEndDate.ToLongDateString()} #cfpexchange {Url.Action("details", "cfp", new { id = cfpToAddId }, "https", "cfp.exchange")}";
+					var tweetMessageBuilder = new StringBuilder();
+					tweetMessageBuilder.AppendLine($" New CFP Added: {cfpToAdd.EventName}");
+					tweetMessageBuilder.AppendLine($"⏳ Closes: {cfpToAdd.CfpEndDate.ToLongDateString()}");
+
+					if (cfpToAdd.EventStartDate != default(DateTime) && cfpToAdd.EventStartDate.Date == cfpToAdd.EventEndDate.Date)
+						tweetMessageBuilder.AppendLine($" Event: {cfpToAdd.EventStartDate.ToString("MMM dd")}");
+					else if (cfpToAdd.EventStartDate != default(DateTime))
+						tweetMessageBuilder.AppendLine($" Event: {cfpToAdd.EventStartDate.ToString("MMM dd")} - {cfpToAdd.EventEndDate.ToString("MMM dd")}");
+					
+					tweetMessageBuilder.AppendLine($"#cfp #cfpexchange {Url.Action("details", "cfp", new { id = cfpToAddId }, "https", "cfp.exchange")}");
+
+					var tweetMessage = tweetMessageBuilder.ToString();
 
 					if (_hostingEnvironment.IsProduction())
 					{
 						// TODO substringing is not the best thing, but does the trick for now
 						await ctx.TweetAsync(tweetMessage.Length > 280 ? tweetMessage.Substring(0, 280) : tweetMessage,
-							(decimal)cfpToAdd.EventLocationLat, (decimal)cfpToAdd.EventLocationLng);
+							(decimal)cfpToAdd.EventLocationLat, (decimal)cfpToAdd.EventLocationLng, true);
 					}
 				}
 				catch
