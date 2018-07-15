@@ -229,17 +229,17 @@ namespace CfpExchange.Controllers
 				if (!twitterHandle.StartsWith('@'))
 					twitterHandle = "@" + twitterHandle;
 
-				tweetMessageBuilder.AppendLine($" New CFP Added: {cfpToAdd.EventName} ({twitterHandle}) ");
+				tweetMessageBuilder.AppendLine($"\U0001F4E2 New CFP: {cfpToAdd.EventName} ({twitterHandle}) ");
 			}
 			else
-				tweetMessageBuilder.AppendLine($" New CFP Added: {cfpToAdd.EventName}");
+				tweetMessageBuilder.AppendLine($"\U0001F4E2 New CFP: {cfpToAdd.EventName}");
 
-			tweetMessageBuilder.AppendLine($"⏳ Closes: {cfpToAdd.CfpEndDate.ToLongDateString()}");
+			tweetMessageBuilder.AppendLine($"\U000023F3 Closes: {cfpToAdd.CfpEndDate.ToLongDateString()}");
 
 			if (cfpToAdd.EventStartDate != default(DateTime) && cfpToAdd.EventStartDate.Date == cfpToAdd.EventEndDate.Date)
-				tweetMessageBuilder.AppendLine($" Event: {cfpToAdd.EventStartDate.ToString("MMM dd")}");
+				tweetMessageBuilder.AppendLine($"\U0001F5D3 Event: {cfpToAdd.EventStartDate.ToString("MMM dd")}");
 			else if (cfpToAdd.EventStartDate != default(DateTime))
-				tweetMessageBuilder.AppendLine($" Event: {cfpToAdd.EventStartDate.ToString("MMM dd")} - {cfpToAdd.EventEndDate.ToString("MMM dd")}");
+				tweetMessageBuilder.AppendLine($"\U0001F5D3 Event: {cfpToAdd.EventStartDate.ToString("MMM dd")} - {cfpToAdd.EventEndDate.ToString("MMM dd")}");
 
 			tweetMessageBuilder.AppendLine($"#cfp #cfpexchange {Url.Action("details", "cfp", new { id = cfpToAdd.Id }, "https", "cfp.exchange")}");
 
