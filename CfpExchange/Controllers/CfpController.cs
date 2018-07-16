@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using CfpExchange.Data;
 using CfpExchange.Helpers;
@@ -159,6 +160,15 @@ namespace CfpExchange.Controllers
 					// If it fails, sucks for you
 				}
 
+				var cfpToAddSlug = FriendlyUrlHelper.GetFriendlyTitle(submittedCfp.EventTitle);//SlugHelper.Slugify(submittedCfp.EventTitle);
+				var i = 0;
+
+				// Prevent duplicate slugs
+				while (_cfpContext.Cfps.Any(cfp => cfp.Slug == cfpToAddSlug))
+				{
+					cfpToAddSlug = $"{cfpToAddSlug}-{++i}";
+				}
+
 				var cfpToAdd = new Cfp
 				{
 					Id = cfpToAddId,
@@ -178,7 +188,8 @@ namespace CfpExchange.Controllers
 					ProvidesTravelAssistance = submittedCfp.ProvidesTravelAssistance,
 					SubmittedByName = submittedCfp.SubmittedByName,
 					EventTwitterHandle = submittedCfp.EventTwitterHandle,
-					EventTimezone = timezone
+					EventTimezone = timezone,
+					Slug = cfpToAddSlug
 				};
 
 				// Save CFP
@@ -268,16 +279,26 @@ namespace CfpExchange.Controllers
 			}
 		}
 
-		public IActionResult Details(Guid id)
+		public IActionResult Details(string id)
 		{
-			if (id == Guid.Empty)
+			if (string.IsNullOrWhiteSpace(id))
 				return RedirectToAction("index", "home");
 
-			var selectedCfp = _cfpContext.Cfps.SingleOrDefault(cfp => cfp.Id == id);
+			var selectedCfp = _cfpContext.Cfps.SingleOrDefault(cfp => cfp.Slug == id);
 
 			if (selectedCfp == null)
-				// TODO to error page?
-				return RedirectToAction("index", "home");
+			{
+				// Check it the id happens to be a Guid
+				if (Guid.TryParse(id, out Guid guidId))
+				{
+					if (guidId != Guid.Empty)
+						selectedCfp = _cfpContext.Cfps.SingleOrDefault(cfp => cfp.Id == guidId);
+				}
+
+				if (selectedCfp == null)
+					// TODO to error page?
+					return RedirectToAction("index", "home");
+			}
 
 			if (selectedCfp.DuplicateOfId != null && selectedCfp.DuplicateOfId != Guid.Empty)
 			{

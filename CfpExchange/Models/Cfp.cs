@@ -49,6 +49,7 @@ namespace CfpExchange.Models
 		public string SubmittedByName { get; set; }
 		public string EventTwitterHandle { get; set; }
 		public Guid? DuplicateOfId { get; set; }
+		public string Slug { get; set; }
 
 		[NotMapped]
 		public string ShortDescription

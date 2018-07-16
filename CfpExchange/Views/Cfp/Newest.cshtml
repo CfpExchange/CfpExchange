@@ -32,11 +32,11 @@
                             Added on: @cfp.CfpAdded.ToShortDateString() - Ends in: @(((TimeSpan)cfp.CfpEndDate.Subtract(DateTime.Now)).Humanize(minUnit: TimeUnit.Hour))
                             <div class="float-right">Event date: @Html.Raw(eventDate)</div>
                         </div>
-                        <a href="@(Url.Action("details", "cfp", new {id = cfp.Id}))">
+                        <a href="@(Url.Action("details", "cfp", new {id = cfp.Slug}))">
                             <img src="@cfp.EventImage" alt="Event image">
                         </a>
                         <h2>
-                            <a href="@(Url.Action("details", "cfp", new {id = cfp.Id}))">@cfp.EventName</a>
+                            <a href="@(Url.Action("details", "cfp", new {id = cfp.Slug}))">@cfp.EventName</a>
                             @if (!string.IsNullOrWhiteSpace(cfp.EventLocationName))
                             {
                                 @Html.Raw($"&nbsp;<small>{@cfp.EventLocationName}</small>");

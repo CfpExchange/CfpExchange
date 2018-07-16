@@ -56,7 +56,7 @@ namespace CfpExchange.Middleware
 				foreach (var cfp in _cfpContext.Cfps.Where(cfp => cfp.CfpEndDate > DateTime.UtcNow))
 				{
 					sitemapContent += "<url>";
-					sitemapContent += $"<loc>{_rootUrl}/cfp/details/{cfp.Id}</loc>";
+					sitemapContent += $"<loc>{_rootUrl}/cfp/details/{cfp.Slug}</loc>";
 					sitemapContent += $"<lastmod>{cfp.CfpAdded.ToString("yyyy-MM-dd")}</lastmod>";
 					sitemapContent += "</url>";
 				}
