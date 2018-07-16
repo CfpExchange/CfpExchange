@@ -302,7 +302,8 @@ namespace CfpExchange.Controllers
 
 			if (selectedCfp.DuplicateOfId != null && selectedCfp.DuplicateOfId != Guid.Empty)
 			{
-				return RedirectToAction("details", "cfp", new { id = selectedCfp.DuplicateOfId });
+				var originalCfp = _cfpContext.Cfps.SingleOrDefault(cfp => cfp.Id == selectedCfp.DuplicateOfId);
+				return RedirectToAction("details", "cfp", new { id = originalCfp.Slug });
 			}
 
 			selectedCfp.Views++;
