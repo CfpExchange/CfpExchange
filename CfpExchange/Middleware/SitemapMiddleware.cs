@@ -43,7 +43,7 @@ namespace CfpExchange.Middleware
 				{
 					var methods = controller.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly)
 					.Where(method => typeof(IActionResult).IsAssignableFrom(method.ReturnType));
-					
+
 					foreach (var method in methods)
 					{
 						sitemapContent += "<url>";
@@ -85,9 +85,8 @@ namespace CfpExchange.Middleware
 		{
 			var serviceScope = app.ApplicationServices
 				.GetRequiredService<IServiceScopeFactory>().CreateScope();
-			
-				return app.UseMiddleware<RssMiddleware>(rootUrl, serviceScope.ServiceProvider.GetService<CfpContext>());
-			
+
+			return app.UseMiddleware<RssMiddleware>(rootUrl, serviceScope.ServiceProvider.GetService<CfpContext>());
 		}
 	}
 }
