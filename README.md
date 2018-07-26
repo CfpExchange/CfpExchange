@@ -31,9 +31,11 @@ The file should have the following layout:
         "ApiUri": "https://api.mailgun.net/v3/yourdomain.com/messages",
         "From": "No-Reply CFP Exchange <no-reply@cfp.exchange>"
     },
-    "GoogleTimezoneApiKey": "key",
+    "MapsApiKey": "key",
     "ConnectionStrings": {
         "CfpExchangeDb":  "YourConnectionString" 
     } 
 }
 ```
+
+`MapsApiKey` is an API key for the Azure Maps service

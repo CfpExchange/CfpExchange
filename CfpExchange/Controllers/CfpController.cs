@@ -160,7 +160,7 @@ namespace CfpExchange.Controllers
 					// If it fails, sucks for you
 				}
 
-				var cfpToAddSlug = FriendlyUrlHelper.GetFriendlyTitle(submittedCfp.EventTitle);//SlugHelper.Slugify(submittedCfp.EventTitle);
+				var cfpToAddSlug = FriendlyUrlHelper.GetFriendlyTitle(submittedCfp.EventTitle);
 				var i = 0;
 
 				// Prevent duplicate slugs
@@ -272,10 +272,10 @@ namespace CfpExchange.Controllers
 		{
 			using (var httpClient = new HttpClient())
 			{
-				var resultJson = await httpClient.GetStringAsync($"https://maps.googleapis.com/maps/api/timezone/json?location={lat},{lng}&timestamp={DateTime.Now.Ticks}&key={_configuration["GoogleTimezoneApiKey"]}");
-				var result = JsonConvert.DeserializeObject<dynamic>(resultJson);
+				var resultJson = await httpClient.GetStringAsync($"https://atlas.microsoft.com/timezone/byCoordinates/json?subscription-key={_configuration["MapsApiKey"]}&api-version=1.0&query={lat}%2C{lng}");
+				var result = JsonConvert.DeserializeObject<TimezoneInfo>(resultJson);
 
-				return result.timeZoneId;
+				return result.TimeZones.FirstOrDefault()?.Id ?? string.Empty;
 			}
 		}
 
