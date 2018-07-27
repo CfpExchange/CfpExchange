@@ -1,9 +1,11 @@
 ﻿using System;
+using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using CfpExchange.Models;
 using HtmlAgilityPack;
+using Newtonsoft.Json;
 
 namespace CfpExchange.Helpers
 {
@@ -11,6 +13,37 @@ namespace CfpExchange.Helpers
 	// And modified
 	public static class MetaScraper
 	{
+		// Implemented, but not used yet. Results are just as good as the method below at this time.
+		public static MetaInformation GetUrlPreview(string url, string apikey)
+		{
+			try
+			{
+				using (var httpClient = new HttpClient())
+				{
+					httpClient.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", apikey);
+
+					using (Stream s = httpClient.GetStreamAsync($"https://api.labs.cognitive.microsoft.com/urlpreview/v7.0/search?q={url}").Result)
+					using (StreamReader sr = new StreamReader(s))
+					using (JsonReader reader = new JsonTextReader(sr))
+					{
+						var serializer = new JsonSerializer();
+						var result = serializer.Deserialize<UrlPreviewResult>(reader);
+
+						return new MetaInformation(url, result.Name, result.Description, "", result.PrimaryImageOfPage?.ContentUrl, "");
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				// TODO: We should probably log this somewhere...
+				return new MetaInformation(url)
+				{
+					HasError = true,
+					ExternalPageError = ex is WebException
+				};
+			}
+		}
+
 		/// <summary>
 		/// Uses HtmlAgilityPack to get the meta information from a url
 		/// </summary>

@@ -59,7 +59,7 @@ namespace CfpExchange
 				options.AccessDeniedPath = "/Errors/AccessDenied";
 			});
 
-            services.AddAuthorization();
+			services.AddAuthorization();
 
 			services.AddMvc();
 

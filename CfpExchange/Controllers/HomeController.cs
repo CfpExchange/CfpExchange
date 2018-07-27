@@ -48,6 +48,7 @@ namespace CfpExchange.Controllers
 
 				indexViewModel.CfpList = _cfpContext.Cfps
 					.Where(cfp => cfp.CfpEndDate > DateTime.UtcNow)
+					.Where(cfp => cfp.DuplicateOfId == null)
 					.OrderBy(cfp => cfp.CfpEndDate).Take(9).ToArray();
 			}
 
