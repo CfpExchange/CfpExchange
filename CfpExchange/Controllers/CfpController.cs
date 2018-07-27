@@ -49,6 +49,8 @@ namespace CfpExchange.Controllers
 				&& !validatedUrl.StartsWith("https://", StringComparison.Ordinal))
 				validatedUrl = $"http://{validatedUrl}";
 
+			// Inject api key here to prevent resolve of a service for this one value in the underlying class
+			//var metadata = MetaScraper.GetUrlPreview(validatedUrl, _configuration["UrlPreviewApiKey"]);
 			var metadata = MetaScraper.GetMetaDataFromUrl(validatedUrl);
 
 			// Double check image URL

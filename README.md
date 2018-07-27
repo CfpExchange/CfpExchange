@@ -34,8 +34,10 @@ The file should have the following layout:
     "MapsApiKey": "key",
     "ConnectionStrings": {
         "CfpExchangeDb":  "YourConnectionString" 
-    } 
+    },
+    "UrlPreviewApiKey": "key"
 }
 ```
 
-`MapsApiKey` is an API key for the Azure Maps service
+- `MapsApiKey` is an API key for the Azure Maps service
+- `UrlPreviewApiKey` is the Azure Cognitive Services URL Preview key (experimental) functionality for this is implemented but not currently used.
