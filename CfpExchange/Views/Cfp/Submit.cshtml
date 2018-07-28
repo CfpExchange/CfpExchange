@@ -318,7 +318,7 @@
                 autoclose: true
             }).on('changeDate', function(e) {
                 $('#eventEndDate').datepicker('setStartDate', e.date);
-                cfpToSubmit.eventStartDate = e.date.toLocaleDateString("en-US");
+                cfpToSubmit.eventStartDate = e.date.toISOString();
             });
 
             $('#eventEndDate').datepicker({
@@ -326,7 +326,7 @@
                 startDate: '0d',
                 autoclose: true
             }).on('changeDate', function(e) {
-                cfpToSubmit.eventEndDate = e.date.toLocaleDateString("en-US");
+                cfpToSubmit.eventEndDate = e.date.toISOString();
             });
 
             $('#eventCfpCloseDate').datepicker({
@@ -334,7 +334,7 @@
                 startDate: '0d',
                 autoclose: true
             }).on('changeDate', function(e) {
-                cfpToSubmit.cfpEndDate = e.date.toLocaleDateString("en-US");
+                cfpToSubmit.cfpEndDate = e.date.toISOString();
             });
 
             var autocomplete = new google.maps.places.Autocomplete(document.getElementById('eventLocation'));
