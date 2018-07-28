@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace CfpExchange.Services
 {
     public interface IDownloadEventImageMessageSender
     {
-        void Execute(Guid cfpPublicId, string cfpEventImageUrl);
+        Task Execute(Guid cfpPublicId, string cfpEventImageUrl);
     }
 }

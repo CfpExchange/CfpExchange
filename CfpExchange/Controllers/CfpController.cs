@@ -199,11 +199,11 @@ namespace CfpExchange.Controllers
 
 				// Save CFP
 				_cfpContext.Add(cfpToAdd);
-				_cfpContext.SaveChanges();
+				await _cfpContext.SaveChangesAsync();
 
 			    if (ShouldDownloadEventImageLocally())
 			    {
-                    _downloadEventImageMessageSender.Execute(cfpToAddId, submittedCfp.EventImageUrl);
+                    await _downloadEventImageMessageSender.Execute(cfpToAddId, submittedCfp.EventImageUrl);
 			    }
 
 				// Post to Twitter account
