@@ -142,7 +142,7 @@ namespace CfpExchange.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Submit(SubmittedCfp submittedCfp)
+		public async Task<IActionResult> Submit([FromForm]SubmittedCfp submittedCfp)
 		{
 			// TODO
 			// Check validity
