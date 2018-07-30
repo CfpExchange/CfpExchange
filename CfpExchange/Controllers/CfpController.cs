@@ -272,13 +272,19 @@ namespace CfpExchange.Controllers
 
 		private async Task<string> GetTimezone(double lat, double lng)
 		{
-			using (var httpClient = new HttpClient())
+			// Only in production, saves credits
+			if (_hostingEnvironment.IsProduction())
 			{
-				var resultJson = await httpClient.GetStringAsync($"https://atlas.microsoft.com/timezone/byCoordinates/json?subscription-key={_configuration["MapsApiKey"]}&api-version=1.0&query={lat}%2C{lng}");
-				var result = JsonConvert.DeserializeObject<TimezoneInfo>(resultJson);
+				using (var httpClient = new HttpClient())
+				{
+					var resultJson = await httpClient.GetStringAsync($"https://atlas.microsoft.com/timezone/byCoordinates/json?subscription-key={_configuration["MapsApiKey"]}&api-version=1.0&query={lat}%2C{lng}");
+					var result = JsonConvert.DeserializeObject<TimezoneInfo>(resultJson);
 
-				return result.TimeZones.FirstOrDefault()?.Id ?? string.Empty;
+					return result.TimeZones.FirstOrDefault()?.Id ?? string.Empty;
+				}
 			}
+
+			return string.Empty;
 		}
 
 		public IActionResult Details(string id)
