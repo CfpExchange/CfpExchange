@@ -95,9 +95,6 @@
     "servicebusNamespace": {
       "type": "string"
     },
-    "serviceBusQueueName": {
-      "type": "string"
-    },
     "vaultName": {
       "type": "string"
     },
@@ -164,23 +161,28 @@
           "servicebusNamespace": {
             "value": "[parameters('servicebusNamespace')]"
           },
-          "serviceBusQueueName": {
-            "value": "[parameters('serviceBusQueueName')]"
-          },
           "vaultName": {
             "value": "[parameters('vaultName')]"
           },
           "FeatureToggle.HostOwnImages": {
             "value": "[parameters('FeatureToggle.HostOwnImages')]"
           },
-          "servicebusQueueConnectionString": {
+          "servicebusEventImagesQueueConnectionString": {
             "reference": {
               "keyVault": {
                 "id": "[resourceId(subscription().subscriptionId,  parameters('resourcegroup'), 'Microsoft.KeyVault/vaults', parameters('vaultName'))]"
               },
-              "secretName": "ServicebusQueueConnectionString"
+              "secretName": "ServicebusEventImagesQueueConnectionString"
             }
-          }
+          },
+          "servicebusManageConnectionString": {
+            "reference": {
+              "keyVault": {
+                "id": "[resourceId(subscription().subscriptionId,  parameters('resourcegroup'), 'Microsoft.KeyVault/vaults', parameters('vaultName'))]"
+              },
+              "secretName": "ServicebusManageConnectionString"
+            }
+          } 
         }
       }
     },

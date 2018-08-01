@@ -32,9 +32,6 @@
     "servicebusNamespace": {
       "value": "cfpexchange-bus"
     },
-    "serviceBusQueueName": {
-      "value": "eventimages"
-    },
     "vaultName": {
       "value": "cfpexchange-vault"
     },
