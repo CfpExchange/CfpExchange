@@ -43,7 +43,10 @@
                         <div class="tag">
                             @foreach (var tag in cfp.EventTags.Split(";"))
                             {
-                            <a href="#">@tag</a>
+                                if (!string.IsNullOrWhiteSpace(tag))
+                                {
+                            <a href="@Url.Action("browse", "cfp", new { searchTerm = tag })">@tag</a>
+                                }
                             }
                         </div>
                     </div>

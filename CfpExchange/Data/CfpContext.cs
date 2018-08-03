@@ -125,7 +125,7 @@ namespace CfpExchange.Data
 					ProvidesAccommodation = Enums.Accommodation.Unknown,
 					ProvidesTravelAssistance = Enums.TravelAssistence.Unknown,
 					Slug = "sdn-event",
-					EventTags = ".NET;Awesome;Unicorns;SDN"
+					EventTags = ""
 				});
 
 				// Give this one a static GUID to be able to access it

@@ -124,7 +124,10 @@
             <div class="tag" style="margin-bottom: 50px;">
                 @foreach (var tag in Model.EventTags.Split(";"))
                 {
-                <a href="#">@tag</a>
+                    if (!string.IsNullOrWhiteSpace(tag))
+                    {
+                <a href="@Url.Action("browse", "cfp", new { searchTerm = tag })">@tag</a>
+                    }
                 }
             </div>
 
