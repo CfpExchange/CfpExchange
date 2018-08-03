@@ -160,9 +160,10 @@
                             </h2>
                             <p>@cfp.ShortDescription</p>
                             <div class="tag">
-                                @*<a href="#">Awesome</a>
-                                    <a href="#">Unicorns</a>
-                                    <a href="#">.NET</a>*@
+                                @foreach (var tag in cfp.EventTags.Split(";").Take(3))
+                                {
+                                <a href="#">@tag</a>
+                                }
                             </div>
                         </div>
                     </div>
