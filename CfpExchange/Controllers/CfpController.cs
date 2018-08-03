@@ -108,7 +108,8 @@ namespace CfpExchange.Controllers
 				.Where(cfp => cfp.CfpEndDate > DateTime.UtcNow)
 				.Where(cfp => cfp.DuplicateOfId == null)
 				.Where(cfp => cfp.EventName.ToLowerInvariant().Contains(lowercaseSearchTerm)
-					|| cfp.EventLocationName.ToLowerInvariant().Contains(lowercaseSearchTerm))
+					|| cfp.EventLocationName.ToLowerInvariant().Contains(lowercaseSearchTerm)
+					|| cfp.EventTags.ToLowerInvariant().Contains(lowercaseSearchTerm))
 				.Where(cfp => cfp.EventStartDate == default(DateTime) || cfp.EventEndDate == default(DateTime) || cfp.EventStartDate >= startDateTime && cfp.EventEndDate <= endDateTime)
 				.OrderBy(cfp => cfp.CfpEndDate)
 				.Skip((pageToShow - 1) * MaximumNumberOfItemsPerPage)
@@ -191,7 +192,8 @@ namespace CfpExchange.Controllers
 					SubmittedByName = submittedCfp.SubmittedByName,
 					EventTwitterHandle = submittedCfp.EventTwitterHandle,
 					EventTimezone = timezone,
-					Slug = cfpToAddSlug
+					Slug = cfpToAddSlug,
+					EventTags = submittedCfp.EventTags
 				};
 
 				// Save CFP

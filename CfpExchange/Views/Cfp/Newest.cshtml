@@ -41,6 +41,10 @@
                         </h2>
                         <p>@cfp.ShortDescription</p>
                         <div class="tag">
+                            @foreach (var tag in cfp.EventTags.Split(";"))
+                            {
+                            <a href="#">@tag</a>
+                            }
                         </div>
                     </div>
                 }

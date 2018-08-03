@@ -28,6 +28,8 @@
     <Folder Include="Enums\" />
     <Folder Include="Middleware\" />
     <Folder Include="wwwroot\images\social\" />
+    <Folder Include="wwwroot\js\plugins\jquery-tags-input\" />
+    <Folder Include="wwwroot\css\plugins\jquery-tags-input\" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="appsettings.json">

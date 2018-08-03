@@ -121,10 +121,11 @@
             </div>
 
             <p>@Html.Raw(Model.EventDescription?.Replace("\n", "<br />"))</p>
-            <div class="tag">&nbsp;
-                @*<a href="#">.NET</a>
-                    <a href="#">Development</a>
-                    <a href="#">Azure</a>*@
+            <div class="tag" style="margin-bottom: 50px;">
+                @foreach (var tag in Model.EventTags.Split(";"))
+                {
+                <a href="#">@tag</a>
+                }
             </div>
 
             <div class="nutrition-facts clearfix">

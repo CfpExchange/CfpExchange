@@ -16,6 +16,7 @@ namespace CfpExchange.Models
 		public double EventLocationLat { get; set; }
 		public double EventLocationLng { get; set; }
 		public string EventUrl { get; set; } = String.Empty;
+		public string EventTags { get; set; } = String.Empty;
 
 		private string _eventImage;
 		public string EventImage
