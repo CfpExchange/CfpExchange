@@ -84,12 +84,6 @@
             <p>By providing this information you will help other speakers to find out more about the event, but is not absolutely necessary</p>
 
             <div class="form-group">
-                <label>Your name</label>
-                <input class="form-control" id="submitterName" type="text">
-                @*<small id="submittedNameHelp" class="form-text text-muted">If you want the credits, enter your name</small>*@
-            </div>
-
-            <div class="form-group">
                 <label>Event Twitter handle</label>
                 <input class="form-control" id="eventTwitterHandle" type="text">
             </div>
@@ -112,21 +106,29 @@
             </div>
 
             <div class="form-group">
-                <label>Offers Accommodation</label>
-                <select class="js-search-category form-control" name="accommodation" id="accommodation" data-placeholder="Choose option">
-                    <option value="0">Unknown</option>
-                    <option value="1">No</option>
-                    <option value="2">Yes</option>
-                  </select>
+                <div class="form-row">
+                    <div class="col">
+                        <label>Offers Accommodation</label>
+                        <select class="js-search-category form-control" name="accommodation" id="accommodation" data-placeholder="Choose option">
+                            <option value="0">Unknown</option>
+                            <option value="1">No</option>
+                            <option value="2">Yes</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label>Offers Travel Assistance</label>
+                        <select class="js-search-category form-control" name="travelassistance" id="travelassistance" data-placeholder="Choose option">
+                            <option value="0">Unknown</option>
+                            <option value="1">No</option>
+                            <option value="2">Yes</option>
+                        </select>
+                    </div>
+                </div>
             </div>
 
             <div class="form-group">
-                <label>Offers Travel Assistance</label>
-                <select class="js-search-category form-control" name="travelassistance" id="travelassistance" data-placeholder="Choose option">
-                    <option value="0">Unknown</option>
-                    <option value="1">No</option>
-                    <option value="2">Yes</option>
-                  </select>
+                <label>Your name</label>
+                <input class="form-control" id="submitterName" type="text">
             </div>
               
             <button type="submit" class="btn btn-submit" id="submitCfpButton" onclick="javascript:submitCfp();">Submit CFP</button>

@@ -349,7 +349,7 @@ namespace CfpExchange.Controllers
 			}
 			catch
 			{
-				// Intentionally left blank, should be a show-stopper
+				// Intentionally left blank, shouldn't be a show-stopper
 			}
 
 			return Redirect(url);
