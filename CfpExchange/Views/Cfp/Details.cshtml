@@ -8,21 +8,41 @@
     cfpUrl = Url.Action("OutgoingCfpLink", "Cfp", new { id = Model.Id, url = cfpUrl });
 
     var cfpClosed = DateTime.UtcNow > Model.CfpEndDate;
-    var cfpHasEventDates = false;
+    var cfpHasEventDates = Model.EventStartDate != default(DateTime) || Model.EventEndDate != default(DateTime);
 }
 <!-- CFP details-->
 <div class="recipe-detail">
     <div class="container">
         <div class="row" style="margin-bottom: 15px;">
             <div class="col-lg-12">
-                <div class="float-left">
+                <div class="row">
+                <div class="col-lg-4 text-center">
+                @*<div class="float-left">*@
                     <div class="addthis_inline_share_toolbox"></div>
                     <small id="shareButtons" class="form-text text-muted">Share this CFP</small>
                 </div>
-                @if (!cfpClosed)
+                <div class="col-lg-4 text-center">
+                @if (cfpHasEventDates)
                 {
-                    <a href="@cfpUrl" target="_blank" class="btn btn-lg float-right" style="background-color: #DD3326;color: white;">Go to CFP <i class="fa fa-external-link"></i></a>
+                <div title="Add event to Calendar" class="addeventatc">
+                    Add event to Calendar
+                    <span class="start">@Model.EventStartDate.ToString("MM/dd/yyyy")</span>
+                    <span class="end">@Model.EventEndDate.ToString("MM/dd/yyyy")</span>
+                    <span class="timezone">@Model.EventTimezone</span>
+                    <span class="title">@Model.EventName</span>
+                    <span class="description">@Html.Raw(@Model.EventDescription?.Replace("\n", "<br />"))</span>
+                    <span class="location">@Model.EventLocationName</span>
+                    <span class="all_day_event">true</span>
+                    <span class="date_format">MM/DD/YYYY</span>
+                </div>
                 }
+                </div>
+                @if (!cfpClosed)
+                {<div class="col-lg-4 text-center">
+                    <a href="@cfpUrl" target="_blank" class="btn btn-lg " style="background-color: #DD3326;color: white;">Go to CFP <i class="fa fa-external-link"></i></a>
+                </div>
+                }
+                </div>
             </div>
         </div>
         <div class="row justify-content-center">
@@ -65,14 +85,11 @@
                                     @if (@Model.EventStartDate.Date == @Model.EventEndDate.Date && @Model.EventStartDate != default(DateTime) && @Model.EventEndDate != default(DateTime))
                                     {
                                         @Model.EventStartDate.ToShortDateString()
-                                        cfpHasEventDates = true;
                                     }
                                     else if (@Model.EventStartDate != default(DateTime) && @Model.EventEndDate != default(DateTime))
                                     {
                                         @Model.EventStartDate.ToString("MMM dd") @:- @Model.EventEndDate.ToString("MMM dd")<br />
                                         @Model.EventEndDate.ToString("yyyy")
-
-                                        cfpHasEventDates = true;
                                     }
                                     else
                                     {
@@ -109,8 +126,49 @@
                     <a href="#">Development</a>
                     <a href="#">Azure</a>*@
             </div>
+
             <div class="nutrition-facts clearfix">
-            <h3>Good to know</h3>
+            <h3>About...</h3>
+                @if (!string.IsNullOrWhiteSpace(Model.EventUrl))
+                {
+                <div>
+                    <p>Website:</p>
+                    <p>
+                        <strong><a href="@Url.Action("OutgoingCfpLink", "Cfp", new { id = Model.Id, url = Model.EventUrl });" target="_blank">Click here <i class="fa fa-external-link"></i></a></strong>
+                    </p>
+                </div>
+                }
+                @if (!string.IsNullOrWhiteSpace(Model.EventTwitterHandle))
+                {
+                <div>
+                    <p>Twitter:</p>
+                    <p>
+                        <strong><a href="https://twitter.com/@Model.EventTwitterHandle" target="_blank">@Model.EventTwitterHandle  <i class="fa fa-external-link"></i></a></strong>
+                    </p>
+                </div>
+                }
+                <div>
+                    <p>CFP added:</p>
+                    <p>
+                        <strong>@Model.CfpAdded.Humanize()</strong>
+                    </p>
+                </div>
+                <div>
+                    <p>Viewed:</p>
+                    <p>
+                        <strong>@Model.Views times</strong>
+                    </p>
+                </div>
+                <div>
+                    <p>CFP clicked:</p>
+                    <p>
+                        <strong>@Model.ClicksToCfpUrl times</strong>
+                    </p>
+                </div>
+            </div>
+
+            @*<div class="nutrition-facts clearfix">
+            <h3>CFP</h3>
                 <div>
                     <p>CFP added:</p>
                     <p>
@@ -144,7 +202,7 @@
                     <span class="date_format">MM/DD/YYYY</span>
                 </div>
                 }
-            </div>
+            </div>*@
                
             <div class="blog-comment">
             @if (!cfpClosed)
