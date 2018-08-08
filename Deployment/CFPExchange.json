@@ -103,7 +103,10 @@
     },
     "templateBaseUri": {
       "type": "string"
-    }
+    },
+    "storageAccountName": {
+      "type": "string" 
+    } 
   },
   "variables": {
   },
@@ -182,6 +185,9 @@
               },
               "secretName": "ServicebusManageConnectionString"
             }
+          },
+          "storageAccountName": {
+            "value": "[parameters('storageAccountName')]"
           } 
         }
       }

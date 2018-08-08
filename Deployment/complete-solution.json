@@ -100,6 +100,9 @@
     },
     "servicebusManageConnectionString": {
       "type": "securestring"
+    },
+    "storageAccountName": {
+      "type": "string"
     }
   },
   "variables": {
@@ -456,6 +459,30 @@
             "path": "eventimages",
             "defaultMessageTimeToLive": "P0Y0M0DT0H30M0S"
           }
+        }
+      ]
+    },
+    {
+      "name": "[parameters('storageAccountName')]",
+      "type": "Microsoft.Storage/storageAccounts",
+      "apiVersion": "2018-02-01",
+      "location": "[resourceGroup().location]",
+      "kind": "StorageV2",
+      "sku": {
+        "name": "Standard_LRS",
+        "tier": "Standard"
+      },
+      "properties": {
+        "accessTier": "Hot"
+      },
+      "resources": [
+        {
+          "name": "[concat('default/', 'eventImages')]",
+          "type": "blobServices/containers",
+          "apiVersion": "2018-03-01-preview",
+          "dependsOn": [
+            "[parameters('storageAccountName')]"
+          ]
         }
       ]
     }
