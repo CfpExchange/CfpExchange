@@ -477,7 +477,7 @@
       },
       "resources": [
         {
-          "name": "[concat('default/', 'eventImages')]",
+          "name": "[concat('default/', 'eventimages')]",
           "type": "blobServices/containers",
           "apiVersion": "2018-03-01-preview",
           "dependsOn": [
