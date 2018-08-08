@@ -42,7 +42,7 @@
       "value": "https://the-base-uri-where-your-nested-templates-are-stored/"
     },
     "storageAccountName": {
-      "value": "cfpexchange-test"
+      "value": "cfpexchangestoragetest"
     }
   }
 }
