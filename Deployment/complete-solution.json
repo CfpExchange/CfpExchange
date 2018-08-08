@@ -103,6 +103,9 @@
     },
     "storageAccountName": {
       "type": "string"
+    },
+    "functionAppName": {
+      "type": "string"
     }
   },
   "variables": {
@@ -483,6 +486,42 @@
           "dependsOn": [
             "[parameters('storageAccountName')]"
           ]
+        }
+      ]
+    },
+    {
+      "apiVersion": "2015-04-01",
+      "type": "Microsoft.Web/sites",
+      "name": "[parameters('functionAppName')]",
+      "location": "[resourceGroup().location]",
+      "kind": "functionapp",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverFarms/', parameters('hostingPlanName'))]",
+        "[resourceId('Microsoft.Storage/storageAccounts/', parameters('storageAccountName'))]"
+      ],
+      "properties": {
+        "name": "[parameters('functionAppName')]",
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('hostingPlanName'))]",
+        "hostingEnvironment": "",
+        "clientAffinityEnabled": false,
+        "siteConfig": {
+          "alwaysOn": true
+        }
+      },
+      "resources": [
+        {
+          "apiVersion": "2016-03-01",
+          "name": "appsettings",
+          "type": "config",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/sites', parameters('functionAppName'))]",
+            "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
+          ],
+          "properties": {
+            "AzureWebJobsStorage": "[concat('DefaultEndpointsProtocol=https;AccountName=',parameters('storageAccountName'),';AccountKey=',listkeys(resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName')), '2015-05-01-preview').key1,';')]",
+            "AzureWebJobsDashboard": "[concat('DefaultEndpointsProtocol=https;AccountName=',parameters('storageAccountName'),';AccountKey=',listkeys(resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName')), '2015-05-01-preview').key1,';')]",
+            "FUNCTIONS_EXTENSION_VERSION": "~1"
+          }
         }
       ]
     }

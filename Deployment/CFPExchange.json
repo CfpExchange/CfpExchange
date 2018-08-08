@@ -105,8 +105,11 @@
       "type": "string"
     },
     "storageAccountName": {
-      "type": "string" 
-    } 
+      "type": "string"
+    },
+    "functionAppName": {
+      "type": "string"
+    }
   },
   "variables": {
   },
@@ -188,7 +191,10 @@
           },
           "storageAccountName": {
             "value": "[parameters('storageAccountName')]"
-          } 
+          },
+          "functionAppName": {
+            "value": "[parameters('functionAppName')]"
+          }
         }
       }
     },
