@@ -8,6 +8,12 @@
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="1.0.14" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CfpExchange.Models\CfpExchange.Models.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Azure.ServiceBus">
+      <HintPath>C:\Users\jan\.nuget\packages\microsoft.azure.servicebus\3.0.2\lib\netstandard2.0\Microsoft.Azure.ServiceBus.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>

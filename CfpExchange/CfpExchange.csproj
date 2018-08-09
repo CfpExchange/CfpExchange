@@ -48,5 +48,8 @@
     <None Include="wwwroot\images\social\twitter.png" />
     <None Include="wwwroot\images\social\fb.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CfpExchange.Models\CfpExchange.Models.csproj" />
+  </ItemGroup>
 </Project>
 

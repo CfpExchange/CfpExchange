@@ -6,7 +6,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CfpExchange", "CfpExchange\
 EndProject
 Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "Deployment", "Deployment\Deployment.deployproj", "{70A09EDF-300B-4621-A336-0EE0F91FF64D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CfpExchange.Functions", "CfpExchange.Functions\CfpExchange.Functions.csproj", "{47B5CEEB-CE52-475C-9C27-68E7B8BD1CEE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CfpExchange.Functions", "CfpExchange.Functions\CfpExchange.Functions.csproj", "{47B5CEEB-CE52-475C-9C27-68E7B8BD1CEE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CfpExchange.Models", "CfpExchange.Models\CfpExchange.Models.csproj", "{EB288852-AB0D-405A-903A-B2E1736FE9EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,6 +28,10 @@ Global
 		{47B5CEEB-CE52-475C-9C27-68E7B8BD1CEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{47B5CEEB-CE52-475C-9C27-68E7B8BD1CEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47B5CEEB-CE52-475C-9C27-68E7B8BD1CEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB288852-AB0D-405A-903A-B2E1736FE9EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB288852-AB0D-405A-903A-B2E1736FE9EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB288852-AB0D-405A-903A-B2E1736FE9EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB288852-AB0D-405A-903A-B2E1736FE9EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
