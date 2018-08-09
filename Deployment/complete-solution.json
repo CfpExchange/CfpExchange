@@ -170,7 +170,6 @@
           },
           "properties": {
             "ServicebusEventImagesQueueConnectionString": "[parameters('servicebusEventImagesQueueConnectionString')]",
-            "ServicebusManageConnectionString": "[parameters('servicebusManageConnectionString')]",
             "FeatureToggle.HostOwnImages": "[parameters('FeatureToggle.HostOwnImages')]"
           }
         }
@@ -520,7 +519,8 @@
           "properties": {
             "AzureWebJobsStorage": "[concat('DefaultEndpointsProtocol=https;AccountName=',parameters('storageAccountName'),';AccountKey=',listkeys(resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName')), '2015-05-01-preview').key1,';')]",
             "AzureWebJobsDashboard": "[concat('DefaultEndpointsProtocol=https;AccountName=',parameters('storageAccountName'),';AccountKey=',listkeys(resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName')), '2015-05-01-preview').key1,';')]",
-            "FUNCTIONS_EXTENSION_VERSION": "~1"
+            "FUNCTIONS_EXTENSION_VERSION": "~1",
+            "ServicebusQueueConnectionString": "[parameters('servicebusManageConnectionString')]"
           }
         }
       ]
