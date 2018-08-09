@@ -75,11 +75,11 @@ namespace CfpExchange.Functions
             using (var connection = new SqlConnection(connectionstring))
             {
                 connection.Open();
-                connection.Execute("UPDATE dbo.Cfps SET EventImage = '@EventImage' WHERE Id = '@Id'", 
+                connection.Execute("UPDATE dbo.Cfps SET EventImage = '@EventImage' WHERE Id = @Id", 
                     new
                     {
                         EventImage = absoluteImageLocation,
-                        Id = eventImageModel.Id
+                        Id = eventImageModel.Id.ToString("D")
                     });
                 log.Info($"Updated the record `{eventImageModel.Id}` with the event image url to `{absoluteImageLocation}`.");
             }
