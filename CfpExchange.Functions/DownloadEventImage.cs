@@ -30,7 +30,7 @@ namespace CfpExchange.Functions
                 log.Verbose($"Event image URL is `{eventImageModel.ImageUrl}`.");
                 var relativeLocationOfStoredImage = await StoreEventImageInBlobStorage(binder, log, eventImageModel);
 
-                UpdateRecordInTheCfpRepository(eventImageModel, relativeLocationOfStoredImage);
+                UpdateRecordInTheCfpRepository(eventImageModel, relativeLocationOfStoredImage, log);
             }
             else
             {
