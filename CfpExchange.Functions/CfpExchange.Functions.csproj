@@ -4,6 +4,7 @@
     <AzureFunctionsVersion>v1</AzureFunctionsVersion>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Dapper" Version="1.50.5" />
     <PackageReference Include="Microsoft.Azure.WebJobs.ServiceBus" Version="2.2.0" />
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="1.0.14" />
   </ItemGroup>
@@ -15,6 +16,7 @@
       <HintPath>C:\Users\jan\.nuget\packages\microsoft.azure.servicebus\3.0.2\lib\netstandard2.0\Microsoft.Azure.ServiceBus.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
     <None Update="host.json">
