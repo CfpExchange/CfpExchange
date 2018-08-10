@@ -54,5 +54,8 @@ namespace CfpExchange.ViewModels
 
 		[DataType(DataType.Text)]
 		public string EventTwitterHandle { get; set; }
-	}
+
+	    [DataType(DataType.Date)]
+	    public DateTime? CfpDecisionDate { get; set; } = default(DateTime);
+    }
 }
