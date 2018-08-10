@@ -106,25 +106,24 @@ body {
 //Top Recipes
 .top {
   padding: 60px 0;
-
   background-color: #f7f7f7;
-  h5 {
+
+  h5, h5 a {
     font-size: 1.2rem;
-
     margin-bottom: 20px;
-
     color: #dadada;
   }
   .box {
     padding: 25px;
-
     background-color: #fff;
     box-shadow: 0 6px 15px rgba(36,37,38,.08);
+    height: 80%;
+
     h3 {
       font-size: 1.2rem;
       font-weight: bold;
-
       padding-left: 120px;
+
       a {
         color: #333;
       }
@@ -174,6 +173,7 @@ body {
   border: 1px solid #dedede;
   background-color: #fff;
   box-shadow: 0 6px 15px rgba(36,37,38,.08);
+  height: 95%;
   .by {
     padding: 10px 15px;
 
@@ -201,18 +201,19 @@ body {
   img {
     width: 100%;
     margin-bottom: 30px;
+    max-height: 150px;
+    object-fit: cover;
   }
   .tag {
     padding-right: 15px;
     padding-left: 15px;
     a {
       display: inline-block;
-
       padding: 3px 15px;
-
       color: #666;
       border: 1px solid #dedede;
       border-radius: 50px;
+
       &:hover {
         text-decoration: none;
 
@@ -231,13 +232,16 @@ body {
   border: 1px solid #dedede;
   background-color: #fff;
   box-shadow: 0 6px 15px rgba(36,37,38,.08);
+  min-height: 180px;
+
   img {
     float: left;
-
     width: 100px;
     height: 100px;
     margin-left: 20px;
+    object-fit: cover !important;
   }
+  
   h2 {
     font-size: 1.2rem;
 
@@ -542,20 +546,10 @@ body {
     background-color: @base-color;
     p {
       font-size: .8rem;
-
       margin-bottom: 0;
+
       strong {
-        font-size: 1rem;
-
-        color: #fff;
-
-        a {
-          color: #fff;
-
-          &:hover {
-            text-decoration: underline;
-          }
-        }
+        font-size: .95rem;
       }
     }
   }
@@ -869,7 +863,7 @@ footer {
 
 .addeventatc {
   visibility: hidden;
-  
+
   .addeventatc_icon {
     top: 17px !important;
   }

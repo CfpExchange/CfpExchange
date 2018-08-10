@@ -97,7 +97,8 @@ body {
   padding: 60px 0;
   background-color: #f7f7f7;
 }
-.top h5 {
+.top h5,
+.top h5 a {
   font-size: 1.2rem;
   margin-bottom: 20px;
   color: #dadada;
@@ -106,6 +107,7 @@ body {
   padding: 25px;
   background-color: #fff;
   box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);
+  height: 80%;
 }
 .top .box h3 {
   font-size: 1.2rem;
@@ -147,6 +149,7 @@ body {
   border: 1px solid #dedede;
   background-color: #fff;
   box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);
+  height: 95%;
 }
 .box.grid.recipes .by {
   padding: 10px 15px;
@@ -171,6 +174,8 @@ body {
 .box.grid.recipes img {
   width: 100%;
   margin-bottom: 30px;
+  max-height: 150px;
+  object-fit: cover;
 }
 .box.grid.recipes .tag {
   padding-right: 15px;
@@ -194,12 +199,14 @@ body {
   border: 1px solid #dedede;
   background-color: #fff;
   box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);
+  min-height: 180px;
 }
 .box.list.recipes img {
   float: left;
   width: 100px;
   height: 100px;
   margin-left: 20px;
+  object-fit: cover !important;
 }
 .box.list.recipes h2 {
   font-size: 1.2rem;
@@ -443,14 +450,7 @@ body {
   margin-bottom: 0;
 }
 .recipe-detail .info p strong {
-  font-size: 1rem;
-  color: #fff;
-}
-.recipe-detail .info p strong a {
-  color: #fff;
-}
-.recipe-detail .info p strong a:hover {
-  text-decoration: underline;
+  font-size: 0.95rem;
 }
 .recipe-detail .ingredient-direction {
   margin-top: 30px;
