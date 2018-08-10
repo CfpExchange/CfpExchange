@@ -1,7 +1,12 @@
-@import url('https://fonts.googleapis.com/css?family=Varela+Round');
+@font-face {
+  font-family: 'Varela Round';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Varela Round Regular'), local('VarelaRound-Regular'), url(https://fonts.gstatic.com/s/varelaround/v9/w8gdH283Tvk__Lua32TysjIfp8uK.ttf) format('truetype');
+}
 body {
   font-family: 'Varela Round', sans-serif;
-  letter-spacing: .5px;
+  letter-spacing: 0.5px;
   color: #666;
   background: #fff;
 }
@@ -92,10 +97,11 @@ body {
   padding: 60px 0;
   background-color: #f7f7f7;
 }
-.top h5, .top h5 a {
-    font-size: 1.2rem;
-    margin-bottom: 20px;
-    color: #dadada;
+.top h5,
+.top h5 a {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  color: #dadada;
 }
 .top .box {
   padding: 25px;
@@ -167,9 +173,9 @@ body {
 }
 .box.grid.recipes img {
   width: 100%;
+  margin-bottom: 30px;
   max-height: 150px;
   object-fit: cover;
-  margin-bottom: 30px;
 }
 .box.grid.recipes .tag {
   padding-right: 15px;
@@ -422,7 +428,7 @@ body {
   width: 100%;
 }
 .recipe-detail .tag a {
-  font-size: .9rem;
+  font-size: 0.9rem;
   display: inline-block;
   padding: 3px 15px;
   color: #666;
@@ -440,12 +446,11 @@ body {
   background-color: #e13b2b;
 }
 .recipe-detail .info p {
-  font-size: .8rem;
+  font-size: 0.8rem;
   margin-bottom: 0;
 }
 .recipe-detail .info p strong {
   font-size: 0.95rem;
-  color: #fff;
 }
 .recipe-detail .ingredient-direction {
   margin-top: 30px;
@@ -503,7 +508,7 @@ body {
   border-bottom: 1px dashed #dedede;
 }
 .recipe-detail .nutrition-facts h3 {
-  font-size: .9rem;
+  font-size: 0.9rem;
   position: absolute;
   top: -20px;
   left: 0;
@@ -512,7 +517,7 @@ body {
   background-color: #666;
 }
 .recipe-detail .nutrition-facts p {
-  font-size: .8rem;
+  font-size: 0.8rem;
 }
 .recipe-detail .nutrition-facts p strong {
   font-size: 1rem;
@@ -630,7 +635,7 @@ footer .btn {
   color: #fff;
 }
 .copyright {
-  font-size: .9rem;
+  font-size: 0.9rem;
   padding: 15px 0;
   background-color: #212121;
 }
@@ -664,7 +669,40 @@ footer .btn {
   color: #fff;
   padding: 10px;
   text-align: center;
-  font-size: .8rem;
+  font-size: 0.8rem;
+}
+.fragment {
+  font-size: 12px;
+  font-family: "Tahoma", sans-serif;
+  height: 140px;
+  border: 1px solid #ccc;
+  color: #555;
+  display: block;
+  padding: 10px;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+.fragment:hover {
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+.fragment img {
+  float: left;
+  margin-right: 10px;
+  max-width: 116px;
+}
+.fragment h3 {
+  padding: 0;
+  margin: 0;
+  color: #369;
+}
+.validation-summary-valid {
+  display: none;
+}
+.addeventatc {
+  visibility: hidden;
+}
+.addeventatc .addeventatc_icon {
+  top: 17px !important;
 }
 /* Large Devices, Wide Screens */
 /* Medium Devices, Desktops */
@@ -829,54 +867,4 @@ footer .btn {
     width: 50%;
     margin-bottom: 10px;
   }
-}
-
-.fragment {
-    font-size: 12px;
-    font-family: tahoma;
-    height: 140px;
-    border: 1px solid #ccc;
-    color: #555;
-    display: block;
-    padding: 10px;
-    box-sizing: border-box;
-    text-decoration: none
-}
-
-.fragment:hover {
-    box-shadow: 2px 2px 5px rgba(0,0,0,.2)
-}
-
-.fragment img {
-    float: left;
-    margin-right: 10px;
-    max-width: 116px;
-}
-
-.fragment h3 {
-        padding: 0;
-        margin: 0;
-        color: #369
-}
-
-.recipe-detail .info p strong a {
-    color: white
-
-}
-
-.recipe-detail .info p strong a:hover {
-    color: white;
-    text-decoration: underline
-}
-
-.validation-summary-valid {
-    display: none;
-}
-
-.addeventatc .addeventatc_icon {
-    top: 17px !important;
-}
-
-.addeventatc {
-    visibility: hidden;
 }
