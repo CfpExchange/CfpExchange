@@ -548,6 +548,14 @@ body {
         font-size: 1rem;
 
         color: #fff;
+
+        a {
+          color: #fff;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
       }
     }
   }
@@ -825,5 +833,47 @@ footer {
     }
   }
 }
+
+// Gerald's stuff
+.fragment {
+  font-size: 12px;
+  font-family: "Tahoma", sans-serif;
+  height: 140px;
+  border: 1px solid #ccc;
+  color: #555;
+  display: block;
+  padding: 10px;
+  box-sizing: border-box;
+  text-decoration: none;
+
+  &:hover {
+    box-shadow: 2px 2px 5px rgba(0,0,0,.2);
+  }
+
+  img {
+    float: left;
+    margin-right: 10px;
+    max-width: 116px;
+  }
+
+  h3 {
+    padding: 0;
+    margin: 0;
+    color: #369;
+  }
+}
+
+.validation-summary-valid {
+  display: none;
+}
+
+.addeventatc {
+  visibility: hidden;
+  
+  .addeventatc_icon {
+    top: 17px !important;
+  }
+}
+
 
 @import 'responsive';
