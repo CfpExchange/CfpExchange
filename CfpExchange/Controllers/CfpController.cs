@@ -111,7 +111,8 @@ namespace CfpExchange.Controllers
 				.Where(cfp => cfp.CfpEndDate > DateTime.UtcNow)
 				.Where(cfp => cfp.DuplicateOfId == null)
 				.Where(cfp => cfp.EventName.ToLowerInvariant().Contains(lowercaseSearchTerm)
-					|| cfp.EventLocationName.ToLowerInvariant().Contains(lowercaseSearchTerm))
+					|| cfp.EventLocationName.ToLowerInvariant().Contains(lowercaseSearchTerm)
+					|| cfp.EventTags.ToLowerInvariant().Contains(lowercaseSearchTerm))
 				.Where(cfp => cfp.EventStartDate == default(DateTime) || cfp.EventEndDate == default(DateTime) || cfp.EventStartDate >= startDateTime && cfp.EventEndDate <= endDateTime)
 				.OrderBy(cfp => cfp.CfpEndDate)
 				.Skip((pageToShow - 1) * MaximumNumberOfItemsPerPage)
@@ -194,7 +195,8 @@ namespace CfpExchange.Controllers
 					SubmittedByName = submittedCfp.SubmittedByName,
 					EventTwitterHandle = submittedCfp.EventTwitterHandle,
 					EventTimezone = timezone,
-					Slug = cfpToAddSlug
+					Slug = cfpToAddSlug,
+					EventTags = submittedCfp.EventTags
 				};
 
 				// Save CFP
@@ -285,13 +287,19 @@ namespace CfpExchange.Controllers
 
 		private async Task<string> GetTimezone(double lat, double lng)
 		{
-			using (var httpClient = new HttpClient())
+			// Only in production, saves credits
+			if (_hostingEnvironment.IsProduction())
 			{
-				var resultJson = await httpClient.GetStringAsync($"https://atlas.microsoft.com/timezone/byCoordinates/json?subscription-key={_configuration["MapsApiKey"]}&api-version=1.0&query={lat}%2C{lng}");
-				var result = JsonConvert.DeserializeObject<TimezoneInfo>(resultJson);
+				using (var httpClient = new HttpClient())
+				{
+					var resultJson = await httpClient.GetStringAsync($"https://atlas.microsoft.com/timezone/byCoordinates/json?subscription-key={_configuration["MapsApiKey"]}&api-version=1.0&query={lat}%2C{lng}");
+					var result = JsonConvert.DeserializeObject<TimezoneInfo>(resultJson);
 
-				return result.TimeZones.FirstOrDefault()?.Id ?? string.Empty;
+					return result.TimeZones.FirstOrDefault()?.Id ?? string.Empty;
+				}
 			}
+
+			return string.Empty;
 		}
 
 		public IActionResult Details(string id)
@@ -356,7 +364,7 @@ namespace CfpExchange.Controllers
 			}
 			catch
 			{
-				// Intentionally left blank, should be a show-stopper
+				// Intentionally left blank, shouldn't be a show-stopper
 			}
 
 			return Redirect(url);

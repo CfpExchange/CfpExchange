@@ -33,11 +33,11 @@
                 It looks like this CFP might already be added! Please check out these CFPs with a similar event link before adding this CFP to our system. Result(s): <ul class="list-inline" id="duplicatesResult"></ul>
             </div>
 
-            <div class="alert alert-warning" id="metadataError" style="        display: none;" role="alert">
+            <div class="alert alert-warning" id="metadataError" style="display: none;" role="alert">
                 There was a problem loading the event URL. Please double check the URL or enter the details manually.
             </div>
             
-            <div class="form-group" id="eventUrlPreview" style="        display: none;">
+            <div class="form-group" id="eventUrlPreview" style="display: none;">
                 <a id="eventUrl" class="fragment" href="#" target="_blank">
                     <img src ="@CfpExchange.Helpers.Constants.NoEventImageUrl" style="max-width: 116px;overflow: hidden;" alt="Event image"/> 
                     <h3></h3>
@@ -74,20 +74,14 @@
                 <span asp-validation-for="LocationName" style="display: none;" id="locationErrorMessage" class="text-danger">Please search for a location and select a value from the dropdown</span>
             </div>
 
-            @*<div class="form-group">
+            <div class="form-group">
                 <label>Tags</label>
-                <input asp-for="EventTags" class="form-control" id="eventLocation" type="text">
-                <span asp-validation-for="EventTags" style="display: none;" id="locationErrorMessage" class="text-danger"></span>
-            </div>*@
+                <input asp-for="EventTags" name="tags" id="tags" class="form-control" type="text">
+                <span asp-validation-for="EventTags" style="display: none;" id="tagsErrorMessage" class="text-danger">Please add a minimum of one tag for this event</span>
+            </div>
               
             <h1>Nice to have</h1>
             <p>By providing this information you will help other speakers to find out more about the event, but is not absolutely necessary</p>
-
-            <div class="form-group">
-                <label>Your name</label>
-                <input class="form-control" id="submitterName" type="text">
-                @*<small id="submittedNameHelp" class="form-text text-muted">If you want the credits, enter your name</small>*@
-            </div>
 
             <div class="form-group">
                 <label>Event Twitter handle</label>
@@ -112,21 +106,29 @@
             </div>
 
             <div class="form-group">
-                <label>Offers Accommodation</label>
-                <select class="js-search-category form-control" name="accommodation" id="accommodation" data-placeholder="Choose option">
-                    <option value="0">Unknown</option>
-                    <option value="1">No</option>
-                    <option value="2">Yes</option>
-                  </select>
+                <div class="form-row">
+                    <div class="col">
+                        <label>Offers Accommodation</label>
+                        <select class="js-search-category form-control" name="accommodation" id="accommodation" data-placeholder="Choose option">
+                            <option value="0">Unknown</option>
+                            <option value="1">No</option>
+                            <option value="2">Yes</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label>Offers Travel Assistance</label>
+                        <select class="js-search-category form-control" name="travelassistance" id="travelassistance" data-placeholder="Choose option">
+                            <option value="0">Unknown</option>
+                            <option value="1">No</option>
+                            <option value="2">Yes</option>
+                        </select>
+                    </div>
+                </div>
             </div>
 
             <div class="form-group">
-                <label>Offers Travel Assistance</label>
-                <select class="js-search-category form-control" name="travelassistance" id="travelassistance" data-placeholder="Choose option">
-                    <option value="0">Unknown</option>
-                    <option value="1">No</option>
-                    <option value="2">Yes</option>
-                  </select>
+                <label>Your name</label>
+                <input class="form-control" id="submitterName" type="text">
             </div>
               
             <button type="submit" class="btn btn-submit" id="submitCfpButton" onclick="javascript:submitCfp();">Submit CFP</button>
@@ -140,6 +142,7 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgVGJaXfyAu25OCrj3xu7RI0GQvzQY4p4&libraries=places&language=en"></script>
     <script src="/js/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
     <script src="/js/plugins/select2.min.js"></script>
+    <script src="/js/plugins/jquery-tags-input/jquery.tagsinput.min.js"></script>
 
     @await Html.PartialAsync("_ValidationScriptsPartial")
 
@@ -160,11 +163,16 @@
         cfpToSubmit.providesTravelAssistance = null;
         cfpToSubmit.submittedByName = null;
         cfpToSubmit.eventTwitterHandle = null;
+        cfpToSubmit.eventTags = null;
 
         function submitCfp()
         {
             var formValid = false;
             var locationValid = true;
+            var tagsValid = true;
+
+            $('#locationErrorMessage').hide();
+            $('#tagsErrorMessage').hide();
         
             formValid = $('#submitForm').valid();
         
@@ -173,7 +181,12 @@
                 locationValid = false;
             }
 
-            if (!formValid || !locationValid)
+            if (cfpToSubmit.eventTags === undefined || cfpToSubmit.eventTags === null || cfpToSubmit.eventTags === '') {
+                $('#tagsErrorMessage').show();
+                tagsValid = false;
+            }
+
+            if (!formValid || !locationValid || !tagsValid)
             {
                 if (formValid)
                     window.scrollTo(0,0);
@@ -354,10 +367,24 @@
                 cfpToSubmit.locationLat = place.geometry.location.lat();
                 cfpToSubmit.locationLng = place.geometry.location.lng();
              }); 
+
+            $('#tags').tagsInput({
+                'defaultText':'',
+                'onChange': function(input,tag) {
+                    var tags = $.map(
+                      $("#tags_tagsinput").children("span").children("span"), 
+                      function(element) {
+                          return $(element).text().trim()
+                      }).join(";");
+
+                    cfpToSubmit.eventTags = tags;
+                }
+            });
         });
     </script>
 }
 
 @section Styles {
     <link href="/css/plugins/bootstrap-datepicker/bootstrap-datepicker3.min.css" rel="stylesheet">
+    <link href="/css/plugins/jquery-tags-input/jquery.tagsinput.min.css" rel="stylesheet">
 }

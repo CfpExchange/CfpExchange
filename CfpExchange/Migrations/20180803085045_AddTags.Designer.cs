@@ -12,9 +12,10 @@ using System;
 namespace CfpExchange.Migrations
 {
     [DbContext(typeof(CfpContext))]
-    partial class CfpContextModelSnapshot : ModelSnapshot
+    [Migration("20180803085045_AddTags")]
+    partial class AddTags
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
