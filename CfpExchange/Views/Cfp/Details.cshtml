@@ -169,6 +169,15 @@
                         <strong>@Model.ClicksToCfpUrl times</strong>
                     </p>
                 </div>
+                @if (Model.CfpDecisionDate.Year >= 2018)
+                {
+                    <div>
+                        <p>CFP decision date</p>
+                        <p>
+                            <strong>@Model.CfpDecisionDate.ToString("MMM dd, yyyy")</strong>
+                        </p>
+                    </div>
+                }
             </div>
 
             @*<div class="nutrition-facts clearfix">
