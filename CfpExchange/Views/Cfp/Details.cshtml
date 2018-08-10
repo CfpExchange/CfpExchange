@@ -84,7 +84,7 @@
                                 <strong>
                                     @if (@Model.EventStartDate.Date == @Model.EventEndDate.Date && @Model.EventStartDate != default(DateTime) && @Model.EventEndDate != default(DateTime))
                                     {
-                                        @Model.EventStartDate.ToShortDateString()
+                                        @Model.EventStartDate.ToString("dd MMM yyyy")
                                     }
                                     else if (@Model.EventStartDate != default(DateTime) && @Model.EventEndDate != default(DateTime))
                                     {
