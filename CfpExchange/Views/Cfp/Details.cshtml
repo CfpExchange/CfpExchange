@@ -169,45 +169,17 @@
                         <strong>@Model.ClicksToCfpUrl times</strong>
                     </p>
                 </div>
+                @if (Model.CfpDecisionDate.Year >= 2018)
+                {
+                    <div>
+                        <p>CFP decision date</p>
+                        <p>
+                            <strong>@Model.CfpDecisionDate.ToString("MMM dd, yyyy")</strong>
+                        </p>
+                    </div>
+                }
             </div>
 
-            @*<div class="nutrition-facts clearfix">
-            <h3>CFP</h3>
-                <div>
-                    <p>CFP added:</p>
-                    <p>
-                        <strong>@Model.CfpAdded.Humanize()</strong>
-                    </p>
-                </div>
-                <div>
-                    <p>Viewed:</p>
-                    <p>
-                        <strong>@Model.Views times</strong>
-                    </p>
-                </div>
-                <div>
-                    <p>CFP clicked:</p>
-                    <p>
-                        <strong>@Model.ClicksToCfpUrl times</strong>
-                    </p>
-                </div>
-                @if (cfpHasEventDates)
-                {
-                <div>&nbsp;</div>
-                <div title="Add event to Calendar" class="addeventatc">
-                    Add event to Calendar
-                    <span class="start">@Model.EventStartDate.ToString("MM/dd/yyyy")</span>
-                    <span class="end">@Model.EventEndDate.ToString("MM/dd/yyyy")</span>
-                    <span class="timezone">@Model.EventTimezone</span>
-                    <span class="title">@Model.EventName</span>
-                    <span class="description">@Html.Raw(@Model.EventDescription?.Replace("\n", "<br />"))</span>
-                    <span class="location">@Model.EventLocationName</span>
-                    <span class="all_day_event">true</span>
-                    <span class="date_format">MM/DD/YYYY</span>
-                </div>
-                }
-            </div>*@
-               
             <div class="blog-comment">
             @if (!cfpClosed)
             {
