@@ -193,6 +193,12 @@ namespace CfpExchange.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.AddColumn<int>(
+                name: "ProvidedExpenses",
+                table: "Cfps",
+                nullable: false,
+                defaultValue: 0);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -217,6 +223,11 @@ namespace CfpExchange.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropColumn(
+                name: "ProvidedExpenses",
+                table: "Cfps");
+
         }
     }
 }
