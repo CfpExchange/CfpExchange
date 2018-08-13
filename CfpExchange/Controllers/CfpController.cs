@@ -196,7 +196,8 @@ namespace CfpExchange.Controllers
 					EventTwitterHandle = submittedCfp.EventTwitterHandle,
 					EventTimezone = timezone,
 					Slug = cfpToAddSlug,
-					EventTags = submittedCfp.EventTags
+					EventTags = submittedCfp.EventTags,
+          CfpDecisionDate = submittedCfp.CfpDecisionDate?.Date ?? default(DateTime)
 				};
 
 				// Save CFP
