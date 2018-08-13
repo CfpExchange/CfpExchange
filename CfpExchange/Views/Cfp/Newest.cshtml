@@ -4,14 +4,11 @@
 @{
     ViewData["Title"] = "Newest";
 }
-
+@await Html.PartialAsync("_SearchBar", new SearchViewModel())
 <!-- Page-->
 <div class="page contact">
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-lg-12 title text-center">
-                <h1>Newest CFP's added to this site</h1>
-            </div>
             <div class="col-lg-8 content">
                 @if (!Model.CfpList.Any())
                 {
@@ -32,11 +29,11 @@
                             Added on: @cfp.CfpAdded.ToShortDateString() - Ends in: @(((TimeSpan)cfp.CfpEndDate.Subtract(DateTime.Now)).Humanize(minUnit: TimeUnit.Hour))
                             <div class="float-right">Event date: @Html.Raw(eventDate)</div>
                         </div>
-                        <a href="@(Url.Action("details", "cfp", new {id = cfp.Id}))">
+                        <a href="@(Url.Action("details", "cfp", new {id = cfp.Slug}))">
                             <img src="@cfp.EventImage" alt="Event image">
                         </a>
                         <h2>
-                            <a href="@(Url.Action("details", "cfp", new {id = cfp.Id}))">@cfp.EventName</a>
+                            <a href="@(Url.Action("details", "cfp", new {id = cfp.Slug}))">@cfp.EventName</a>
                             @if (!string.IsNullOrWhiteSpace(cfp.EventLocationName))
                             {
                                 @Html.Raw($"&nbsp;<small>{@cfp.EventLocationName}</small>");
@@ -44,6 +41,13 @@
                         </h2>
                         <p>@cfp.ShortDescription</p>
                         <div class="tag">
+                            @foreach (var tag in cfp.EventTags.Split(";"))
+                            {
+                                if (!string.IsNullOrWhiteSpace(tag))
+                                {
+                            <a href="@Url.Action("browse", "cfp", new { searchTerm = tag })">@tag</a>
+                                }
+                            }
                         </div>
                     </div>
                 }
@@ -52,12 +56,12 @@
                 <div class="tab-pane active">
                     @if (Model.CurrentPage > 1)
                     {
-                        @Html.ActionLink("Previous", "newest", new {page = Model.CurrentPage - 1}, new {@class = "btn pull-left"})
+                        @Html.ActionLink("Previous", "newest", new { page = Model.CurrentPage - 1 }, new { @class = "btn pull-left" })
                     }
-                    
+
                     @if (Model.CfpList.Any())
                     {
-                        @Html.ActionLink("Next", "newest", new {page = Model.CurrentPage + 1}, new {@class = "btn pull-right"})
+                        @Html.ActionLink("Next", "newest", new { page = Model.CurrentPage + 1 }, new { @class = "btn pull-right" })
                     }
                 </div>
             </div>

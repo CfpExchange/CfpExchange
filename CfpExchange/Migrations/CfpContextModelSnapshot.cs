@@ -109,7 +109,11 @@ namespace CfpExchange.Migrations
 
                     b.Property<DateTime>("EventStartDate");
 
+                    b.Property<string>("EventTags");
+
                     b.Property<string>("EventTimezone");
+
+                    b.Property<string>("EventTwitterHandle");
 
                     b.Property<string>("EventUrl");
 
@@ -118,6 +122,8 @@ namespace CfpExchange.Migrations
                     b.Property<int>("ProvidesTravelAssistance");
 
                     b.Property<string>("Remarks");
+
+                    b.Property<string>("Slug");
 
                     b.Property<string>("SubmittedByName");
 

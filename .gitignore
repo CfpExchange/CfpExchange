@@ -6,6 +6,7 @@
 [Bb]in/
 packages/
 TestResults/
+node_modules
 
 # globs
 Makefile.in

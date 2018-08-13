@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using CfpExchange.Helpers;
 using CfpExchange.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -37,7 +39,9 @@ namespace CfpExchange.Data
 					EventStartDate = DateTime.Now.AddDays(1),
 					EventEndDate = DateTime.Now.AddDays(2),
 					ProvidesAccommodation = Enums.Accommodation.Unknown,
-					ProvidesTravelAssistance = Enums.TravelAssistence.Yes
+					ProvidesTravelAssistance = Enums.TravelAssistence.Yes,
+					Slug = "techorama-be",
+					EventTags = ".NET;Awesome;Unicorns"
 				});
 
 				context.Cfps.Add(new Cfp
@@ -54,7 +58,9 @@ namespace CfpExchange.Data
 					EventStartDate = DateTime.Now.AddMonths(1),
 					EventEndDate = DateTime.Now.AddMonths(1).AddDays(2),
 					ProvidesAccommodation = Enums.Accommodation.No,
-					ProvidesTravelAssistance = Enums.TravelAssistence.Unknown
+					ProvidesTravelAssistance = Enums.TravelAssistence.Unknown,
+					Slug = "techorama-nl",
+					EventTags = ".NET;Awesome;Unicorns;Dutch"
 				});
 
 				context.Cfps.Add(new Cfp
@@ -68,7 +74,9 @@ namespace CfpExchange.Data
 					EventDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
 					CfpEndDate = DateTime.Now.AddDays(1),
 					ProvidesAccommodation = Enums.Accommodation.Yes,
-					ProvidesTravelAssistance = Enums.TravelAssistence.Yes
+					ProvidesTravelAssistance = Enums.TravelAssistence.Yes,
+					Slug = "ndc-minnesota",
+					EventTags = ".NET;Awesome;Unicorns;PubConf"
 				});
 
 				// Give this one a static GUID to be able to access it
@@ -85,7 +93,9 @@ namespace CfpExchange.Data
 					EventDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit2.",
 					CfpEndDate = DateTime.Now.AddHours(-24),
 					ProvidesAccommodation = Enums.Accommodation.No,
-					ProvidesTravelAssistance = Enums.TravelAssistence.No
+					ProvidesTravelAssistance = Enums.TravelAssistence.No,
+					Slug = "ndc-london",
+					EventTags = ".NET;Awesome;Unicorns;Bla"
 				});
 
 				context.Cfps.Add(new Cfp
@@ -97,7 +107,8 @@ namespace CfpExchange.Data
 					SubmittedByName = "Gerald",
 					EventLocationName = "Oslo, Norway",
 					EventDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-					CfpEndDate = DateTime.Now.AddDays(20)
+					CfpEndDate = DateTime.Now.AddDays(20),
+					EventTags = ".NET;Awesome;Unicorns;Cold"
 				});
 
 				// Give this one a static GUID to be able to access it
@@ -112,7 +123,9 @@ namespace CfpExchange.Data
 					EventDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit2.",
 					CfpEndDate = DateTime.Now.AddDays(7),
 					ProvidesAccommodation = Enums.Accommodation.Unknown,
-					ProvidesTravelAssistance = Enums.TravelAssistence.Unknown
+					ProvidesTravelAssistance = Enums.TravelAssistence.Unknown,
+					Slug = "sdn-event",
+					EventTags = ""
 				});
 
 				// Give this one a static GUID to be able to access it
@@ -128,8 +141,21 @@ namespace CfpExchange.Data
 					CfpEndDate = DateTime.Now.AddDays(4),
 					ProvidesAccommodation = Enums.Accommodation.Unknown,
 					ProvidesTravelAssistance = Enums.TravelAssistence.Unknown,
-					DuplicateOfId = new Guid("dd3f7150-c9a7-46ed-9481-9246aed2329d")
+					DuplicateOfId = new Guid("dd3f7150-c9a7-46ed-9481-9246aed2329d"),
+					Slug = "sdn-event-1",
+					EventTags = ".NET;Awesome;Unicorns;SDN"
 				});
+
+				context.SaveChanges();
+			}
+
+			// Ensure all cfps have a slug
+			var cfpsWithoutSlug = context.Cfps.Where(cfp => string.IsNullOrWhiteSpace(cfp.Slug));
+
+			if (cfpsWithoutSlug.Any())
+			{
+				foreach (var cfp in cfpsWithoutSlug)
+					cfp.Slug = FriendlyUrlHelper.GetFriendlyTitle(cfp.EventName);
 
 				context.SaveChanges();
 			}

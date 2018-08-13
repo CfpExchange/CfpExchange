@@ -6,6 +6,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CfpExchange", "CfpExchange\
 EndProject
 Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "Deployment", "Deployment\Deployment.deployproj", "{70A09EDF-300B-4621-A336-0EE0F91FF64D}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CfpExchange.Functions", "CfpExchange.Functions\CfpExchange.Functions.csproj", "{47B5CEEB-CE52-475C-9C27-68E7B8BD1CEE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CfpExchange.Models", "CfpExchange.Models\CfpExchange.Models.csproj", "{EB288852-AB0D-405A-903A-B2E1736FE9EB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution items", "Solution items", "{461CF3AA-7C6A-46E9-BC38-D690C67C0059}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +30,14 @@ Global
 		{70A09EDF-300B-4621-A336-0EE0F91FF64D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{70A09EDF-300B-4621-A336-0EE0F91FF64D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{70A09EDF-300B-4621-A336-0EE0F91FF64D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47B5CEEB-CE52-475C-9C27-68E7B8BD1CEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47B5CEEB-CE52-475C-9C27-68E7B8BD1CEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47B5CEEB-CE52-475C-9C27-68E7B8BD1CEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47B5CEEB-CE52-475C-9C27-68E7B8BD1CEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB288852-AB0D-405A-903A-B2E1736FE9EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB288852-AB0D-405A-903A-B2E1736FE9EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB288852-AB0D-405A-903A-B2E1736FE9EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB288852-AB0D-405A-903A-B2E1736FE9EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

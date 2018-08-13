@@ -14,10 +14,10 @@
                 <div class="col-lg-4">
                     <h5><i class="fa fa-smile-o" aria-hidden="true"></i> Newest CFP</h5>
                     <div class="box clearfix">
-                        <a href="@(Url.Action("details", "cfp", new { id = Model.NewestCfp.Id }))">
+                        <a href="@(Url.Action("details", "cfp", new { id = Model.NewestCfp.Slug }))">
                             <img src="@Model.NewestCfp.EventImage" alt="Event image" style="object-fit:cover;">
                         </a>
-                        <h3><a href="@(Url.Action("details", "cfp", new { id = Model.NewestCfp.Id }))">@Model.NewestCfp.EventName</a></h3>
+                        <h3><a href="@(Url.Action("details", "cfp", new { id = Model.NewestCfp.Slug }))">@Model.NewestCfp.EventName</a></h3>
                         <p>
                             @if (!string.IsNullOrWhiteSpace(Model.NewestCfp.EventDescription))
                             {
@@ -36,10 +36,10 @@
                 <div class="col-lg-4">
                     <h5><i class="fa fa-eye" aria-hidden="true"></i> Most Viewed CFP</h5>
                     <div class="box clearfix">
-                        <a href="@(Url.Action("details", "cfp", new { id = Model.MostViewedCfp.Id }))">
+                        <a href="@(Url.Action("details", "cfp", new { id = Model.MostViewedCfp.Slug }))">
                             <img src="@Model.MostViewedCfp.EventImage" alt="Event image" style="object-fit:cover;">
                         </a>
-                        <h3><a href="@(Url.Action("details", "cfp", new { id = Model.MostViewedCfp.Id }))">@Model.MostViewedCfp.EventName</a></h3>
+                        <h3><a href="@(Url.Action("details", "cfp", new { id = Model.MostViewedCfp.Slug }))">@Model.MostViewedCfp.EventName</a></h3>
                         <p>
                             @if (!string.IsNullOrWhiteSpace(Model.MostViewedCfp.EventDescription))
                             {
@@ -58,10 +58,10 @@
                 <div class="col-lg-4">
                     <h5><i class="fa fa-random" aria-hidden="true"></i> Just Random</h5>
                     <div class="box clearfix">
-                        <a href="@(Url.Action("details", "cfp", new { id = Model.RandomCfp.Id }))">
+                        <a href="@(Url.Action("details", "cfp", new { id = Model.RandomCfp.Slug }))">
                             <img src="@Model.RandomCfp.EventImage" alt="Event image" style="object-fit:cover;">
                         </a>
-                        <h3><a href="@(Url.Action("details", "cfp", new { id = Model.RandomCfp.Id }))">@Model.RandomCfp.EventName</a></h3>
+                        <h3><a href="@(Url.Action("details", "cfp", new { id = Model.RandomCfp.Slug }))">@Model.RandomCfp.EventName</a></h3>
                         <p>
                             @if (!string.IsNullOrWhiteSpace(Model.RandomCfp.EventDescription))
                             {
@@ -85,7 +85,7 @@
                 <div class="col-lg-12">
                     <div class="form-group">
                         <form action="@Url.Action("Browse", "Cfp")" method="get">
-                            <input type="text" class="form-control" name="searchTerm" placeholder="Search by keyword">
+                            <input type="text" class="form-control" name="searchTerm" placeholder="Search by keyword or tag">
                             <button type="submit" class="btn">Search CFP</button>
                         </form>
                     </div>
@@ -149,20 +149,24 @@
                     <div class="col-lg-4 col-sm-6">
                         <div class="box grid recipes">
                             <div class="by">@*<i class="fa fa-clock-o" aria-hidden="true"></i>*@Ends: @(((TimeSpan)cfp.CfpEndDate.Subtract(DateTime.Now)).Humanize(minUnit: TimeUnit.Hour))<div class="float-right">Event: @Html.Raw(eventDate)</div></div>
-                            <a href="@(Url.Action("details", "cfp", new { id = cfp.Id }))">
+                            <a href="@(Url.Action("details", "cfp", new { id = cfp.Slug }))">
                                 <img src="@cfp.EventImage" alt="Event image">
                             </a>
                             <h2>
-                                <a href="@(Url.Action("details", "cfp", new { id = cfp.Id }))">@cfp.EventName</a>@if (!string.IsNullOrWhiteSpace(cfp.EventLocationName))
+                                <a href="@(Url.Action("details", "cfp", new { id = cfp.Slug }))">@cfp.EventName</a>@if (!string.IsNullOrWhiteSpace(cfp.EventLocationName))
                                 {
                                     @Html.Raw($"&nbsp;<small>{@cfp.EventLocationName}</small>");
                                 }
                             </h2>
                             <p>@cfp.ShortDescription</p>
                             <div class="tag">
-                                @*<a href="#">Awesome</a>
-                                    <a href="#">Unicorns</a>
-                                    <a href="#">.NET</a>*@
+                                @foreach (var tag in cfp.EventTags.Split(";").Take(3))
+                                {
+                                    if (!string.IsNullOrWhiteSpace(tag))
+                                    {
+                                <a href="@Url.Action("browse", "cfp", new { searchTerm = tag })">@tag</a>
+                                    }
+                                }
                             </div>
                         </div>
                     </div>

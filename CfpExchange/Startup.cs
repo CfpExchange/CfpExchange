@@ -59,17 +59,25 @@ namespace CfpExchange
 				options.AccessDeniedPath = "/Errors/AccessDenied";
 			});
 
-            services.AddAuthorization();
+			services.AddAuthorization();
 
 			services.AddMvc();
 
-			if (_environment.IsProduction())
-				services.AddTransient<IEmailSender, MailGunEmailSender>();
-			else
-				services.AddTransient<IEmailSender, MockEmailSender>();
+			AddServices(services);
+
 		}
 
-		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+	    private void AddServices(IServiceCollection services)
+	    {
+	        if (_environment.IsProduction())
+	            services.AddTransient<IEmailSender, MailGunEmailSender>();
+	        else
+	            services.AddTransient<IEmailSender, MockEmailSender>();
+
+	        services.AddTransient<IDownloadEventImageMessageSender, DownloadEventImageMessageSender>();
+	    }
+
+	    // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IHostingEnvironment env)
 		{
 			try

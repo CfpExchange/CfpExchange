@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using CfpExchange.Data;
 using CfpExchange.Helpers;
@@ -24,14 +27,17 @@ namespace CfpExchange.Controllers
 		private readonly IConfiguration _configuration;
 		private readonly IEmailSender _emailSender;
 		private readonly IHostingEnvironment _hostingEnvironment;
+	    private readonly IDownloadEventImageMessageSender _downloadEventImageMessageSender;
 
-		public CfpController(CfpContext cfpContext, IConfiguration configuration,
-			IEmailSender emailSender, IHostingEnvironment env)
+	    public CfpController(CfpContext cfpContext, IConfiguration configuration,
+			IEmailSender emailSender, IHostingEnvironment env,
+		    IDownloadEventImageMessageSender downloadEventImageMessageSender)
 		{
 			_cfpContext = cfpContext;
 			_configuration = configuration;
 			_emailSender = emailSender;
 			_hostingEnvironment = env;
+		    _downloadEventImageMessageSender = downloadEventImageMessageSender;
 		}
 
 		[HttpPost]
@@ -46,6 +52,8 @@ namespace CfpExchange.Controllers
 				&& !validatedUrl.StartsWith("https://", StringComparison.Ordinal))
 				validatedUrl = $"http://{validatedUrl}";
 
+			// Inject api key here to prevent resolve of a service for this one value in the underlying class
+			//var metadata = MetaScraper.GetUrlPreview(validatedUrl, _configuration["UrlPreviewApiKey"]);
 			var metadata = MetaScraper.GetMetaDataFromUrl(validatedUrl);
 
 			// Double check image URL
@@ -103,7 +111,8 @@ namespace CfpExchange.Controllers
 				.Where(cfp => cfp.CfpEndDate > DateTime.UtcNow)
 				.Where(cfp => cfp.DuplicateOfId == null)
 				.Where(cfp => cfp.EventName.ToLowerInvariant().Contains(lowercaseSearchTerm)
-					|| cfp.EventLocationName.ToLowerInvariant().Contains(lowercaseSearchTerm))
+					|| cfp.EventLocationName.ToLowerInvariant().Contains(lowercaseSearchTerm)
+					|| cfp.EventTags.ToLowerInvariant().Contains(lowercaseSearchTerm))
 				.Where(cfp => cfp.EventStartDate == default(DateTime) || cfp.EventEndDate == default(DateTime) || cfp.EventStartDate >= startDateTime && cfp.EventEndDate <= endDateTime)
 				.OrderBy(cfp => cfp.CfpEndDate)
 				.Skip((pageToShow - 1) * MaximumNumberOfItemsPerPage)
@@ -137,7 +146,7 @@ namespace CfpExchange.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Submit(SubmittedCfp submittedCfp)
+		public async Task<IActionResult> Submit([FromForm]SubmittedCfp submittedCfp)
 		{
 			// TODO
 			// Check validity
@@ -155,6 +164,15 @@ namespace CfpExchange.Controllers
 				{
 					// Intentionally left blank, just for event to calendar
 					// If it fails, sucks for you
+				}
+
+				var cfpToAddSlug = FriendlyUrlHelper.GetFriendlyTitle(submittedCfp.EventTitle);
+				var i = 0;
+
+				// Prevent duplicate slugs
+				while (_cfpContext.Cfps.Any(cfp => cfp.Slug == cfpToAddSlug))
+				{
+					cfpToAddSlug = $"{cfpToAddSlug}-{++i}";
 				}
 
 				var cfpToAdd = new Cfp
@@ -175,39 +193,26 @@ namespace CfpExchange.Controllers
 					ProvidesAccommodation = submittedCfp.ProvidesAccommodation,
 					ProvidesTravelAssistance = submittedCfp.ProvidesTravelAssistance,
 					SubmittedByName = submittedCfp.SubmittedByName,
-					EventTimezone = timezone
+					EventTwitterHandle = submittedCfp.EventTwitterHandle,
+					EventTimezone = timezone,
+					Slug = cfpToAddSlug,
+					EventTags = submittedCfp.EventTags,
+          CfpDecisionDate = submittedCfp.CfpDecisionDate?.Date ?? default(DateTime)
 				};
 
 				// Save CFP
 				_cfpContext.Add(cfpToAdd);
-				_cfpContext.SaveChanges();
+				await _cfpContext.SaveChangesAsync();
+
+			    if (ShouldDownloadEventImageLocally())
+			    {
+                    await _downloadEventImageMessageSender.Execute(cfpToAddId, submittedCfp.EventImageUrl);
+			    }
 
 				// Post to Twitter account
 				try
 				{
-					var auth = new SingleUserAuthorizer
-					{
-						CredentialStore = new SingleUserInMemoryCredentialStore
-						{
-							ConsumerKey = _configuration["TwitterConsumerKey"],
-							ConsumerSecret = _configuration["TwitterConsumerSecret"],
-							OAuthToken = _configuration["TwitterOAuthToken"],
-							OAuthTokenSecret = _configuration["TwitterOAuthTokenSecret"]
-						}
-					};
-
-					await auth.AuthorizeAsync();
-
-					var ctx = new TwitterContext(auth);
-
-					var tweetMessage = $"New CFP Added: {cfpToAdd.EventName} closes {cfpToAdd.CfpEndDate.ToLongDateString()} #cfpexchange {Url.Action("details", "cfp", new { id = cfpToAddId }, "https", "cfp.exchange")}";
-
-					if (_hostingEnvironment.IsProduction())
-					{
-						// TODO substringing is not the best thing, but does the trick for now
-						await ctx.TweetAsync(tweetMessage.Length > 280 ? tweetMessage.Substring(0, 280) : tweetMessage,
-							(decimal)cfpToAdd.EventLocationLat, (decimal)cfpToAdd.EventLocationLng);
-					}
+					await PostNewCfpTweet(cfpToAdd);
 				}
 				catch
 				{
@@ -223,31 +228,106 @@ namespace CfpExchange.Controllers
 			return BadRequest(submittedCfp);
 		}
 
-		private async Task<string> GetTimezone(double lat, double lng)
-		{
-			using (var httpClient = new HttpClient())
-			{
-				var resultJson = await httpClient.GetStringAsync($"https://maps.googleapis.com/maps/api/timezone/json?location={lat},{lng}&timestamp={DateTime.Now.Ticks}&key={_configuration["GoogleTimezoneApiKey"]}");
-				var result = JsonConvert.DeserializeObject<dynamic>(resultJson);
+	    private bool ShouldDownloadEventImageLocally()
+	    {
+	        return bool.TryParse(_configuration["FeatureToggle:HostOwnImages"], out bool hostOwnImages) && hostOwnImages;
+	    }
 
-				return result.timeZoneId;
+	    private async Task PostNewCfpTweet(Cfp cfpToAdd)
+		{
+			var auth = new SingleUserAuthorizer
+			{
+				CredentialStore = new SingleUserInMemoryCredentialStore
+				{
+					ConsumerKey = _configuration["TwitterConsumerKey"],
+					ConsumerSecret = _configuration["TwitterConsumerSecret"],
+					OAuthToken = _configuration["TwitterOAuthToken"],
+					OAuthTokenSecret = _configuration["TwitterOAuthTokenSecret"]
+				}
+			};
+
+			await auth.AuthorizeAsync();
+
+			var ctx = new TwitterContext(auth);
+
+			var tweetMessageBuilder = new StringBuilder();
+			if (!string.IsNullOrWhiteSpace(cfpToAdd.EventTwitterHandle))
+			{
+				var twitterHandle = cfpToAdd.EventTwitterHandle;
+
+				if (!twitterHandle.StartsWith('@'))
+					twitterHandle = "@" + twitterHandle;
+
+				tweetMessageBuilder.AppendLine($"\U0001F4E2 New CFP: {cfpToAdd.EventName} ({twitterHandle}) ");
+			}
+			else
+				tweetMessageBuilder.AppendLine($"\U0001F4E2 New CFP: {cfpToAdd.EventName}");
+
+			tweetMessageBuilder.AppendLine($"\U000023F3 Closes: {cfpToAdd.CfpEndDate.ToLongDateString()}");
+
+			if (cfpToAdd.EventStartDate != default(DateTime) && cfpToAdd.EventStartDate.Date == cfpToAdd.EventEndDate.Date)
+				tweetMessageBuilder.AppendLine($"\U0001F5D3 Event: {cfpToAdd.EventStartDate.ToString("MMM dd")}");
+			else if (cfpToAdd.EventStartDate != default(DateTime))
+				tweetMessageBuilder.AppendLine($"\U0001F5D3 Event: {cfpToAdd.EventStartDate.ToString("MMM dd")} - {cfpToAdd.EventEndDate.ToString("MMM dd")}");
+
+			tweetMessageBuilder.AppendLine($"#cfp #cfpexchange {Url.Action("details", "cfp", new { id = cfpToAdd.Id }, "https", "cfp.exchange")}");
+
+			var tweetMessage = tweetMessageBuilder.ToString();
+
+			if (_hostingEnvironment.IsProduction())
+			{
+				// TODO substringing is not the best thing, but does the trick for now
+				await ctx.TweetAsync(tweetMessage.Length > 280 ? tweetMessage.Substring(0, 280) : tweetMessage,
+					(decimal)cfpToAdd.EventLocationLat, (decimal)cfpToAdd.EventLocationLng, true);
+			}
+			else
+			{
+				Debug.WriteLine(tweetMessage);
 			}
 		}
 
-		public IActionResult Details(Guid id)
+		private async Task<string> GetTimezone(double lat, double lng)
 		{
-			if (id == Guid.Empty)
+			// Only in production, saves credits
+			if (_hostingEnvironment.IsProduction())
+			{
+				using (var httpClient = new HttpClient())
+				{
+					var resultJson = await httpClient.GetStringAsync($"https://atlas.microsoft.com/timezone/byCoordinates/json?subscription-key={_configuration["MapsApiKey"]}&api-version=1.0&query={lat}%2C{lng}");
+					var result = JsonConvert.DeserializeObject<TimezoneInfo>(resultJson);
+
+					return result.TimeZones.FirstOrDefault()?.Id ?? string.Empty;
+				}
+			}
+
+			return string.Empty;
+		}
+
+		public IActionResult Details(string id)
+		{
+			if (string.IsNullOrWhiteSpace(id))
 				return RedirectToAction("index", "home");
 
-			var selectedCfp = _cfpContext.Cfps.SingleOrDefault(cfp => cfp.Id == id);
+			var selectedCfp = _cfpContext.Cfps.SingleOrDefault(cfp => cfp.Slug == id);
 
 			if (selectedCfp == null)
-				// TODO to error page?
-				return RedirectToAction("index", "home");
+			{
+				// Check it the id happens to be a Guid
+				if (Guid.TryParse(id, out Guid guidId))
+				{
+					if (guidId != Guid.Empty)
+						selectedCfp = _cfpContext.Cfps.SingleOrDefault(cfp => cfp.Id == guidId);
+				}
+
+				if (selectedCfp == null)
+					// TODO to error page?
+					return RedirectToAction("index", "home");
+			}
 
 			if (selectedCfp.DuplicateOfId != null && selectedCfp.DuplicateOfId != Guid.Empty)
 			{
-				return RedirectToAction("details", "cfp", new { id = selectedCfp.DuplicateOfId });
+				var originalCfp = _cfpContext.Cfps.SingleOrDefault(cfp => cfp.Id == selectedCfp.DuplicateOfId);
+				return RedirectToAction("details", "cfp", new { id = originalCfp.Slug });
 			}
 
 			selectedCfp.Views++;
@@ -285,7 +365,7 @@ namespace CfpExchange.Controllers
 			}
 			catch
 			{
-				// Intentionally left blank, should be a show-stopper
+				// Intentionally left blank, shouldn't be a show-stopper
 			}
 
 			return Redirect(url);

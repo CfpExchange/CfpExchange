@@ -5,6 +5,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
+    <PackageReference Include="Microsoft.Azure.ServiceBus" Version="3.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="2.0.2" />
     <PackageReference Include="HtmlAgilityPack" Version="1.7.3" />
     <PackageReference Include="Humanizer.Core" Version="2.2.0" />
@@ -28,6 +29,8 @@
     <Folder Include="Enums\" />
     <Folder Include="Middleware\" />
     <Folder Include="wwwroot\images\social\" />
+    <Folder Include="wwwroot\js\plugins\jquery-tags-input\" />
+    <Folder Include="wwwroot\css\plugins\jquery-tags-input\" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="appsettings.json">
@@ -46,6 +49,9 @@
     <None Include="wwwroot\robots.txt" />
     <None Include="wwwroot\images\social\twitter.png" />
     <None Include="wwwroot\images\social\fb.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CfpExchange.Models\CfpExchange.Models.csproj" />
   </ItemGroup>
 </Project>
 

@@ -47,8 +47,8 @@ namespace CfpExchange.Middleware
 					rssContent += "<item>";
 					rssContent += $"<title>{cfp.EventName}, CFP closes: {cfp.CfpEndDate.ToString("dd MMM yyyy")}</title>";
 					rssContent += $"<pubDate>{cfp.CfpAdded.ToString("r")}</pubDate>";
-					rssContent += $"<link>{_rootUrl}/cfp/details/{cfp.Id}</link>";
-					rssContent += $"<guid>{_rootUrl}/cfp/details/{cfp.Id}</guid>";
+					rssContent += $"<link>{_rootUrl}/cfp/details/{cfp.Slug}</link>";
+					rssContent += $"<guid>{_rootUrl}/cfp/details/{cfp.Slug}</guid>";
 					rssContent += $"<description>{cfp.EventDescription}</description>";
 					rssContent += "</item>";
 				}

@@ -16,6 +16,7 @@ namespace CfpExchange.Models
 		public double EventLocationLat { get; set; }
 		public double EventLocationLng { get; set; }
 		public string EventUrl { get; set; } = String.Empty;
+		public string EventTags { get; set; } = String.Empty;
 
 		private string _eventImage;
 		public string EventImage
@@ -47,14 +48,16 @@ namespace CfpExchange.Models
 		public int Views { get; set; }
 		public int ClicksToCfpUrl { get; set; }
 		public string SubmittedByName { get; set; }
+		public string EventTwitterHandle { get; set; }
 		public Guid? DuplicateOfId { get; set; }
+		public string Slug { get; set; }
 
 		[NotMapped]
 		public string ShortDescription
 		{
 			get
 			{
-				if (EventDescription.Length > 140)
+				if (EventDescription?.Length > 140)
 					return $"{EventDescription.Substring(0, 140)}...";
 
 				return EventDescription;
@@ -66,7 +69,7 @@ namespace CfpExchange.Models
 		{
 			get
 			{
-				if (EventDescription.Length > 40)
+				if (EventDescription?.Length > 40)
 					return $"{EventDescription.Substring(0, 40)}...";
 
 				return EventDescription;

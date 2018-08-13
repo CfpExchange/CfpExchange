@@ -31,9 +31,36 @@ The file should have the following layout:
         "ApiUri": "https://api.mailgun.net/v3/yourdomain.com/messages",
         "From": "No-Reply CFP Exchange <no-reply@cfp.exchange>"
     },
-    "GoogleTimezoneApiKey": "key",
+    "MapsApiKey": "key",
     "ConnectionStrings": {
-        "CfpExchangeDb":  "YourConnectionString" 
-    } 
+        "CfpExchangeDb":  "ConnectionStringToTheCfpExchangeDatabase" 
+    },
+    "UrlPreviewApiKey": "key",
+    "FeatureToggle": {
+        "HostOwnImages": true
+    },
+    "ServicebusQueueConnectionString": "ConnectionStringToTheServiceBusQueue"
 }
 ```
+
+- `MapsApiKey` is an API key for the Azure Maps service
+- `UrlPreviewApiKey` is the Azure Cognitive Services URL Preview key (experimental) functionality for this is implemented but not currently used.
+
+### Azure Functions settings
+In order to run the Azure Functions project, you need to create a file called `local.settings.json` in the root directory of this project.
+
+The contents should look like the following:
+```json
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "AzureWebJobsDashboard": "UseDevelopmentStorage=true",
+    "ServicebusQueueConnectionString": "ConnectionStringToTheServiceBusQueue",
+    "StorageAccountName": "ConnectionStringToTheBlobStorageAccount",
+    "CfpExchangeDb": "ConnectionStringToTheCfpExchangeDatabase"
+  }
+}
+```
+
+All of these settings can be found within the Azure Portal once your environment is deployed to Azure via the ARM template.
