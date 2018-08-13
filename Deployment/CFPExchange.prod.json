@@ -2,6 +2,9 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+    "resourcegroup": {
+      "value": "cfpexchange"
+    },
     "hostingPlanName": {
       "value": "cfpexchange"
     },
@@ -29,8 +32,20 @@
     "servicebusNamespace": {
       "value": "cfpexchange-bus"
     },
-    "serviceBusQueueName": {
-      "value": "eventimages"
+    "vaultName": {
+      "value": "cfpexchange-vault"
+    },
+    "FeatureToggle.HostOwnImages": {
+      "value": false
+    },
+    "templateBaseUri": {
+      "value": "https://the-base-uri-where-your-nested-templates-are-stored/"
+    },
+    "storageAccountName": {
+      "value": "cfpexchangestorage"
+    },
+    "functionAppName": {
+      "value": "cfpexchange-functions"
     }
   }
 }

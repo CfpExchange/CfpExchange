@@ -27,14 +27,17 @@ namespace CfpExchange.Controllers
 		private readonly IConfiguration _configuration;
 		private readonly IEmailSender _emailSender;
 		private readonly IHostingEnvironment _hostingEnvironment;
+	    private readonly IDownloadEventImageMessageSender _downloadEventImageMessageSender;
 
-		public CfpController(CfpContext cfpContext, IConfiguration configuration,
-			IEmailSender emailSender, IHostingEnvironment env)
+	    public CfpController(CfpContext cfpContext, IConfiguration configuration,
+			IEmailSender emailSender, IHostingEnvironment env,
+		    IDownloadEventImageMessageSender downloadEventImageMessageSender)
 		{
 			_cfpContext = cfpContext;
 			_configuration = configuration;
 			_emailSender = emailSender;
 			_hostingEnvironment = env;
+		    _downloadEventImageMessageSender = downloadEventImageMessageSender;
 		}
 
 		[HttpPost]
@@ -194,12 +197,17 @@ namespace CfpExchange.Controllers
 					EventTimezone = timezone,
 					Slug = cfpToAddSlug,
 					EventTags = submittedCfp.EventTags,
-                    CfpDecisionDate = submittedCfp.CfpDecisionDate?.Date ?? default(DateTime)
+          CfpDecisionDate = submittedCfp.CfpDecisionDate?.Date ?? default(DateTime)
 				};
 
 				// Save CFP
 				_cfpContext.Add(cfpToAdd);
-				_cfpContext.SaveChanges();
+				await _cfpContext.SaveChangesAsync();
+
+			    if (ShouldDownloadEventImageLocally())
+			    {
+                    await _downloadEventImageMessageSender.Execute(cfpToAddId, submittedCfp.EventImageUrl);
+			    }
 
 				// Post to Twitter account
 				try
@@ -220,7 +228,12 @@ namespace CfpExchange.Controllers
 			return BadRequest(submittedCfp);
 		}
 
-		private async Task PostNewCfpTweet(Cfp cfpToAdd)
+	    private bool ShouldDownloadEventImageLocally()
+	    {
+	        return bool.TryParse(_configuration["FeatureToggle:HostOwnImages"], out bool hostOwnImages) && hostOwnImages;
+	    }
+
+	    private async Task PostNewCfpTweet(Cfp cfpToAdd)
 		{
 			var auth = new SingleUserAuthorizer
 			{
