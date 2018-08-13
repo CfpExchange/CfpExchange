@@ -13,7 +13,7 @@ namespace CfpExchange.ViewModels
 		[DataType(DataType.ImageUrl)]
 		public string EventImageUrl { get; set; }
 
-		[Required]
+		[Required(ErrorMessage = "The event title is required")]
 		[DataType(DataType.Text)]
 		public string EventTitle { get; set; }
 
@@ -21,7 +21,7 @@ namespace CfpExchange.ViewModels
 		[DataType(DataType.Text)]
 		public string EventTags { get; set; }
 
-
+        [Required(ErrorMessage = "A description is required for the event")]
 		[DataType(DataType.MultilineText)]
 		public string EventDescription { get; set; }
 
@@ -54,5 +54,8 @@ namespace CfpExchange.ViewModels
 
 		[DataType(DataType.Text)]
 		public string EventTwitterHandle { get; set; }
-	}
+
+	    [DataType(DataType.Date)]
+	    public DateTime? CfpDecisionDate { get; set; } = default(DateTime);
+    }
 }
