@@ -3,14 +3,13 @@ using System.Configuration;
 using System.Data.SqlClient;
 using System.IO;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 using Dapper;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.ServiceBus.Messaging;
 using Newtonsoft.Json;
-
+using CfpExchange.Models;
 namespace CfpExchange.Functions
 {
     public static class DownloadEventImage
@@ -29,19 +28,21 @@ namespace CfpExchange.Functions
             {
                 log.Verbose($"Event image URL is `{eventImageModel.ImageUrl}`.");
                 var relativeLocationOfStoredImage = await StoreEventImageInBlobStorage(binder, log, eventImageModel);
-
-                UpdateRecordInTheCfpRepository(eventImageModel, relativeLocationOfStoredImage, log);
+                if (!eventImageModel.ImageUrl.IsDefaultImage())
+                {
+                    UpdateRecordInTheCfpRepository(eventImageModel, relativeLocationOfStoredImage, log);
+                }
             }
             else
             {
                 log.Warning($"The location `{eventImageModel.ImageUrl}` for CFP `{eventImageModel.Id}` is not an absolute URI.");
             }
-            
+
             log.Info($"Processed the download event image for identifier `{eventImageModel.Id}`");
         }
 
         private static async Task<string> StoreEventImageInBlobStorage(
-            Binder binder, 
+            Binder binder,
             TraceWriter log,
             Models.DownloadEventImage eventImageModel)
         {
@@ -75,7 +76,7 @@ namespace CfpExchange.Functions
             using (var connection = new SqlConnection(connectionstring))
             {
                 connection.Open();
-                connection.Execute("UPDATE dbo.Cfps SET EventImage = @EventImage WHERE Id = @Id", 
+                connection.Execute("UPDATE dbo.Cfps SET EventImage = @EventImage WHERE Id = @Id",
                     new
                     {
                         EventImage = absoluteImageLocation,
