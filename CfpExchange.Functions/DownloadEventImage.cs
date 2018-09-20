@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.IO;
@@ -75,7 +75,7 @@ namespace CfpExchange.Functions
             using (var connection = new SqlConnection(connectionstring))
             {
                 connection.Open();
-                connection.Execute("UPDATE dbo.Cfps SET EventImage = '@EventImage' WHERE Id = @Id", 
+                connection.Execute("UPDATE dbo.Cfps SET EventImage = @EventImage WHERE Id = @Id", 
                     new
                     {
                         EventImage = absoluteImageLocation,
