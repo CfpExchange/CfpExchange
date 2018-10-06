@@ -92,7 +92,7 @@
     "vaultName": {
       "type": "string"
     },
-    "FeatureToggle.HostOwnImages": {
+    "FeatureToggle:HostOwnImages": {
       "type": "bool"
     },
     "servicebusEventImagesQueueConnectionString": {
@@ -106,6 +106,33 @@
     },
     "functionAppName": {
       "type": "string"
+    },
+    "AdminEmailaddress": { 
+        "type": "string"
+    },
+    "EmailSettings:ApiKey": {
+      "type": "securestring"
+    },
+    "EmailSettings:ApiUri": {
+      "type": "string"
+    },
+    "EmailSettings:From": {
+      "type": "string"
+    },
+    "MapsApiKey": {
+      "type": "securestring"
+    },
+    "TwitterConsumerKey": {
+      "type": "securestring"
+    },
+    "TwitterConsumerSecret": {
+      "type": "securestring"
+    },
+    "TwitterOAuthToken": {
+      "type": "securestring"
+    },
+    "TwitterOAuthTokenSecret": {
+      "type": "securestring"
     }
   },
   "variables": {
@@ -170,7 +197,16 @@
           },
           "properties": {
             "ServicebusEventImagesQueueConnectionString": "[parameters('servicebusEventImagesQueueConnectionString')]",
-            "FeatureToggle.HostOwnImages": "[parameters('FeatureToggle.HostOwnImages')]"
+            "FeatureToggle:HostOwnImages": "[parameters('FeatureToggle:HostOwnImages')]",
+            "AdminEmailaddress": "[parameters('AdminEmailaddress')]",
+            "EmailSettings:ApiKey": "[parameters('EmailSettings:ApiKey')]",
+            "EmailSettings:ApiUri": "[parameters('EmailSettings:ApiUri')]",
+            "EmailSettings:From": "[parameters('EmailSettings:From')]",
+            "MapsApiKey": "[parameters('MapsApiKey')]",
+            "TwitterConsumerKey": "[parameters('TwitterConsumerKey')]",
+            "TwitterConsumerSecret": "[parameters('TwitterConsumerSecret')]",
+            "TwitterOAuthToken": "[parameters('TwitterOAuthToken')]",
+            "TwitterOAuthTokenSecret": "[parameters('TwitterOAuthTokenSecret')]"
           }
         }
       ]
