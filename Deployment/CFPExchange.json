@@ -109,6 +109,33 @@
     },
     "functionAppName": {
       "type": "string"
+    },
+    "AdminEmailaddress": { 
+        "type": "string"
+    },
+    "EmailSettings:ApiKey": {
+      "type": "securestring"
+    },
+    "EmailSettings:ApiUri": {
+      "type": "string"
+    },
+    "EmailSettings:From": {
+      "type": "string"
+    },
+    "MapsApiKey": {
+      "type": "securestring"
+    },
+    "TwitterConsumerKey": {
+      "type": "securestring"
+    },
+    "TwitterConsumerSecret": {
+      "type": "securestring"
+    },
+    "TwitterOAuthToken": {
+      "type": "securestring"
+    },
+    "TwitterOAuthTokenSecret": {
+      "type": "securestring"
     }
   },
   "variables": {
