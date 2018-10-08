@@ -221,6 +221,33 @@
           },
           "functionAppName": {
             "value": "[parameters('functionAppName')]"
+          },
+          "AdminEmailaddress": {
+            "value": "[parameters('AdminEmailaddress')]"
+          },
+          "EmailSettings:ApiKey": {
+            "value": "[parameters('EmailSettings:ApiKey')]"
+          },
+          "EmailSettings:ApiUri": {
+            "value": "[parameters('EmailSettings:ApiUri')]"
+          },
+          "EmailSettings:From": {
+            "value": "[parameters('EmailSettings:From')]"
+          },
+          "MapsApiKey": {
+            "value": "[parameters('MapsApiKey')]"
+          },
+          "TwitterConsumerKey": {
+            "value": "[parameters('TwitterConsumerKey')]"
+          },
+          "TwitterConsumerSecret": {
+            "value": "[parameters('TwitterConsumerSecret')]"
+          },
+          "TwitterOAuthToken": {
+            "value": "[parameters('TwitterOAuthToken')]"
+          },
+          "TwitterOAuthTokenSecret": {
+            "value": "[parameters('TwitterOAuthTokenSecret')]"
           }
         }
       }
