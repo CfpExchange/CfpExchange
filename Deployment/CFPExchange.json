@@ -98,7 +98,7 @@
     "vaultName": {
       "type": "string"
     },
-    "FeatureToggle.HostOwnImages": {
+    "FeatureToggle:HostOwnImages": {
       "type": "bool"
     },
     "templateBaseUri": {
