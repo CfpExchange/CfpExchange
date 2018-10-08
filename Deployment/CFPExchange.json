@@ -197,8 +197,8 @@
           "vaultName": {
             "value": "[parameters('vaultName')]"
           },
-          "FeatureToggle.HostOwnImages": {
-            "value": "[parameters('FeatureToggle.HostOwnImages')]"
+          "FeatureToggle:HostOwnImages": {
+            "value": "[parameters('FeatureToggle:HostOwnImages')]"
           },
           "servicebusEventImagesQueueConnectionString": {
             "reference": {
