@@ -109,7 +109,264 @@
     },
     "functionAppName": {
       "type": "string"
+    }{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "resourcegroup": {
+      "type": "string"
+    },
+    "hostingPlanName": {
+      "type": "string",
+      "minLength": 1
+    },
+    "skuName": {
+      "type": "string",
+      "defaultValue": "F1",
+      "allowedValues": [
+        "F1",
+        "D1",
+        "B1",
+        "B2",
+        "B3",
+        "S1",
+        "S2",
+        "S3",
+        "P1",
+        "P2",
+        "P3",
+        "P4"
+      ],
+      "metadata": {
+        "description": "Describes plan's pricing tier and instance size. Check details at https://azure.microsoft.com/en-us/pricing/details/app-service/"
+      }
+    },
+    "skuCapacity": {
+      "type": "int",
+      "defaultValue": 1,
+      "minValue": 1,
+      "metadata": {
+        "description": "Describes plan's instance count"
+      }
+    },
+    "administratorLogin": {
+      "type": "string"
+    },
+    "administratorLoginPassword": {
+      "type": "securestring"
+    },
+    "databaseName": {
+      "type": "string"
+    },
+    "collation": {
+      "type": "string",
+      "defaultValue": "SQL_Latin1_General_CP1_CI_AS"
+    },
+    "edition": {
+      "type": "string",
+      "defaultValue": "Basic",
+      "allowedValues": [
+        "Basic",
+        "Standard",
+        "Premium"
+      ]
+    },
+    "maxSizeBytes": {
+      "type": "string",
+      "defaultValue": "1073741824"
+    },
+    "requestedServiceObjectiveName": {
+      "type": "string",
+      "defaultValue": "Basic",
+      "allowedValues": [
+        "Basic",
+        "S0",
+        "S1",
+        "S2",
+        "P1",
+        "P2",
+        "P3"
+      ],
+      "metadata": {
+        "description": "Describes the performance level for Edition"
+      }
+    },
+    "sqlServerName": {
+      "type": "string"
+    },
+    "websiteName": {
+      "type": "string"
+    },
+    "AD.TenantId": {
+      "type": "string"
+    },
+    "AD.ObjectId": {
+      "type": "string"
+    },
+    "servicebusNamespace": {
+      "type": "string"
+    },
+    "vaultName": {
+      "type": "string"
+    },
+    "FeatureToggle.HostOwnImages": {
+      "type": "bool"
+    },
+    "templateBaseUri": {
+      "type": "string"
+    },
+    "storageAccountName": {
+      "type": "string"
+    },
+    "functionAppName": {
+      "type": "string"
+    },
+    "AdminEmailaddress": { 
+        "type": "string"
+    },
+    "EmailSettings:ApiKey": {
+      "type": "securestring"
+    },
+    "EmailSettings:ApiUri": {
+      "type": "string"
+    },
+    "EmailSettings:From": {
+      "type": "string"
+    },
+    "MapsApiKey": {
+      "type": "securestring"
+    },
+    "TwitterConsumerKey": {
+      "type": "securestring"
+    },
+    "TwitterConsumerSecret": {
+      "type": "securestring"
+    },
+    "TwitterOAuthToken": {
+      "type": "securestring"
+    },
+    "TwitterOAuthTokenSecret": {
+      "type": "securestring"
     }
+  },
+  "variables": {
+  },
+  "resources": [
+    {
+      "apiVersion": "2015-01-01",
+      "name": "nestedTemplate",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(parameters('templateBaseUri'), 'complete-solution.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "resourcegroup": {
+            "value": "[parameters('resourcegroup')]"
+          },
+          "hostingPlanName": {
+            "value": "[parameters('hostingPlanName')]"
+          },
+          "skuName": {
+            "value": "[parameters('skuName')]"
+          },
+          "skuCapacity": {
+            "value": "[parameters('skuCapacity')]"
+          },
+          "websiteName": {
+            "value": "[parameters('websiteName')]"
+          },
+          "sqlServerName": {
+            "value": "[parameters('sqlServerName')]"
+          },
+          "databaseName": {
+            "value": "[parameters('databaseName')]"
+          },
+          "collation": {
+            "value": "[parameters('collation')]"
+          },
+          "edition": {
+            "value": "[parameters('edition')]"
+          },
+          "maxSizeBytes": {
+            "value": "[parameters('maxSizeBytes')]"
+          },
+          "requestedServiceObjectiveName": {
+            "value": "[parameters('requestedServiceObjectiveName')]"
+          },
+          "administratorLogin": {
+            "value": "[parameters('administratorLogin')]"
+          },
+          "administratorLoginPassword": {
+            "value": "[parameters('administratorLoginPassword')]"
+          },
+          "servicebusNamespace": {
+            "value": "[parameters('servicebusNamespace')]"
+          },
+          "vaultName": {
+            "value": "[parameters('vaultName')]"
+          },
+          "FeatureToggle.HostOwnImages": {
+            "value": "[parameters('FeatureToggle.HostOwnImages')]"
+          },
+          "servicebusEventImagesQueueConnectionString": {
+            "reference": {
+              "keyVault": {
+                "id": "[resourceId(subscription().subscriptionId,  parameters('resourcegroup'), 'Microsoft.KeyVault/vaults', parameters('vaultName'))]"
+              },
+              "secretName": "ServicebusEventImagesQueueConnectionString"
+            }
+          },
+          "servicebusManageConnectionString": {
+            "reference": {
+              "keyVault": {
+                "id": "[resourceId(subscription().subscriptionId,  parameters('resourcegroup'), 'Microsoft.KeyVault/vaults', parameters('vaultName'))]"
+              },
+              "secretName": "ServicebusManageConnectionString"
+            }
+          },
+          "storageAccountName": {
+            "value": "[parameters('storageAccountName')]"
+          },
+          "functionAppName": {
+            "value": "[parameters('functionAppName')]"
+          }
+        }
+      }
+    },
+    {
+      "name": "[parameters('vaultName')]",
+      "type": "Microsoft.KeyVault/vaults",
+      "apiVersion": "2016-10-01",
+      "location": "West Europe",
+      "tags": {},
+      "properties": {
+        "tenantId": "[parameters('AD.TenantId')]",
+        "sku": {
+          "family": "A",
+          "name": "standard"
+        },
+        "accessPolicies": [
+          {
+            "tenantId": "[parameters('AD.TenantId')]",
+            "objectId": "[parameters('AD.ObjectId')]",
+            "permissions": {
+              "keys": [],
+              "secrets": [
+                "get"
+              ],
+              "certificates": [],
+              "storage": []
+            }
+          }
+        ],
+        "enabledForTemplateDeployment": true
+      }
+    }
+  ]
+}
   },
   "variables": {
   },
