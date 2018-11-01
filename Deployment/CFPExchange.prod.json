@@ -35,7 +35,7 @@
     "vaultName": {
       "value": "cfpexchange-vault"
     },
-    "FeatureToggle.HostOwnImages": {
+    "FeatureToggle:HostOwnImages": {
       "value": false
     },
     "templateBaseUri": {
@@ -46,6 +46,33 @@
     },
     "functionAppName": {
       "value": "cfpexchange-functions"
+    },
+    "AdminEmailaddress": { 
+      "value": "cfpexchange@geraldversluis.nl"
+    },
+    "EmailSettings:ApiKey": {
+      "value": "YourAPIKey"
+    },
+    "EmailSettings:ApiUri": {
+      "value": "YorAPIUri"
+    },
+    "EmailSettings:From": {
+      "value": "No-Reply CFP Exchange <no-reply@cfp.exchange>"
+    },
+    "MapsApiKey": {
+      "value": "YourAzureMapsApiKey"
+    },
+    "TwitterConsumerKey": {
+      "value": "YourConsumerKey"
+    },
+    "TwitterConsumerSecret": {
+      "value": "YourConsumerSecret"
+    },
+    "TwitterOAuthToken": {
+      "value": "YourOAuthToken"
+    },
+    "TwitterOAuthTokenSecret": {
+      "value": "YourOAuthTokenSecret"
     }
   }
 }

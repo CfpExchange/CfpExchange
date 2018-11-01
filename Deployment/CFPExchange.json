@@ -98,7 +98,7 @@
     "vaultName": {
       "type": "string"
     },
-    "FeatureToggle.HostOwnImages": {
+    "FeatureToggle:HostOwnImages": {
       "type": "bool"
     },
     "templateBaseUri": {
@@ -109,6 +109,33 @@
     },
     "functionAppName": {
       "type": "string"
+    },
+    "AdminEmailaddress": { 
+        "type": "string"
+    },
+    "EmailSettings:ApiKey": {
+      "type": "securestring"
+    },
+    "EmailSettings:ApiUri": {
+      "type": "string"
+    },
+    "EmailSettings:From": {
+      "type": "string"
+    },
+    "MapsApiKey": {
+      "type": "securestring"
+    },
+    "TwitterConsumerKey": {
+      "type": "securestring"
+    },
+    "TwitterConsumerSecret": {
+      "type": "securestring"
+    },
+    "TwitterOAuthToken": {
+      "type": "securestring"
+    },
+    "TwitterOAuthTokenSecret": {
+      "type": "securestring"
     }
   },
   "variables": {
@@ -170,8 +197,8 @@
           "vaultName": {
             "value": "[parameters('vaultName')]"
           },
-          "FeatureToggle.HostOwnImages": {
-            "value": "[parameters('FeatureToggle.HostOwnImages')]"
+          "FeatureToggle:HostOwnImages": {
+            "value": "[parameters('FeatureToggle:HostOwnImages')]"
           },
           "servicebusEventImagesQueueConnectionString": {
             "reference": {
@@ -194,6 +221,33 @@
           },
           "functionAppName": {
             "value": "[parameters('functionAppName')]"
+          },
+          "AdminEmailaddress": {
+            "value": "[parameters('AdminEmailaddress')]"
+          },
+          "EmailSettings:ApiKey": {
+            "value": "[parameters('EmailSettings:ApiKey')]"
+          },
+          "EmailSettings:ApiUri": {
+            "value": "[parameters('EmailSettings:ApiUri')]"
+          },
+          "EmailSettings:From": {
+            "value": "[parameters('EmailSettings:From')]"
+          },
+          "MapsApiKey": {
+            "value": "[parameters('MapsApiKey')]"
+          },
+          "TwitterConsumerKey": {
+            "value": "[parameters('TwitterConsumerKey')]"
+          },
+          "TwitterConsumerSecret": {
+            "value": "[parameters('TwitterConsumerSecret')]"
+          },
+          "TwitterOAuthToken": {
+            "value": "[parameters('TwitterOAuthToken')]"
+          },
+          "TwitterOAuthTokenSecret": {
+            "value": "[parameters('TwitterOAuthTokenSecret')]"
           }
         }
       }
