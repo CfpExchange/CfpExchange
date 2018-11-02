@@ -264,7 +264,7 @@ namespace CfpExchange.Controllers
             return string.Empty;
         }
 
-        public IActionResult Details(string id)
+        public async Task<IActionResult> Details(string id)
         {
             if (string.IsNullOrWhiteSpace(id))
                 return RedirectToAction("index", "home");
@@ -293,7 +293,7 @@ namespace CfpExchange.Controllers
 
             selectedCfp.Views++;
 
-            _cfpService.SaveChanges();
+            await _cfpService.SaveChangesAsync();
 
             return View(selectedCfp);
         }
@@ -316,7 +316,7 @@ namespace CfpExchange.Controllers
         }
 
         [HttpGet]
-        public IActionResult OutgoingCfpLink(Guid id, string url)
+        public async Task<IActionResult> OutgoingCfpLink(Guid id, string url)
         {
             try
             {
@@ -326,7 +326,7 @@ namespace CfpExchange.Controllers
                 {
                     linkedCfp.ClicksToCfpUrl++;
 
-                    _cfpService.SaveChanges();
+                    await _cfpService.SaveChangesAsync();
                 }
             }
             catch

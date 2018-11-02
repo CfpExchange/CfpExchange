@@ -80,11 +80,6 @@ namespace CfpExchange.Services
             _cfpContext.Add(cfpToAdd);
         }
 
-        public void SaveChanges()
-        {
-            _cfpContext.SaveChanges();
-        }
-
         public async Task SaveChangesAsync()
         {
             await _cfpContext.SaveChangesAsync();
