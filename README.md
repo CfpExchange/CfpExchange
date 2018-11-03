@@ -39,7 +39,7 @@ The file should have the following layout:
     "FeatureToggle": {
         "HostOwnImages": true
     },
-    "ServicebusQueueConnectionString": "ConnectionStringToTheServiceBusQueue"
+    "ServicebusEventImagesQueueConnectionString": "ConnectionStringToTheServiceBusQueue"
 }
 ```
 

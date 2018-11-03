@@ -19,7 +19,7 @@ namespace CfpExchange.Services
         }
         public async Task Execute(Guid cfpPublicId, string cfpEventImageUrl)
         {
-            var servicebusConnectionstring = _configuration["ServicebusQueueConnectionString"];
+            var servicebusConnectionstring = _configuration["ServicebusEventImagesQueueConnectionString"];
 
             var queueClient = new QueueClient(
                 new ServiceBusConnectionStringBuilder(servicebusConnectionstring),
