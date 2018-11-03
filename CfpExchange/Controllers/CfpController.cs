@@ -17,7 +17,7 @@ namespace CfpExchange.Controllers
     public class CfpController : Controller
     {
         private const int MaximumPageToShow = 3000;
-        
+
         private readonly IConfiguration _configuration;
         private readonly IEmailSender _emailSender;
         private readonly IHostingEnvironment _hostingEnvironment;
@@ -88,7 +88,7 @@ namespace CfpExchange.Controllers
             return Json(result);
         }
 
-        
+
 
         [HttpGet]
         public IActionResult Browse(int page = 1, string eventdate = "0", string searchTerm = "")
@@ -112,7 +112,7 @@ namespace CfpExchange.Controllers
 
             return View(new BrowseResponseViewModel(allActiveCfps, pageToShow, searchTerm, eventdate));
         }
-        
+
         [HttpGet]
         public IActionResult Newest(int page = 1)
         {
@@ -246,7 +246,7 @@ namespace CfpExchange.Controllers
         {
             return bool.TryParse(_configuration["FeatureToggle:HostOwnImages"], out bool hostOwnImages) && hostOwnImages;
         }
-        
+
         private async Task<string> GetTimezone(double lat, double lng)
         {
             // Only in production, saves credits
@@ -318,22 +318,15 @@ namespace CfpExchange.Controllers
         [HttpGet]
         public async Task<IActionResult> OutgoingCfpLink(Guid id, string url)
         {
-            try
+            var linkedCfp = _cfpService.GetCfpById(id);
+
+            if (linkedCfp != null)
             {
-                var linkedCfp = _cfpService.GetCfpById(id);
+                linkedCfp.ClicksToCfpUrl++;
 
-                if (linkedCfp != null)
-                {
-                    linkedCfp.ClicksToCfpUrl++;
-
-                    await _cfpService.SaveChangesAsync();
-                }
+                await _cfpService.SaveChangesAsync();
             }
-            catch
-            {
-                // Intentionally left blank, shouldn't be a show-stopper
-            }
-
+            
             return Redirect(url);
         }
 
