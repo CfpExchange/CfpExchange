@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using CfpExchange.Data;
 using CfpExchange.Helpers;
 using CfpExchange.Middleware;
@@ -17,7 +17,7 @@ namespace CfpExchange
 {
 	public class Startup
 	{
-		private IHostingEnvironment _environment;
+		private readonly IHostingEnvironment _environment;
 		private readonly ILogger _logger;
 
 		public IConfiguration Configuration { get; }
@@ -38,10 +38,10 @@ namespace CfpExchange
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			if (_environment.IsDevelopment())
-				services.AddDbContext<CfpContext>(opt => opt.UseInMemoryDatabase("Cfps"));
-			else
-				services.AddDbContext<CfpContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("CfpExchangeDb")));
+            if (_environment.IsDevelopment())
+                services.AddDbContext<CfpContext>(opt => opt.UseInMemoryDatabase("Cfps"));
+            else
+                services.AddDbContext<CfpContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("CfpExchangeDb")));
 
 			services.AddIdentity<ApplicationUser, IdentityRole>(options => { options.User.RequireUniqueEmail = true; })
 				.AddEntityFrameworkStores<CfpContext>()
@@ -75,6 +75,8 @@ namespace CfpExchange
 	            services.AddTransient<IEmailSender, MockEmailSender>();
 
 	        services.AddTransient<IDownloadEventImageMessageSender, DownloadEventImageMessageSender>();
+	        services.AddTransient<ITwitterService, TwitterService>();
+	        services.AddTransient<ICfpService, CfpService>();
 	    }
 
 	    // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
