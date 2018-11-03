@@ -44,10 +44,13 @@
     "storageAccountName": {
       "value": "cfpexchangestoragetest"
     },
+    "storageAccountConnectionString": {
+      "value": "YourStorageAccountConnectionString"
+    },
     "functionAppName": {
       "value": "cfpexchange-functions-test"
     },
-    "AdminEmailaddress": { 
+    "AdminEmailaddress": {
       "value": "cfpexchange@geraldversluis.nl"
     },
     "EmailSettings:ApiKey": {

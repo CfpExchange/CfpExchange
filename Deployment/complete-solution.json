@@ -104,11 +104,14 @@
     "storageAccountName": {
       "type": "string"
     },
+    "storageAccountConnectionString": {
+      "type": "securestring"
+    },
     "functionAppName": {
       "type": "string"
     },
-    "AdminEmailaddress": { 
-        "type": "string"
+    "AdminEmailaddress": {
+      "type": "string"
     },
     "EmailSettings:ApiKey": {
       "type": "securestring"
@@ -561,6 +564,7 @@
             "FUNCTIONS_EXTENSION_VERSION": "~1",
             "ServicebusQueueConnectionString": "[parameters('servicebusManageConnectionString')]",
             "StorageAccountName": "[parameters('storageAccountName')]",
+            "StorageAccountConnectionString": "[parameters('storageAccountConnectionString')]",
             "CfpExchangeDb": "[concat('Data Source=tcp:', reference(resourceId('Microsoft.Sql/servers/', parameters('sqlserverName'))).fullyQualifiedDomainName, ',1433;Initial Catalog=', parameters('databaseName'), ';User Id=', parameters('administratorLogin'), '@', parameters('sqlserverName'), ';Password=', parameters('administratorLoginPassword'), ';')]"
           }
         }

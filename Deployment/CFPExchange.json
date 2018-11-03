@@ -107,11 +107,14 @@
     "storageAccountName": {
       "type": "string"
     },
+    "storageAccountConnectionString": {
+        "type": "securestring" 
+    },
     "functionAppName": {
       "type": "string"
     },
-    "AdminEmailaddress": { 
-        "type": "string"
+    "AdminEmailaddress": {
+      "type": "string"
     },
     "EmailSettings:ApiKey": {
       "type": "securestring"
@@ -218,6 +221,9 @@
           },
           "storageAccountName": {
             "value": "[parameters('storageAccountName')]"
+          },
+          "storageAccountConnectionString": {
+            "value": "[parameters('storageAccountConnectionString')]"
           },
           "functionAppName": {
             "value": "[parameters('functionAppName')]"
