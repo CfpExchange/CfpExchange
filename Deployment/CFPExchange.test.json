@@ -44,9 +44,6 @@
     "storageAccountName": {
       "value": "cfpexchangestoragetest"
     },
-    "storageAccountConnectionString": {
-      "value": "YourStorageAccountConnectionString"
-    },
     "functionAppName": {
       "value": "cfpexchange-functions-test"
     },

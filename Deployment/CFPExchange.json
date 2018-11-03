@@ -107,9 +107,6 @@
     "storageAccountName": {
       "type": "string"
     },
-    "storageAccountConnectionString": {
-        "type": "securestring" 
-    },
     "functionAppName": {
       "type": "string"
     },
@@ -223,7 +220,12 @@
             "value": "[parameters('storageAccountName')]"
           },
           "storageAccountConnectionString": {
-            "value": "[parameters('storageAccountConnectionString')]"
+            "reference": {
+              "keyVault": {
+                "id": "[resourceId(subscription().subscriptionId,  parameters('resourcegroup'), 'Microsoft.KeyVault/vaults', parameters('vaultName'))]"
+              },
+              "secretName": "StorageAccountConnectionString"
+            }
           },
           "functionAppName": {
             "value": "[parameters('functionAppName')]"
