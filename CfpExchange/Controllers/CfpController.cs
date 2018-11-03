@@ -14,6 +14,7 @@ using LinqToTwitter;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
 namespace CfpExchange.Controllers
@@ -28,16 +29,19 @@ namespace CfpExchange.Controllers
         private readonly IEmailSender _emailSender;
         private readonly IHostingEnvironment _hostingEnvironment;
         private readonly IDownloadEventImageMessageSender _downloadEventImageMessageSender;
+        private readonly ILogger<CfpController> _logger;
 
         public CfpController(CfpContext cfpContext, IConfiguration configuration,
             IEmailSender emailSender, IHostingEnvironment env,
-            IDownloadEventImageMessageSender downloadEventImageMessageSender)
+            IDownloadEventImageMessageSender downloadEventImageMessageSender,
+            ILogger<CfpController> logger)
         {
             _cfpContext = cfpContext;
             _configuration = configuration;
             _emailSender = emailSender;
             _hostingEnvironment = env;
             _downloadEventImageMessageSender = downloadEventImageMessageSender;
+            _logger = logger;
         }
 
         [HttpPost]
@@ -210,11 +214,14 @@ namespace CfpExchange.Controllers
                     {
                         await _downloadEventImageMessageSender.Execute(cfpToAddId, submittedCfp.EventImageUrl);
                     }
+                    else
+                    {
+                        _logger.LogInformation("Not downloading event image to local store.");
+                    }
                 }
-                catch
+                catch(Exception ex)
                 {
-                    // Intentionally left blank, we can probably do something
-                    // more useful, but for now if download fails  ¯\_(ツ)_/¯
+                    _logger.LogError(ex.Message);
                 }
 
                 // Post to Twitter account
@@ -222,10 +229,9 @@ namespace CfpExchange.Controllers
                 {
                     await PostNewCfpTweet(cfpToAdd);
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // Intentionally left blank, we can probably do something
-                    // more useful, but for now if Twitter fails  ¯\_(ツ)_/¯
+                    _logger.LogError(ex.Message);
                 }
 
                 // Send back ID to do whatever at the client-side
