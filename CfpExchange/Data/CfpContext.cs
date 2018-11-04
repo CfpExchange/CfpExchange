@@ -9,12 +9,17 @@ namespace CfpExchange.Data
 {
 	public class CfpContext : IdentityDbContext<ApplicationUser>
 	{
+	    public CfpContext()
+	    {
+	        
+	    }
+
 		public CfpContext(DbContextOptions<CfpContext> options)
 			: base(options)
 		{
 		}
 
-		public DbSet<Cfp> Cfps { get; set; }
+		public virtual DbSet<Cfp> Cfps { get; set; }
 	}
 
 	public static class CfpContextExtensions
