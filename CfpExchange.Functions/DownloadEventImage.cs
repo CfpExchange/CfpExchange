@@ -51,8 +51,10 @@ namespace CfpExchange.Functions
             var downloadLocationForEventImage = $"eventimages/{eventImageModel.Id}/{filename}";
 
             using (var blobBinding = await binder.BindAsync<Stream>(
-                new BlobAttribute(downloadLocationForEventImage, FileAccess.Write)))
-            {
+                new Attribute[] {new BlobAttribute(downloadLocationForEventImage, FileAccess.Write),
+                new StorageAccountAttribute("StorageAccountConnectionString")}))
+
+        {
                 var webClient = new WebClient();
                 var imageBytes = await webClient.DownloadDataTaskAsync(uri);
                 log.Verbose($"Writing event image for CFP `{eventImageModel.Id}` to location `{downloadLocationForEventImage}`.");
