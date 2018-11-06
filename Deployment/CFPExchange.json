@@ -110,8 +110,8 @@
     "functionAppName": {
       "type": "string"
     },
-    "AdminEmailaddress": { 
-        "type": "string"
+    "AdminEmailaddress": {
+      "type": "string"
     },
     "EmailSettings:ApiKey": {
       "type": "securestring"
@@ -218,6 +218,14 @@
           },
           "storageAccountName": {
             "value": "[parameters('storageAccountName')]"
+          },
+          "storageAccountConnectionString": {
+            "reference": {
+              "keyVault": {
+                "id": "[resourceId(subscription().subscriptionId,  parameters('resourcegroup'), 'Microsoft.KeyVault/vaults', parameters('vaultName'))]"
+              },
+              "secretName": "StorageAccountConnectionString"
+            }
           },
           "functionAppName": {
             "value": "[parameters('functionAppName')]"

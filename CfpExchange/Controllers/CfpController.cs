@@ -10,6 +10,7 @@ using LinqToTwitter;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
 namespace CfpExchange.Controllers
@@ -24,6 +25,7 @@ namespace CfpExchange.Controllers
         private readonly IDownloadEventImageMessageSender _downloadEventImageMessageSender;
         private readonly ITwitterService _twitterService;
         private readonly ICfpService _cfpService;
+        private ILogger<CfpController> _logger;
 
         public CfpController(
             IConfiguration configuration,
@@ -31,7 +33,8 @@ namespace CfpExchange.Controllers
             IHostingEnvironment env,
             IDownloadEventImageMessageSender downloadEventImageMessageSender,
             ITwitterService twitterService,
-            ICfpService cfpService)
+            ICfpService cfpService,
+            ILogger<CfpController> logger)
         {
             _configuration = configuration;
             _emailSender = emailSender;
@@ -39,6 +42,7 @@ namespace CfpExchange.Controllers
             _downloadEventImageMessageSender = downloadEventImageMessageSender;
             _twitterService = twitterService;
             _cfpService = cfpService;
+            _logger = logger;
         }
 
         [HttpPost]
@@ -162,10 +166,9 @@ namespace CfpExchange.Controllers
                 await _twitterService.PostNewCfpTweet(cfpToAdd,
                     Url.Action("details", "cfp", new { id = cfpToAdd.Id }, "https", "cfp.exchange"));
             }
-            catch
+            catch (Exception ex)
             {
-                // Intentionally left blank, we can probably do something
-                // more useful, but for now if Twitter fails  ¯\_(ツ)_/¯
+                _logger.LogError(ex.Message);
             }
         }
 
@@ -177,11 +180,14 @@ namespace CfpExchange.Controllers
                 {
                     await _downloadEventImageMessageSender.Execute(cfpToAdd.Id, submittedCfp.EventImageUrl);
                 }
+                else
+                {
+                    _logger.LogInformation("Not downloading event image locally.");
+                }
             }
-            catch
+            catch(Exception ex)
             {
-                // Intentionally left blank, we can probably do something
-                // more useful, but for now if download fails  ¯\_(ツ)_/¯
+                _logger.LogError(ex.Message);
             }
         }
 
