@@ -11,68 +11,23 @@
         <div class="row">
             @if (@Model.NewestCfp != null)
             {
-                <div class="col-lg-4">
+                <div class="col-lg-4" id="NewestCfpContent">
                     <h5><i class="fa fa-smile-o" aria-hidden="true"></i> Newest CFP</h5>
-                    <div class="box clearfix">
-                        <a href="@(Url.Action("details", "cfp", new { id = Model.NewestCfp.Slug }))">
-                            <img src="@Model.NewestCfp.EventImage" alt="Event image" style="object-fit:cover;">
-                        </a>
-                        <h3><a href="@(Url.Action("details", "cfp", new { id = Model.NewestCfp.Slug }))">@Model.NewestCfp.EventName</a></h3>
-                        <p>
-                            @if (!string.IsNullOrWhiteSpace(Model.NewestCfp.EventDescription))
-                            {
-                                @Model.NewestCfp.ReallyShortDescription
-                            }
-                            else
-                            {
-                                @("No description available...");
-                            }
-                        </p>
-                    </div>
+                    <partial name="_singleCfp" model="Model.NewestCfp" />
                 </div>
             }
             @if (@Model.MostViewedCfp != null)
             {
-                <div class="col-lg-4">
-                    <h5><i class="fa fa-eye" aria-hidden="true"></i> Most Viewed CFP</h5>
-                    <div class="box clearfix">
-                        <a href="@(Url.Action("details", "cfp", new { id = Model.MostViewedCfp.Slug }))">
-                            <img src="@Model.MostViewedCfp.EventImage" alt="Event image" style="object-fit:cover;">
-                        </a>
-                        <h3><a href="@(Url.Action("details", "cfp", new { id = Model.MostViewedCfp.Slug }))">@Model.MostViewedCfp.EventName</a></h3>
-                        <p>
-                            @if (!string.IsNullOrWhiteSpace(Model.MostViewedCfp.EventDescription))
-                            {
-                                @Model.MostViewedCfp.ReallyShortDescription
-                            }
-                            else
-                            {
-                                @("No description available...");
-                            }
-                        </p>
-                    </div>
+                <div class="col-lg-4" id="MostViewedCfpContent">
+                   <h5><i class="fa fa-eye" aria-hidden="true"></i> Most Viewed CFP</h5>
+                   <partial name="_singleCfp" model="Model.MostViewedCfp" />
                 </div>
             }
             @if (@Model.RandomCfp != null)
             {
-                <div class="col-lg-4">
+                <div class="col-lg-4" id="RandomCfpContent">
                     <h5><i class="fa fa-random" aria-hidden="true"></i> Just Random</h5>
-                    <div class="box clearfix">
-                        <a href="@(Url.Action("details", "cfp", new { id = Model.RandomCfp.Slug }))">
-                            <img src="@Model.RandomCfp.EventImage" alt="Event image" style="object-fit:cover;">
-                        </a>
-                        <h3><a href="@(Url.Action("details", "cfp", new { id = Model.RandomCfp.Slug }))">@Model.RandomCfp.EventName</a></h3>
-                        <p>
-                            @if (!string.IsNullOrWhiteSpace(Model.RandomCfp.EventDescription))
-                            {
-                                @Model.RandomCfp.ReallyShortDescription
-                            }
-                            else
-                            {
-                                @("No description available...");
-                            }
-                        </p>
-                    </div>
+                    <partial name="_singleCfp" model="Model.RandomCfp" />
                 </div>
             }
         </div>

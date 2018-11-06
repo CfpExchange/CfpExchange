@@ -1,0 +1,18 @@
+﻿@model Cfp
+
+<div class="box clearfix">
+    <a href="@(Url.Action("details", "cfp", new { id = Model.Slug }))">
+        <img src="@Model.EventImage" alt="Event image" style="object-fit:cover;">
+    </a>
+    <h3><a href="@(Url.Action("details", "cfp", new { id = Model.Slug }))">@Model.EventName</a></h3>
+    <p>
+        @if (!string.IsNullOrWhiteSpace(Model.EventDescription))
+        {
+            @Model.ReallyShortDescription
+        }
+        else
+        {
+            @("No description available...");
+        }
+    </p>
+</div>
