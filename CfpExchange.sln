@@ -17,6 +17,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CfpExchange.FunctionalTests", "CfpExchange.FunctionalTests\CfpExchange.FunctionalTests.csproj", "{16A3B296-3E87-4AB6-B17C-3CC89AB3F3BE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CfpExchange.UnitTests", "CfpExchange.Unittests\CfpExchange.UnitTests.csproj", "{41677218-A626-4C74-93DE-0463A8B3D57E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +42,14 @@ Global
 		{EB288852-AB0D-405A-903A-B2E1736FE9EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB288852-AB0D-405A-903A-B2E1736FE9EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB288852-AB0D-405A-903A-B2E1736FE9EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16A3B296-3E87-4AB6-B17C-3CC89AB3F3BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16A3B296-3E87-4AB6-B17C-3CC89AB3F3BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16A3B296-3E87-4AB6-B17C-3CC89AB3F3BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16A3B296-3E87-4AB6-B17C-3CC89AB3F3BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41677218-A626-4C74-93DE-0463A8B3D57E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41677218-A626-4C74-93DE-0463A8B3D57E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41677218-A626-4C74-93DE-0463A8B3D57E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41677218-A626-4C74-93DE-0463A8B3D57E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

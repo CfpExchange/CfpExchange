@@ -1,4 +1,5 @@
-using System;
+﻿using System;
+using System.Globalization;
 using CfpExchange.Data;
 using CfpExchange.Helpers;
 using CfpExchange.Middleware;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,7 +19,7 @@ namespace CfpExchange
 {
 	public class Startup
 	{
-		private IHostingEnvironment _environment;
+		private readonly IHostingEnvironment _environment;
 		private readonly ILogger _logger;
 
 		public IConfiguration Configuration { get; }
@@ -38,10 +40,10 @@ namespace CfpExchange
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			if (_environment.IsDevelopment())
-				services.AddDbContext<CfpContext>(opt => opt.UseInMemoryDatabase("Cfps"));
-			else
-				services.AddDbContext<CfpContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("CfpExchangeDb")));
+            if (_environment.IsDevelopment())
+                services.AddDbContext<CfpContext>(opt => opt.UseInMemoryDatabase("Cfps"));
+            else
+                services.AddDbContext<CfpContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("CfpExchangeDb")));
 
 			services.AddIdentity<ApplicationUser, IdentityRole>(options => { options.User.RequireUniqueEmail = true; })
 				.AddEntityFrameworkStores<CfpContext>()
@@ -75,6 +77,8 @@ namespace CfpExchange
 	            services.AddTransient<IEmailSender, MockEmailSender>();
 
 	        services.AddTransient<IDownloadEventImageMessageSender, DownloadEventImageMessageSender>();
+	        services.AddTransient<ITwitterService, TwitterService>();
+	        services.AddTransient<ICfpService, CfpService>();
 	    }
 
 	    // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -107,7 +111,21 @@ namespace CfpExchange
 
 			}
 
-			app.UseStaticFiles();
+		    var supportedCultures = new[]
+		    {
+		        new CultureInfo("en-US")
+		    };
+
+            app.UseRequestLocalization(new RequestLocalizationOptions
+		    {
+		        DefaultRequestCulture = new RequestCulture("en-US"),
+		        // Formatting numbers, dates, etc.
+		        SupportedCultures = supportedCultures,
+		        // UI strings that we have localized.
+		        SupportedUICultures = supportedCultures
+		    });
+
+            app.UseStaticFiles();
 			app.UseAuthentication();
 			app.UseMvcWithDefaultRoute();
 

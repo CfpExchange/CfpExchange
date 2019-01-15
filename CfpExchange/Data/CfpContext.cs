@@ -9,12 +9,17 @@ namespace CfpExchange.Data
 {
 	public class CfpContext : IdentityDbContext<ApplicationUser>
 	{
+	    public CfpContext()
+	    {
+	        
+	    }
+
 		public CfpContext(DbContextOptions<CfpContext> options)
 			: base(options)
 		{
 		}
 
-		public DbSet<Cfp> Cfps { get; set; }
+		public virtual DbSet<Cfp> Cfps { get; set; }
 	}
 
 	public static class CfpContextExtensions
@@ -33,7 +38,7 @@ namespace CfpExchange.Data
 					EventLocationName = "Antwerp, Belgium",
 					EventDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
 					CfpEndDate = DateTime.Now.AddDays(100),
-					CfpUrl = "www.example.com",
+					CfpUrl = "http://www.example.com",
 					EventUrl = "https://www.techorama.be",
 					EventImage = "https://techorama.nl/wp-content/uploads/sites/2/2017/10/TVrobot@4x.svg",
 					EventStartDate = DateTime.Now.AddDays(1),
