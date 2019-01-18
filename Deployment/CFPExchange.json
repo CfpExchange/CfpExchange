@@ -139,6 +139,9 @@
     },
     "AppInsightsInstrumentationKey": {
       "type": "string"
+    },
+    "GooglePlacesApiKey": {
+      "type": "string"
     }
   },
   "variables": {
@@ -262,6 +265,9 @@
           },
           "AppInsightsInstrumentationKey": {
             "value": "[parameters('AppInsightsInstrumentationKey')]"
+          },
+          "GooglePlacesApiKey": {
+            "value": "[parameters('GooglePlacesApiKey')]"
           }
         }
       }
