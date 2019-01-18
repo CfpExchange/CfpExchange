@@ -136,6 +136,9 @@
     },
     "TwitterOAuthTokenSecret": {
       "type": "securestring"
+    },
+    "AppInsightsInstrumentationKey": {
+      "type": "string"
     }
   },
   "variables": {
@@ -209,7 +212,29 @@
             "TwitterConsumerKey": "[parameters('TwitterConsumerKey')]",
             "TwitterConsumerSecret": "[parameters('TwitterConsumerSecret')]",
             "TwitterOAuthToken": "[parameters('TwitterOAuthToken')]",
-            "TwitterOAuthTokenSecret": "[parameters('TwitterOAuthTokenSecret')]"
+            "TwitterOAuthTokenSecret": "[parameters('TwitterOAuthTokenSecret')]",
+            "APPINSIGHTS_PORTALINFO": "ASP.NETCORE",
+            "APPINSIGHTS_INSTRUMENTATIONKEY": "[parameters('AppInsightsInstrumentationKey')]",
+            "APPINSIGHTS_PROFILERFEATURE_VERSION": "1.0.0",
+            "APPINSIGHTS_SNAPSHOTFEATURE_VERSION": "1.0.0"
+          }
+        },
+        {
+          "name": "slotConfigNames",
+          "type": "config",
+          "apiVersion": "2015-08-01",
+          "dependsOn": [
+            "[concat('Microsoft.Web/sites/', parameters('webSiteName'))]"
+          ],
+          "tags": {
+            "displayName": "slotConfigNames"
+          },
+          "properties": {
+            "appSettingNames": [
+              "APPINSIGHTS_INSTRUMENTATIONKEY",
+              "APPINSIGHTS_PROFILERFEATURE_VERSION",
+              "APPINSIGHTS_SNAPSHOTFEATURE_VERSION"
+            ]
           }
         }
       ]

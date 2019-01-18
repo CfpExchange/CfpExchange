@@ -136,6 +136,9 @@
     },
     "TwitterOAuthTokenSecret": {
       "type": "securestring"
+    },
+    "AppInsightsInstrumentationKey": {
+      "type": "string"
     }
   },
   "variables": {
@@ -256,6 +259,9 @@
           },
           "TwitterOAuthTokenSecret": {
             "value": "[parameters('TwitterOAuthTokenSecret')]"
+          },
+          "AppInsightsInstrumentationKey": {
+            "value": "[parameters('AppInsightsInstrumentationKey')]"
           }
         }
       }

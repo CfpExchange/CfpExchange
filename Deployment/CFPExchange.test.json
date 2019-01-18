@@ -73,6 +73,9 @@
     },
     "TwitterOAuthTokenSecret": {
       "value": "YourOAuthTokenSecret"
+    },
+    "AppInsightsInstrumentationKey": {
+      "value": "AppInsightsInstrumentationKey"
     }
   }
 }
