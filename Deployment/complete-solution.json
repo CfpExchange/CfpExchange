@@ -594,7 +594,8 @@
             "ServicebusQueueConnectionString": "[parameters('servicebusManageConnectionString')]",
             "StorageAccountName": "[parameters('storageAccountName')]",
             "StorageAccountConnectionString": "[parameters('storageAccountConnectionString')]",
-            "CfpExchangeDb": "[concat('Data Source=tcp:', reference(resourceId('Microsoft.Sql/servers/', parameters('sqlserverName'))).fullyQualifiedDomainName, ',1433;Initial Catalog=', parameters('databaseName'), ';User Id=', parameters('administratorLogin'), '@', parameters('sqlserverName'), ';Password=', parameters('administratorLoginPassword'), ';')]"
+            "CfpExchangeDb": "[concat('Data Source=tcp:', reference(resourceId('Microsoft.Sql/servers/', parameters('sqlserverName'))).fullyQualifiedDomainName, ',1433;Initial Catalog=', parameters('databaseName'), ';User Id=', parameters('administratorLogin'), '@', parameters('sqlserverName'), ';Password=', parameters('administratorLoginPassword'), ';')]",
+            "APPINSIGHTS_INSTRUMENTATIONKEY": "[parameters('AppInsightsInstrumentationKey')]"
           }
         }
       ]
