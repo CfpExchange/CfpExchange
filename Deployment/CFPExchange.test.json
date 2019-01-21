@@ -76,6 +76,9 @@
     },
     "AppInsightsInstrumentationKey": {
       "value": "AppInsightsInstrumentationKey"
+    },
+    "GooglePlacesApiKey": {
+      "value": "GooglePlacesApiKey"
     }
   }
 }
