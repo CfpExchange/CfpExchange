@@ -86,7 +86,7 @@ namespace CfpExchange.Controllers
             if (ModelState.IsValid)
             {
                 var applicationUser = new ApplicationUser()
-                {
+                {                   
                     Email = viewModel.Email,
                     UserName = viewModel.Email,
                     FullName = viewModel.FullName

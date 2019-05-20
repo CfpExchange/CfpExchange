@@ -17,7 +17,7 @@ using Microsoft.Extensions.Logging;
 
 namespace CfpExchange
 {
-	public class Startup
+    public class Startup
 	{
 		private readonly IHostingEnvironment _environment;
 		private readonly ILogger _logger;

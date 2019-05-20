@@ -3,7 +3,7 @@
 An online community website used to share interesting call for papers with
 speakers. 
 
-This website is built using ASP.NET Core 2.0 and hosted on Azure: [https://cfp.exchange](https://cfp.exchange).
+This website is built using ASP.NET Core 2.2 and hosted on Azure: [https://cfp.exchange](https://cfp.exchange).
 
 ## Connection strings and other secrets
 This project uses a number of secrets to connect to various APIs and databases.

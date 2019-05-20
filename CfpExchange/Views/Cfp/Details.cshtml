@@ -1,6 +1,5 @@
 ﻿@model Cfp
 @using Humanizer
-@using Humanizer.Localisation
 @{
     ViewData["Title"] = @Model.EventName + " event CFP Details";
 
@@ -16,32 +15,32 @@
         <div class="row" style="margin-bottom: 15px;">
             <div class="col-lg-12">
                 <div class="row">
-                <div class="col-lg-4 text-center">
-                @*<div class="float-left">*@
-                    <div class="addthis_inline_share_toolbox"></div>
-                    <small id="shareButtons" class="form-text text-muted">Share this CFP</small>
-                </div>
-                <div class="col-lg-4 text-center">
-                @if (cfpHasEventDates)
-                {
-                <div title="Add event to Calendar" class="addeventatc">
-                    Add event to Calendar
-                    <span class="start">@Model.EventStartDate.ToString("MM/dd/yyyy")</span>
-                    <span class="end">@Model.EventEndDate.ToString("MM/dd/yyyy")</span>
-                    <span class="timezone">@Model.EventTimezone</span>
-                    <span class="title">@Model.EventName</span>
-                    <span class="description">@Html.Raw(@Model.EventDescription?.Replace("\n", "<br />"))</span>
-                    <span class="location">@Model.EventLocationName</span>
-                    <span class="all_day_event">true</span>
-                    <span class="date_format">MM/DD/YYYY</span>
-                </div>
-                }
-                </div>
-                @if (!cfpClosed)
-                {<div class="col-lg-4 text-center">
-                    <a href="@cfpUrl" target="_blank" class="btn btn-lg " style="background-color: #DD3326;color: white;">Go to CFP <i class="fa fa-external-link"></i></a>
-                </div>
-                }
+                    <div class="col-lg-4 text-center">
+                        @*<div class="float-left">*@
+                        <div class="addthis_inline_share_toolbox"></div>
+                        <small id="shareButtons" class="form-text text-muted">Share this CFP</small>
+                    </div>
+                    <div class="col-lg-4 text-center">
+                        @if (cfpHasEventDates)
+                        {
+                            <div title="Add event to Calendar" class="addeventatc">
+                                Add event to Calendar
+                                <span class="start">@Model.EventStartDate.ToString("MM/dd/yyyy")</span>
+                                <span class="end">@Model.EventEndDate.ToString("MM/dd/yyyy")</span>
+                                <span class="timezone">@Model.EventTimezone</span>
+                                <span class="title">@Model.EventName</span>
+                                <span class="description">@Html.Raw(@Model.EventDescription?.Replace("\n", "<br />"))</span>
+                                <span class="location">@Model.EventLocationName</span>
+                                <span class="all_day_event">true</span>
+                                <span class="date_format">MM/DD/YYYY</span>
+                            </div>
+                        }
+                    </div>
+                    @if (!cfpClosed)
+                    {<div class="col-lg-4 text-center">
+                            <a href="@cfpUrl" target="_blank" class="btn btn-lg " style="background-color: #DD3326;color: white;">Go to CFP <i class="fa fa-external-link"></i></a>
+                        </div>
+                    }
                 </div>
             </div>
         </div>
@@ -70,11 +69,11 @@
                             <p>
                                 @if (Model.EventLocationLat != 0 && Model.EventLocationLng != 0)
                                 {
-                                <strong><a href="http://www.google.com/maps/place/@Model.EventLocationLat,@Model.EventLocationLng" target="_blank">@Model.EventLocationName</a></strong>
+                                    <strong><a href="http://www.google.com/maps/place/@Model.EventLocationLat,@Model.EventLocationLng" target="_blank">@Model.EventLocationName</a></strong>
                                 }
                                 else
                                 {
-                                <strong>@Model.EventLocationName</strong>
+                                    <strong>@Model.EventLocationName</strong>
                                 }
                             </p>
                         </div>
@@ -102,133 +101,135 @@
                                             @($"See website");
                                         }
                                     }
-                            </strong>
-                        </p>
-                    </div>
-                    <div class="col-lg-3 col-sm-3">
-                        <p><i class="fa fa-home"></i> Accommodation:</p>
-                        <p>
-                            <strong>@Model.ProvidesAccommodation</strong>
-                        </p>
-                    </div>
-                    <div class="col-lg-3 col-sm-3">
-                        <p><i class="fa fa-plane"></i> Travel assistance:</p>
-                        <p>
-                            <strong>@Model.ProvidesTravelAssistance</strong>
-                        </p>
+                                </strong>
+                            </p>
+                        </div>
+                        <div class="col-lg-3 col-sm-3">
+                            <p><i class="fa fa-home"></i> Accommodation:</p>
+                            <p>
+                                <strong>@Model.ProvidesAccommodation</strong>
+                            </p>
+                        </div>
+                        <div class="col-lg-3 col-sm-3">
+                            <p><i class="fa fa-plane"></i> Travel assistance:</p>
+                            <p>
+                                <strong>@Model.ProvidesTravelAssistance</strong>
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <p>@Html.Raw(Model.EventDescription?.Replace("\n", "<br />"))</p>
-            <div class="tag" style="margin-bottom: 50px;">
-                @foreach (var tag in Model.EventTags.Split(";"))
-                {
-                    if (!string.IsNullOrWhiteSpace(tag))
+                <p>@Html.Raw(Model.EventDescription?.Replace("\n", "<br />"))</p>
+                <div class="tag" style="margin-bottom: 50px;">
+                    @foreach (var tag in Model.EventTags.Split(";"))
                     {
-                <a href="@Url.Action("browse", "cfp", new { searchTerm = tag })">@tag</a>
+                        if (!string.IsNullOrWhiteSpace(tag))
+                        {
+                            <a href="@Url.Action("browse", "cfp", new { searchTerm = tag })">@tag</a>
+                        }
                     }
-                }
-            </div>
+                </div>
 
-            <div class="nutrition-facts clearfix">
-            <h3>About...</h3>
-                @if (!string.IsNullOrWhiteSpace(Model.EventUrl))
-                {
-                <div>
-                    <p>Website:</p>
-                    <p>
-                        <strong><a href="@Url.Action("OutgoingCfpLink", "Cfp", new { id = Model.Id, url = Model.EventUrl })" target="_blank">Click here <i class="fa fa-external-link"></i></a></strong>
-                    </p>
-                </div>
-                }
-                @if (!string.IsNullOrWhiteSpace(Model.EventTwitterHandle))
-                {
-                <div>
-                    <p>Twitter:</p>
-                    <p>
-                        <strong><a href="https://twitter.com/@Model.EventTwitterHandle" target="_blank">@Model.EventTwitterHandle  <i class="fa fa-external-link"></i></a></strong>
-                    </p>
-                </div>
-                }
-                <div>
-                    <p>CFP added:</p>
-                    <p>
-                        <strong>@Model.CfpAdded.Humanize()</strong>
-                    </p>
-                </div>
-                <div>
-                    <p>Viewed:</p>
-                    <p>
-                        <strong>@Model.Views times</strong>
-                    </p>
-                </div>
-                <div>
-                    <p>CFP clicked:</p>
-                    <p>
-                        <strong>@Model.ClicksToCfpUrl times</strong>
-                    </p>
-                </div>
-                @if (Model.CfpDecisionDate.Year >= 2018)
-                {
+                <div class="nutrition-facts clearfix">
+                    <h3>About...</h3>
+                    @if (!string.IsNullOrWhiteSpace(Model.EventUrl))
+                    {
+                        <div>
+                            <p>Website:</p>
+                            <p>
+                                <strong><a href="@Url.Action("OutgoingCfpLink", "Cfp", new { id = Model.Id, url = Model.EventUrl })" target="_blank">Click here <i class="fa fa-external-link"></i></a></strong>
+                            </p>
+                        </div>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(Model.EventTwitterHandle))
+                    {
+                        <div>
+                            <p>Twitter:</p>
+                            <p>
+                                <strong><a href="https://twitter.com/@Model.EventTwitterHandle" target="_blank">@Model.EventTwitterHandle  <i class="fa fa-external-link"></i></a></strong>
+                            </p>
+                        </div>
+                    }
                     <div>
-                        <p>CFP decision date</p>
+                        <p>CFP added:</p>
                         <p>
-                            <strong>@Model.CfpDecisionDate.ToString("MMM dd, yyyy")</strong>
+                            <strong>@Model.CfpAdded.Humanize()</strong>
                         </p>
                     </div>
-                }
+                    <div>
+                        <p>Viewed:</p>
+                        <p>
+                            <strong>@Model.Views times</strong>
+                        </p>
+                    </div>
+                    <div>
+                        <p>CFP clicked:</p>
+                        <p>
+                            <strong>@Model.ClicksToCfpUrl times</strong>
+                        </p>
+                    </div>
+                    @if (Model.CfpDecisionDate.Year >= 2018)
+                    {
+                        <div>
+                            <p>CFP decision date</p>
+                            <p>
+                                <strong>@Model.CfpDecisionDate.ToString("MMM dd, yyyy")</strong>
+                            </p>
+                        </div>
+                    }
+                </div>
+
+                <div class="blog-comment">
+                    @if (!cfpClosed)
+                    {
+                        <div class="alert alert-success" role="alert" id="issue-success" style="display: none;">
+                            Your issue was sent succesfully! If needed, we will get back to you shortly and/or correct the issue.<br />
+                            Thank you for your attention to detail!
+                        </div>
+
+                        <div class="alert alert-danger" role="alert" id="issue-error" style="display: none;">
+                            There was an error sending your issue. Please check all the fields carefully and try again.
+                        </div>
+
+                        <div class="reply" id="issue-form">
+                            <h3>Report issue</h3>
+                            <p class="comment-form-comment">
+                                <textarea class="form-control" placeholder="For example: close date is wrong, URL is missing, etc." id="comment" name="comment" cols="45" rows="5" required="required" aria-required="true"></textarea>
+                            </p>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p class="comment-form-author">
+                                        <label for="author">
+                                            Name <span class="required">*</span>
+                                        </label>
+                                        <input class="form-control" id="author" name="author" type="text" value="" size="30" maxlength="245" aria-required="true" required="required">
+                                    </p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="comment-form-email">
+                                        <label for="email">
+                                            Email <span class="required">*</span>
+                                        </label>
+                                        <input class="form-control" id="email" name="email" type="text" value="" size="30" maxlength="100" aria-required="true" required="required">
+                                    </p>
+                                </div>
+                            </div>
+                            <p class="form-submit">
+                                <i class="fa fa-spinner fa-spin" id="sendIssueSpinner" style="font-size: 24px;display: none;"></i>
+                                <input class="btn btn-submit btn-block" name="submit" type="submit" id="submit" value="Send issue" onclick="javascript:ReportIssue();">
+                            </p>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-info" role="alert">
+                            Report issue is closed because the CFP date is due.
+                        </div>
+                    }
+                </div>
             </div>
-
-            <div class="blog-comment">
-            @if (!cfpClosed)
-            {
-                <div class="alert alert-success" role="alert" id="issue-success" style="display: none;">
-                    Your issue was sent succesfully! If needed, we will get back to you shortly and/or correct the issue.<br />
-                    Thank you for your attention to detail!
-                </div>
-
-               <div class="alert alert-danger" role="alert" id="issue-error" style="display: none;">
-                    There was an error sending your issue. Please check all the fields carefully and try again.
-                </div>
-                    
-                <div class="reply" id="issue-form">
-                  <h3>Report issue</h3>
-                    <p class="comment-form-comment">
-                      <textarea class="form-control" placeholder="For example: close date is wrong, URL is missing, etc." id="comment" name="comment" cols="45" rows="5" required="required" aria-required="true"></textarea>
-                    </p>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <p class="comment-form-author">
-                          <label for="author">Name <span class="required">*</span>
-                          </label>
-                          <input class="form-control" id="author" name="author" type="text" value="" size="30" maxlength="245" aria-required="true" required="required">
-                        </p>
-                      </div>
-                      <div class="col-md-6">
-                        <p class="comment-form-email">
-                          <label for="email">Email <span class="required">*</span>
-                          </label>
-                          <input class="form-control" id="email" name="email" type="text" value="" size="30" maxlength="100" aria-required="true" required="required">
-                        </p>
-                      </div>
-                    </div>
-                    <p class="form-submit">
-                        <i class="fa fa-spinner fa-spin" id="sendIssueSpinner" style="font-size: 24px;display: none;"></i>
-                        <input class="btn btn-submit btn-block" name="submit" type="submit" id="submit" value="Send issue" onclick="javascript:ReportIssue();">
-                    </p>
-                </div>
-            }
-            else
-            {
-                <div class="alert alert-info" role="alert">
-                    Report issue is closed because the CFP date is due.
-                </div>
-            }
-          </div>
         </div>
     </div>
-</div>
 </div>
 @section Scripts {
     <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5ad705ab67da4ff7"></script>

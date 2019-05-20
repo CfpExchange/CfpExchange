@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 using CfpExchange.Models;
@@ -52,9 +51,9 @@ namespace CfpExchange.Services
 
             tweetMessageBuilder.AppendLine($"\U000023F3 Closes: {cfpToAdd.CfpEndDate.ToLongDateString()}");
 
-            if (cfpToAdd.EventStartDate != default(DateTime) && cfpToAdd.EventStartDate.Date == cfpToAdd.EventEndDate.Date)
+            if (cfpToAdd.EventStartDate != default && cfpToAdd.EventStartDate.Date == cfpToAdd.EventEndDate.Date)
                 tweetMessageBuilder.AppendLine($"\U0001F5D3 Event: {cfpToAdd.EventStartDate:MMM dd}");
-            else if (cfpToAdd.EventStartDate != default(DateTime))
+            else if (cfpToAdd.EventStartDate != default)
                 tweetMessageBuilder.AppendLine($"\U0001F5D3 Event: {cfpToAdd.EventStartDate:MMM dd} - {cfpToAdd.EventEndDate:MMM dd}");
 
             tweetMessageBuilder.AppendLine($"#cfp #cfpexchange {urlToCfp}");

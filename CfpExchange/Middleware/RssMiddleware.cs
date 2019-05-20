@@ -1,19 +1,17 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using CfpExchange.Data;
 using CfpExchange.Helpers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CfpExchange.Middleware
 {
-	public class RssMiddleware
+    public class RssMiddleware
 	{
 		private readonly RequestDelegate _next;
 		private readonly string _rootUrl;
