@@ -219,8 +219,8 @@ namespace CfpExchange.Controllers
                 CfpEndDate = submittedCfp.CfpEndDate.Date,
                 CfpAdded = DateTime.Now,
                 CfpUrl = submittedCfp.CfpUrl,
-                EventStartDate = submittedCfp.EventStartDate?.Date ?? default,
-                EventEndDate = submittedCfp.EventEndDate?.Date ?? default,
+                EventStartDate = submittedCfp.EventStartDate?.Date ?? default(DateTime),
+                EventEndDate = submittedCfp.EventEndDate?.Date ?? default(DateTime),
                 ProvidesAccommodation = submittedCfp.ProvidesAccommodation,
                 ProvidesTravelAssistance = submittedCfp.ProvidesTravelAssistance,
                 SubmittedByName = submittedCfp.SubmittedByName,
@@ -228,7 +228,7 @@ namespace CfpExchange.Controllers
                 EventTimezone = timezone,
                 Slug = cfpToAddSlug,
                 EventTags = submittedCfp.EventTags,
-                CfpDecisionDate = submittedCfp.CfpDecisionDate?.Date ?? default
+                CfpDecisionDate = submittedCfp.CfpDecisionDate?.Date ?? default(DateTime)
             };
 
             return cfpToAdd;
