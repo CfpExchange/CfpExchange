@@ -7,6 +7,7 @@ using LinqToTwitter;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 
+
 namespace CfpExchange.Services
 {
     public class TwitterService : ITwitterService
@@ -52,7 +53,7 @@ namespace CfpExchange.Services
 
             tweetMessageBuilder.AppendLine($"\U000023F3 Closes: {cfpToAdd.CfpEndDate.ToLongDateString()}");
 
-            if (cfpToAdd.EventStartDate != default && cfpToAdd.EventStartDate.Date == cfpToAdd.EventEndDate.Date)
+            if (cfpToAdd.EventStartDate != default(DateTime) && cfpToAdd.EventStartDate.Date == cfpToAdd.EventEndDate.Date)
                 tweetMessageBuilder.AppendLine($"\U0001F5D3 Event: {cfpToAdd.EventStartDate:MMM dd}");
             else if (cfpToAdd.EventStartDate != default(DateTime))
                 tweetMessageBuilder.AppendLine($"\U0001F5D3 Event: {cfpToAdd.EventStartDate:MMM dd} - {cfpToAdd.EventEndDate:MMM dd}");
