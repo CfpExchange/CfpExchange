@@ -1,9 +1,8 @@
-﻿using System;
-using CfpExchange.Models;
+﻿using CfpExchange.Models;
 
 namespace CfpExchange.ViewModels
 {
-	public class IndexViewModel
+    public class IndexViewModel
 	{
 		public Cfp NewestCfp { get; set; }
 		public Cfp MostViewedCfp { get; set; }

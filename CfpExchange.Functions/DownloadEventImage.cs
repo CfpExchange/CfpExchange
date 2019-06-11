@@ -1,50 +1,48 @@
 ﻿using System;
-using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
-using Dapper;
 using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Host;
-using Microsoft.ServiceBus.Messaging;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using CfpExchange.Models;
+
+using DownloadEventImageModel = CfpExchange.Models.DownloadEventImage;
+
 namespace CfpExchange.Functions
 {
     public static class DownloadEventImage
     {
         [FunctionName("DownloadEventImage")]
         public static async Task Run(
-            [ServiceBusTrigger("eventimages", AccessRights.Manage, Connection = "ServicebusQueueConnectionString")]
-            string eventImageMessage,
-            Binder binder,
-            TraceWriter log)
+            [ServiceBusTrigger("eventimages", Connection = "ServicebusQueueConnectionString")]
+            string eventImageMessage, Binder binder, ILogger log)
         {
-            var eventImageModel = JsonConvert.DeserializeObject<Models.DownloadEventImage>(eventImageMessage);
-            log.Info($"Processing the download event image for identifier `{eventImageModel.Id}`");
+            var eventImageModel = JsonConvert.DeserializeObject<DownloadEventImageModel>(eventImageMessage);
+            log.LogInformation($"Processing the download event image for identifier `{eventImageModel.Id}`");
 
             if (Uri.IsWellFormedUriString(eventImageModel.ImageUrl, UriKind.Absolute))
             {
-                log.Verbose($"Event image URL is `{eventImageModel.ImageUrl}`.");
+                log.LogInformation($"Event image URL is `{eventImageModel.ImageUrl}`.");
                 var relativeLocationOfStoredImage = await StoreEventImageInBlobStorage(binder, log, eventImageModel);
-                if (!eventImageModel.ImageUrl.IsDefaultImage())
+                if (!eventImageModel.HasDefaultImage())
                 {
                     UpdateRecordInTheCfpRepository(eventImageModel, relativeLocationOfStoredImage, log);
                 }
             }
             else
             {
-                log.Warning($"The location `{eventImageModel.ImageUrl}` for CFP `{eventImageModel.Id}` is not an absolute URI.");
+                log.LogWarning($"The location `{eventImageModel.ImageUrl}` for CFP `{eventImageModel.Id}` is not an absolute URI.");
             }
 
-            log.Info($"Processed the download event image for identifier `{eventImageModel.Id}`");
+            log.LogInformation($"Processed the download event image for identifier `{eventImageModel.Id}`");
         }
 
         private static async Task<string> StoreEventImageInBlobStorage(
             Binder binder,
-            TraceWriter log,
-            Models.DownloadEventImage eventImageModel)
+            ILogger log,
+            DownloadEventImageModel eventImageModel)
         {
             Uri uri = new Uri(eventImageModel.ImageUrl);
             var filename = Path.GetFileName(uri.LocalPath);
@@ -53,11 +51,10 @@ namespace CfpExchange.Functions
             using (var blobBinding = await binder.BindAsync<Stream>(
                 new Attribute[] {new BlobAttribute(downloadLocationForEventImage, FileAccess.Write),
                 new StorageAccountAttribute("StorageAccountConnectionString")}))
-
-        {
+            {
                 var webClient = new WebClient();
                 var imageBytes = await webClient.DownloadDataTaskAsync(uri);
-                log.Verbose($"Writing event image for CFP `{eventImageModel.Id}` to location `{downloadLocationForEventImage}`.");
+                log.LogInformation($"Writing event image for CFP `{eventImageModel.Id}` to location `{downloadLocationForEventImage}`.");
                 await blobBinding.WriteAsync(imageBytes, 0, imageBytes.Length);
 
                 return downloadLocationForEventImage;
@@ -65,27 +62,32 @@ namespace CfpExchange.Functions
         }
 
         private static void UpdateRecordInTheCfpRepository(
-            Models.DownloadEventImage eventImageModel,
+            DownloadEventImageModel eventImageModel,
             string relativeLocationOfStoredImage,
-            TraceWriter log)
+            ILogger log)
         {
-            var storageAccountName = ConfigurationManager.AppSettings["StorageAccountName"];
+            var storageAccountName = GetEnvironmentVariable("StorageAccountName");
             var absoluteImageLocation = $"https://{storageAccountName}.blob.core.windows.net/{relativeLocationOfStoredImage}";
 
-            var connectionstring = ConfigurationManager.AppSettings["CfpExchangeDb"];
+            var connectionstring = GetEnvironmentVariable("CfpExchangeDb");
 
-            log.Info($"Updating the record `{eventImageModel.Id}` with the event image url to `{absoluteImageLocation}`.");
+            log.LogInformation($"Updating the record `{eventImageModel.Id}` with the event image url to `{absoluteImageLocation}`.");
             using (var connection = new SqlConnection(connectionstring))
             {
+                var command = connection.CreateCommand();
+                command.CommandType = CommandType.Text;
+                command.CommandText = "UPDATE dbo.Cfps SET EventImage = @EventImage WHERE Id = @Id";
+                command.Parameters.AddWithValue("EventImage", absoluteImageLocation);
+                command.Parameters.AddWithValue("Id", eventImageModel.Id);
                 connection.Open();
-                connection.Execute("UPDATE dbo.Cfps SET EventImage = @EventImage WHERE Id = @Id",
-                    new
-                    {
-                        EventImage = absoluteImageLocation,
-                        Id = eventImageModel.Id.ToString("D")
-                    });
-                log.Info($"Updated the record `{eventImageModel.Id}` with the event image url to `{absoluteImageLocation}`.");
+                command.ExecuteNonQuery();
+                log.LogInformation($"Updated the record `{eventImageModel.Id}` with the event image url to `{absoluteImageLocation}`.");
             }
+        }
+
+        private static string GetEnvironmentVariable(string name)
+        {
+            return Environment.GetEnvironmentVariable(name, EnvironmentVariableTarget.Process);
         }
     }
 }

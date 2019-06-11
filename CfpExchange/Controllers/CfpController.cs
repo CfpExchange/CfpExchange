@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -6,7 +7,6 @@ using CfpExchange.Helpers;
 using CfpExchange.Models;
 using CfpExchange.Services;
 using CfpExchange.ViewModels;
-using LinqToTwitter;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -106,7 +106,7 @@ namespace CfpExchange.Controllers
 
             if (eventdate != "0")
             {
-                if (DateTime.TryParseExact(eventdate, "yyyy-M", Culture.US, System.Globalization.DateTimeStyles.None, out startDateTime))
+                if (DateTime.TryParseExact(eventdate, "yyyy-M", new CultureInfo("en-us"), System.Globalization.DateTimeStyles.None, out startDateTime))
                 {
                     endDateTime = startDateTime.AddMonths(1).AddDays(-1);
                 }
