@@ -13,12 +13,12 @@ namespace CfpExchange.Services
     public class TwitterService : ITwitterService
     {
         private readonly IConfiguration _configuration;
-        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public TwitterService(IConfiguration configuration, IHostingEnvironment hostingEnvironment)
+        public TwitterService(IConfiguration configuration, IWebHostEnvironment hostingEnvironment)
         {
             _configuration = configuration;
-            _hostingEnvironment = hostingEnvironment;
+            _webHostEnvironment = hostingEnvironment;
         }
 
         public async Task PostNewCfpTweet(Cfp cfpToAdd, string urlToCfp)
@@ -62,7 +62,7 @@ namespace CfpExchange.Services
 
             var tweetMessage = tweetMessageBuilder.ToString();
 
-            if (_hostingEnvironment.IsProduction())
+            if (_webHostEnvironment.EnvironmentName.Equals("Production"))
             {
                 // TODO substringing is not the best thing, but does the trick for now
                 await ctx.TweetAsync(tweetMessage.Length > 280 ? tweetMessage.Substring(0, 280) : tweetMessage,
