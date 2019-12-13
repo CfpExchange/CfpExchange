@@ -21,7 +21,7 @@ namespace CfpExchange.Controllers
 
         private readonly IConfiguration _configuration;
         private readonly IEmailSender _emailSender;
-        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IDownloadEventImageMessageSender _downloadEventImageMessageSender;
         private readonly ITwitterService _twitterService;
         private readonly ICfpService _cfpService;
@@ -30,7 +30,7 @@ namespace CfpExchange.Controllers
         public CfpController(
             IConfiguration configuration,
             IEmailSender emailSender,
-            IHostingEnvironment env,
+            IWebHostEnvironment env,
             IDownloadEventImageMessageSender downloadEventImageMessageSender,
             ITwitterService twitterService,
             ICfpService cfpService,
@@ -38,7 +38,7 @@ namespace CfpExchange.Controllers
         {
             _configuration = configuration;
             _emailSender = emailSender;
-            _hostingEnvironment = env;
+            _webHostEnvironment = env;
             _downloadEventImageMessageSender = downloadEventImageMessageSender;
             _twitterService = twitterService;
             _cfpService = cfpService;
@@ -255,8 +255,9 @@ namespace CfpExchange.Controllers
 
         private async Task<string> GetTimezone(double lat, double lng)
         {
-            // Only in production, saves credits
-            if (_hostingEnvironment.IsProduction())
+            // Only in production, saves credits.
+            // TODO: Check production name
+            if (_webHostEnvironment.EnvironmentName.Equals("Production", StringComparison.OrdinalIgnoreCase))
             {
                 using (var httpClient = new HttpClient())
                 {
