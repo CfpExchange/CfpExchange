@@ -2,7 +2,7 @@
 
 namespace CfpExchange.Models
 {
-    public class DownloadEventImage
+    public class DownloadEventImageMessage
     {
         public Guid Id { get; set; }
 
