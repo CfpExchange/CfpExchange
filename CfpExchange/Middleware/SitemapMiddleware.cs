@@ -63,14 +63,12 @@ namespace CfpExchange.Middleware
 
 				sitemapContent += "</urlset>";
 
-				using (var memoryStream = new MemoryStream())
-				{
-					var bytes = Encoding.UTF8.GetBytes(sitemapContent);
-					memoryStream.Write(bytes, 0, bytes.Length);
-					memoryStream.Seek(0, SeekOrigin.Begin);
-					await memoryStream.CopyToAsync(stream, bytes.Length);
-				}
-			}
+                using var memoryStream = new MemoryStream();
+                var bytes = Encoding.UTF8.GetBytes(sitemapContent);
+                memoryStream.Write(bytes, 0, bytes.Length);
+                memoryStream.Seek(0, SeekOrigin.Begin);
+                await memoryStream.CopyToAsync(stream, bytes.Length);
+            }
 			else
 			{
 				await _next(context);
