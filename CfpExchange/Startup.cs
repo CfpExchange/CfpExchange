@@ -66,22 +66,23 @@ namespace CfpExchange
             });
 
             services.AddAuthorization();
-
-            services.AddMvc();
+            services.AddMvc((mvcOptions) => mvcOptions.EnableEndpointRouting = false);
 
             AddServices(services);
-
         }
 
         private void AddServices(IServiceCollection services)
         {
             if (_environment.EnvironmentName.Equals("Production"))
+            {
                 services.AddTransient<IEmailSender, MailGunEmailSender>();
+            }
             else
+            {
                 services.AddTransient<IEmailSender, MockEmailSender>();
+            }
 
-            services.AddTransient<IDownloadEventImageMessageSender, DownloadEventImageMessageSender>();
-            services.AddTransient<ITwitterService, TwitterService>();
+            services.AddTransient<IMessageSender, MessageSender>();
             services.AddTransient<ICfpService, CfpService>();
         }
 
@@ -90,11 +91,9 @@ namespace CfpExchange
         {
             try
             {
-                using (var serviceScope = app.ApplicationServices
-                    .GetRequiredService<IServiceScopeFactory>().CreateScope())
-                {
-                    serviceScope.ServiceProvider.GetService<CfpContext>().Database.Migrate();
-                }
+                using var serviceScope = app.ApplicationServices
+                    .GetRequiredService<IServiceScopeFactory>().CreateScope();
+                serviceScope.ServiceProvider.GetService<CfpContext>().Database.Migrate();
             }
             catch (Exception ex)
             {
@@ -135,8 +134,8 @@ namespace CfpExchange
 
             if (env.EnvironmentName.Equals("Development"))
             {
-                using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
-                    serviceScope.ServiceProvider.GetService<CfpContext>().EnsureSeeded();
+                using var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
+                serviceScope.ServiceProvider.GetService<CfpContext>().EnsureSeeded();
             }
         }
     }
