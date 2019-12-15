@@ -8,15 +8,15 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
-using DownloadEventImageModel = CfpExchange.Models.DownloadEventImage;
+using DownloadEventImageModel = CfpExchange.Models.DownloadEventImageMessage;
 
 namespace CfpExchange.Functions
 {
-    public static class DownloadEventImage
+    public class DownloadEventImage : BaseFunction
     {
-        [FunctionName("DownloadEventImage")]
-        public static async Task Run(
-            [ServiceBusTrigger("eventimages", Connection = "ServicebusQueueConnectionString")]
+        [FunctionName(nameof(DownloadEventImage))]
+        public async Task Run(
+            [ServiceBusTrigger(Constants.QUEUE_IMAGES, Connection = "ServicebusQueueConnectionString")]
             string eventImageMessage, Binder binder, ILogger log)
         {
             var eventImageModel = JsonConvert.DeserializeObject<DownloadEventImageModel>(eventImageMessage);
@@ -25,7 +25,7 @@ namespace CfpExchange.Functions
             if (Uri.IsWellFormedUriString(eventImageModel.ImageUrl, UriKind.Absolute))
             {
                 log.LogInformation($"Event image URL is `{eventImageModel.ImageUrl}`.");
-                var relativeLocationOfStoredImage = await StoreEventImageInBlobStorage(binder, log, eventImageModel);
+                var relativeLocationOfStoredImage = await StoreEventImageInBlobStorage(eventImageModel, binder, log);
                 if (!eventImageModel.HasDefaultImage())
                 {
                     UpdateRecordInTheCfpRepository(eventImageModel, relativeLocationOfStoredImage, log);
@@ -40,25 +40,23 @@ namespace CfpExchange.Functions
         }
 
         private static async Task<string> StoreEventImageInBlobStorage(
+            DownloadEventImageModel eventImageModel,
             Binder binder,
-            ILogger log,
-            DownloadEventImageModel eventImageModel)
+            ILogger log)
         {
             Uri uri = new Uri(eventImageModel.ImageUrl);
             var filename = Path.GetFileName(uri.LocalPath);
             var downloadLocationForEventImage = $"eventimages/{eventImageModel.Id}/{filename}";
 
-            using (var blobBinding = await binder.BindAsync<Stream>(
+            using var blobBinding = await binder.BindAsync<Stream>(
                 new Attribute[] {new BlobAttribute(downloadLocationForEventImage, FileAccess.Write),
-                new StorageAccountAttribute("StorageAccountConnectionString")}))
-            {
-                var webClient = new WebClient();
-                var imageBytes = await webClient.DownloadDataTaskAsync(uri);
-                log.LogInformation($"Writing event image for CFP `{eventImageModel.Id}` to location `{downloadLocationForEventImage}`.");
-                await blobBinding.WriteAsync(imageBytes, 0, imageBytes.Length);
+                new StorageAccountAttribute("StorageAccountConnectionString")});
+            var webClient = new WebClient();
+            var imageBytes = await webClient.DownloadDataTaskAsync(uri);
+            log.LogInformation($"Writing event image for CFP `{eventImageModel.Id}` to location `{downloadLocationForEventImage}`.");
+            await blobBinding.WriteAsync(imageBytes, 0, imageBytes.Length);
 
-                return downloadLocationForEventImage;
-            }
+            return downloadLocationForEventImage;
         }
 
         private static void UpdateRecordInTheCfpRepository(
@@ -72,22 +70,15 @@ namespace CfpExchange.Functions
             var connectionstring = GetEnvironmentVariable("CfpExchangeDb");
 
             log.LogInformation($"Updating the record `{eventImageModel.Id}` with the event image url to `{absoluteImageLocation}`.");
-            using (var connection = new SqlConnection(connectionstring))
-            {
-                var command = connection.CreateCommand();
-                command.CommandType = CommandType.Text;
-                command.CommandText = "UPDATE dbo.Cfps SET EventImage = @EventImage WHERE Id = @Id";
-                command.Parameters.AddWithValue("EventImage", absoluteImageLocation);
-                command.Parameters.AddWithValue("Id", eventImageModel.Id);
-                connection.Open();
-                command.ExecuteNonQuery();
-                log.LogInformation($"Updated the record `{eventImageModel.Id}` with the event image url to `{absoluteImageLocation}`.");
-            }
-        }
-
-        private static string GetEnvironmentVariable(string name)
-        {
-            return Environment.GetEnvironmentVariable(name, EnvironmentVariableTarget.Process);
+            using var connection = new SqlConnection(connectionstring);
+            var command = connection.CreateCommand();
+            command.CommandType = CommandType.Text;
+            command.CommandText = "UPDATE dbo.Cfps SET EventImage = @EventImage WHERE Id = @Id";
+            command.Parameters.AddWithValue("EventImage", absoluteImageLocation);
+            command.Parameters.AddWithValue("Id", eventImageModel.Id);
+            connection.Open();
+            command.ExecuteNonQuery();
+            log.LogInformation($"Updated the record `{eventImageModel.Id}` with the event image url to `{absoluteImageLocation}`.");
         }
     }
 }
