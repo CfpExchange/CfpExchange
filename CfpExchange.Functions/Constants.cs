@@ -4,6 +4,6 @@
     {
         public const string QUEUE_IMAGES = "eventimages";
 
-        public const string QUEUE_TWITTER = "eventimages";
+        public const string QUEUE_TWITTER = "newcfptweet";
     }
 }
