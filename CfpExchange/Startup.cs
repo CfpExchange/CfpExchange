@@ -58,7 +58,7 @@ namespace CfpExchange
             services.ConfigureApplicationCookie(options =>
             {
                 options.Cookie.SameSite = SameSiteMode.Strict;
-                options.Cookie.Expiration = TimeSpan.FromMinutes(30);
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
                 options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
 
                 options.LoginPath = "/Account/Login";

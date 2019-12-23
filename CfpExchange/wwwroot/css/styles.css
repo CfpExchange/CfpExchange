@@ -637,6 +637,7 @@ footer .btn {
 .copyright {
   font-size: 0.9rem;
   padding: 15px 0;
+  text-align: center;
   background-color: #212121;
 }
 .copyright a {
