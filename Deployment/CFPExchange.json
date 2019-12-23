@@ -214,6 +214,14 @@
               "secretName": "ServicebusEventImagesQueueConnectionString"
             }
           },
+          "servicebusTwitterQueueConnectionString": {
+            "reference": {
+              "keyVault": {
+                "id": "[resourceId(subscription().subscriptionId,  parameters('resourcegroup'), 'Microsoft.KeyVault/vaults', parameters('vaultName'))]"
+              },
+              "secretName": "ServicebusTwitterQueueConnectionString"
+            }
+          },
           "servicebusManageConnectionString": {
             "reference": {
               "keyVault": {
