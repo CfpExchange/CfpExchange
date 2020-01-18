@@ -98,6 +98,9 @@
     "servicebusEventImagesQueueConnectionString": {
       "type": "securestring"
     },
+    "servicebusTwitterQueueConnectionString": {
+      "type": "securestring"
+    },
     "servicebusManageConnectionString": {
       "type": "securestring"
     },
@@ -206,16 +209,13 @@
           },
           "properties": {
             "ServicebusEventImagesQueueConnectionString": "[parameters('servicebusEventImagesQueueConnectionString')]",
+            "ServicebusTwitterQueueConnectionString": "[parameters('servicebusTwitterQueueConnectionString')]",
             "FeatureToggle:HostOwnImages": "[parameters('FeatureToggle:HostOwnImages')]",
             "AdminEmailaddress": "[parameters('AdminEmailaddress')]",
             "EmailSettings:ApiKey": "[parameters('EmailSettings:ApiKey')]",
             "EmailSettings:ApiUri": "[parameters('EmailSettings:ApiUri')]",
             "EmailSettings:From": "[parameters('EmailSettings:From')]",
             "MapsApiKey": "[parameters('MapsApiKey')]",
-            "TwitterConsumerKey": "[parameters('TwitterConsumerKey')]",
-            "TwitterConsumerSecret": "[parameters('TwitterConsumerSecret')]",
-            "TwitterOAuthToken": "[parameters('TwitterOAuthToken')]",
-            "TwitterOAuthTokenSecret": "[parameters('TwitterOAuthTokenSecret')]",
             "APPINSIGHTS_PORTALINFO": "ASP.NETCORE",
             "APPINSIGHTS_INSTRUMENTATIONKEY": "[parameters('AppInsightsInstrumentationKey')]",
             "APPINSIGHTS_PROFILERFEATURE_VERSION": "1.0.0",
@@ -529,6 +529,18 @@
             "path": "eventimages",
             "defaultMessageTimeToLive": "P0Y0M0DT0H30M0S"
           }
+        },
+        {
+          "apiVersion": "2017-04-01",
+          "name": "newcfptweet",
+          "type": "Queues",
+          "dependsOn": [
+            "[concat('Microsoft.ServiceBus/namespaces/', parameters('serviceBusNamespace'))]"
+          ],
+          "properties": {
+            "path": "newcfptweet",
+            "defaultMessageTimeToLive": "P0Y0M0DT0H30M0S"
+          }
         }
       ]
     },
@@ -595,6 +607,10 @@
             "StorageAccountName": "[parameters('storageAccountName')]",
             "StorageAccountConnectionString": "[parameters('storageAccountConnectionString')]",
             "CfpExchangeDb": "[concat('Data Source=tcp:', reference(resourceId('Microsoft.Sql/servers/', parameters('sqlserverName'))).fullyQualifiedDomainName, ',1433;Initial Catalog=', parameters('databaseName'), ';User Id=', parameters('administratorLogin'), '@', parameters('sqlserverName'), ';Password=', parameters('administratorLoginPassword'), ';')]",
+            "TwitterConsumerKey": "[parameters('TwitterConsumerKey')]",
+            "TwitterConsumerSecret": "[parameters('TwitterConsumerSecret')]",
+            "TwitterOAuthToken": "[parameters('TwitterOAuthToken')]",
+            "TwitterOAuthTokenSecret": "[parameters('TwitterOAuthTokenSecret')]",
             "APPINSIGHTS_INSTRUMENTATIONKEY": "[parameters('AppInsightsInstrumentationKey')]"
           }
         }

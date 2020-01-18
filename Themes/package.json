@@ -4,17 +4,17 @@
 	"description": "",
 	"main": "",
 	"dependencies": {
-		"gulp": "^3.9.1",
+		"gulp": "^4.0.2",
 		"gulp-cleanhtml": "^1.0.3",
 		"gulp-concat": "^2.6.1",
 		"gulp-cssmin": "^0.2.0",
 		"gulp-html-prettify": "0.0.1",
-		"gulp-image": "^4.3.0",
+		"gulp-image": "^6.0.0",
 		"gulp-less": "^4.0.1",
-		"gulp-plumber": "^1.2.0",
-		"gulp-rename": "^1.4.0",
-		"gulp-uglify": "^3.0.1",
-		"lodash": "^4.17.10"
+		"gulp-plumber": "^1.2.1",
+		"gulp-rename": "^2.0.0",
+		"gulp-uglify": "^3.0.2",
+		"lodash": "^4.17.15"
 	},
 	"devDependencies": {},
 	"repository": {

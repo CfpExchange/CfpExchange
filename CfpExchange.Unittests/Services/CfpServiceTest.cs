@@ -1,20 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using CfpExchange.Data;
 using CfpExchange.Models;
 using CfpExchange.Services;
-using Microsoft.EntityFrameworkCore;
-using Moq;
 using Moq.AutoMock;
-using NUnit.Framework;
+using Xunit;
 
 namespace CfpExchange.UnitTests.Services
 {
-    [TestFixture]
     public class CfpServiceTest : AutomockerTestBase
     {
-        [Test]
+        [Fact]
         public void GetCfpById_WithValidId_ShouldReturnCorrectCfp()
         {
             // Arrange
@@ -36,20 +32,7 @@ namespace CfpExchange.UnitTests.Services
             var cfp = service.GetCfpById(id);
 
             // Assert
-            Assert.AreEqual(id, cfp.Id);
-        }
-
-        private static Mock<CfpContext> SetupMockedCfpContext(IQueryable<Cfp> cfps)
-        {
-            var mockSet = new Mock<DbSet<Cfp>>();
-            mockSet.As<IQueryable<Cfp>>().Setup(m => m.Provider).Returns(cfps.Provider);
-            mockSet.As<IQueryable<Cfp>>().Setup(m => m.Expression).Returns(cfps.Expression);
-            mockSet.As<IQueryable<Cfp>>().Setup(m => m.ElementType).Returns(cfps.ElementType);
-            mockSet.As<IQueryable<Cfp>>().Setup(m => m.GetEnumerator()).Returns(cfps.GetEnumerator());
-
-            var mockContext = new Mock<CfpContext>();
-            mockContext.Setup(c => c.Cfps).Returns(mockSet.Object);
-            return mockContext;
+            Assert.Equal(id, cfp.Id);
         }
     }
 }

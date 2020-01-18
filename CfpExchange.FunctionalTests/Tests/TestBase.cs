@@ -1,22 +1,9 @@
-﻿using NUnit.Framework;
-using OpenQA.Selenium.Chrome;
+﻿using OpenQA.Selenium.Chrome;
 
 namespace CfpExchange.FunctionalTests.Tests
 {
     public class TestBase
     {
-        protected ChromeDriver Driver;
-
-        [OneTimeSetUp]
-        public void OneTimeSetUp()
-        {
-            Driver = Drivers.GetChromeDriver();
-        }
-
-        [OneTimeTearDown]
-        public void OneTimeTearDown()
-        {
-            Drivers.DisposeChomeDriver();
-        }
+        protected static ChromeDriver Driver = Drivers.GetChromeDriver();
     }
 }
