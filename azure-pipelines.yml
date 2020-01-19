@@ -1,0 +1,71 @@
+pool:
+  name: Azure Pipelines
+#Your build pipeline references the ‘BuildConfiguration’ variable, which you’ve selected to be settable at queue time. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab, and then select the option to make it settable at queue time. See https://go.microsoft.com/fwlink/?linkid=865971
+#Your build pipeline references the ‘BuildPlatform’ variable, which you’ve selected to be settable at queue time. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab, and then select the option to make it settable at queue time. See https://go.microsoft.com/fwlink/?linkid=865971
+#Your build pipeline references the ‘BuildConfiguration’ variable, which you’ve selected to be settable at queue time. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab, and then select the option to make it settable at queue time. See https://go.microsoft.com/fwlink/?linkid=865971
+
+variables:
+ BuildConfiguration: 'release'
+ BuildPlatform: 'any cpu'
+
+stages:
+
+- stage: Build
+  jobs:
+
+  - job: Build_Solution
+    displayName: 'Build Solution'
+    pool:
+      vmImage: 'windows-2019'
+
+    steps:
+    - task: UseNode@1
+    
+      displayName: 'Use Node 12.x'
+      inputs:
+        version: 12.x
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Restore nuget packages'
+      inputs:
+        command: restore
+        projects: '**/*.csproj'
+
+    - task: Npm@1
+      displayName: 'Restore npm packages'
+      inputs:
+        workingDir: Themes
+        verbose: false
+
+    - task: Gulp@1
+      displayName: 'Run gulp tasks'
+      inputs:
+        gulpFile: Themes/gulpfile.js
+        targets: runAll
+        workingDirectory: Themes
+        gulpjs: 'node_modules/gulp/bin/gulp.js'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Build CfpExchange projects'
+      inputs:
+        projects: '**/*.csproj'
+        arguments: '--configuration $(BuildConfiguration) /p:platform="$(BuildPlatform)" /p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation=$(build.artifactstagingdirectory)'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Run CfpExchange unit tests'
+      inputs:
+        command: test
+        projects: '**/CfpExchange.Unittests/*.csproj'
+        arguments: '--configuration $(BuildConfiguration) /p:CollectCoverage=true /p:CoverletOputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)\TestResults\Coverage\ --collect "Code coverage"'
+
+    - task: CopyFiles@2
+      displayName: 'Copy Infrastructure Code'
+      inputs:
+        SourceFolder: Deployment
+        TargetFolder: '$(build.artifactstagingdirectory)/Deployment'
+        flattenFolders: true
+
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact'
+      inputs:
+        PathtoPublish: '$(build.artifactstagingdirectory)'
