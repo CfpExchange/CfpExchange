@@ -58,7 +58,10 @@ stages:
     - task: CopyFiles@2
       displayName: 'Copy Infrastructure Code'
       inputs:
-        SourceFolder: Deployment
+        SourceFolder: 'Deployment'
+        Contents: |
+          **/*.ps1
+          **/*.json
         TargetFolder: '$(build.artifactstagingdirectory)/Deployment'
         flattenFolders: true
 
