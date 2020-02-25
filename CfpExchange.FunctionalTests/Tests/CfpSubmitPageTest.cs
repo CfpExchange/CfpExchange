@@ -1,17 +1,16 @@
 ﻿using CfpExchange.FunctionalTests.PageObjectModels;
-using NUnit.Framework;
+using Xunit;
 
 namespace CfpExchange.FunctionalTests.Tests
 {
-    [TestFixture]
     public class CfpSubmitPageTest : TestBase
     {
-        [Test]
+        [Fact]
         public void CfpSubmitPage()
         {
             var cfpSubmitPage = new CfpSubmitPage(Driver);
 
-            Assert.IsTrue(cfpSubmitPage.NavigateToNewCfp()
+            Assert.True(cfpSubmitPage.NavigateToNewCfp()
                 .OnCfpSubmitPage());
         }
     }

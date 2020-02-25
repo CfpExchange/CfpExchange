@@ -1,35 +1,34 @@
 ﻿using CfpExchange.FunctionalTests.PageObjectModels;
-using NUnit.Framework;
+using Xunit;
 
 namespace CfpExchange.FunctionalTests.Tests
 {
-    [TestFixture]
     public class HomePageTest : TestBase
     {
-        [Test]
+        [Fact]
         public void HomePage_ShouldShowNewestCfp()
         {
             var homePage = new HomePage(Driver);
 
-            Assert.IsTrue(homePage.ShowsNewestCfp()
+            Assert.True(homePage.ShowsNewestCfp()
                 .HasClickableTitle());
         }
 
-        [Test]
+        [Fact]
         public void HomePage_ShouldShowMostViewedCfp()
         {
             var homePage = new HomePage(Driver);
 
-            Assert.IsTrue(homePage.ShowsMostViewedCfp()
+            Assert.True(homePage.ShowsMostViewedCfp()
                 .HasClickableTitle());
         }
 
-        [Test]
+        [Fact]
         public void HomePage_ShouldShowRandomCfp()
         {
             var homePage = new HomePage(Driver);
 
-            Assert.IsTrue(homePage.ShowsRandomCfp()
+            Assert.True(homePage.ShowsRandomCfp()
                 .HasClickableTitle());
         }
     }

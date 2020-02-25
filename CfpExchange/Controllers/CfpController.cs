@@ -21,26 +21,23 @@ namespace CfpExchange.Controllers
 
         private readonly IConfiguration _configuration;
         private readonly IEmailSender _emailSender;
-        private readonly IHostingEnvironment _hostingEnvironment;
-        private readonly IDownloadEventImageMessageSender _downloadEventImageMessageSender;
-        private readonly ITwitterService _twitterService;
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly IMessageSender _messageSender;
         private readonly ICfpService _cfpService;
         private ILogger<CfpController> _logger;
 
         public CfpController(
             IConfiguration configuration,
             IEmailSender emailSender,
-            IHostingEnvironment env,
-            IDownloadEventImageMessageSender downloadEventImageMessageSender,
-            ITwitterService twitterService,
+            IWebHostEnvironment env,
+            IMessageSender messageSender,
             ICfpService cfpService,
             ILogger<CfpController> logger)
         {
             _configuration = configuration;
             _emailSender = emailSender;
-            _hostingEnvironment = env;
-            _downloadEventImageMessageSender = downloadEventImageMessageSender;
-            _twitterService = twitterService;
+            _webHostEnvironment = env;
+            _messageSender = messageSender;
             _cfpService = cfpService;
             _logger = logger;
         }
@@ -148,7 +145,7 @@ namespace CfpExchange.Controllers
 
                 await DownloadEventImageLocally(submittedCfp, cfpToAdd);
 
-                await PostNewCfpTweet(cfpToAdd);
+                await SendPostNewCfpMessageAsync(cfpToAdd);
 
                 // Send back ID to do whatever at the client-side
                 return Json(cfpToAdd.Id);
@@ -158,13 +155,11 @@ namespace CfpExchange.Controllers
             return BadRequest(submittedCfp);
         }
 
-        private async Task PostNewCfpTweet(Cfp cfpToAdd)
+        private async Task SendPostNewCfpMessageAsync(Cfp cfpToAdd)
         {
-            // Post to Twitter account
             try
             {
-                await _twitterService.PostNewCfpTweet(cfpToAdd,
-                    Url.Action("details", "cfp", new { id = cfpToAdd.Id }, "https", "cfp.exchange"));
+                await _messageSender.SendTwitterMessageAsync(cfpToAdd, Url.Action("details", "cfp", new { id = cfpToAdd.Id }, "https", "cfp.exchange"));
             }
             catch (Exception ex)
             {
@@ -178,7 +173,7 @@ namespace CfpExchange.Controllers
             {
                 if (ShouldDownloadEventImageLocally())
                 {
-                    await _downloadEventImageMessageSender.Execute(cfpToAdd.Id, submittedCfp.EventImageUrl);
+                    await _messageSender.SendDownloadEventImageMessageAsync(cfpToAdd.Id, submittedCfp.EventImageUrl);
                 }
                 else
                 {
@@ -255,16 +250,15 @@ namespace CfpExchange.Controllers
 
         private async Task<string> GetTimezone(double lat, double lng)
         {
-            // Only in production, saves credits
-            if (_hostingEnvironment.IsProduction())
+            // Only in production, saves credits.
+            // TODO: Check production name
+            if (_webHostEnvironment.EnvironmentName.Equals("Production", StringComparison.OrdinalIgnoreCase))
             {
-                using (var httpClient = new HttpClient())
-                {
-                    var resultJson = await httpClient.GetStringAsync($"https://atlas.microsoft.com/timezone/byCoordinates/json?subscription-key={_configuration["MapsApiKey"]}&api-version=1.0&query={lat}%2C{lng}");
-                    var result = JsonConvert.DeserializeObject<TimezoneInfo>(resultJson);
+                using var httpClient = new HttpClient();
+                var resultJson = await httpClient.GetStringAsync($"https://atlas.microsoft.com/timezone/byCoordinates/json?subscription-key={_configuration["MapsApiKey"]}&api-version=1.0&query={lat}%2C{lng}");
+                var result = JsonConvert.DeserializeObject<TimezoneInfo>(resultJson);
 
-                    return result.TimeZones.FirstOrDefault()?.Id ?? string.Empty;
-                }
+                return result.TimeZones.FirstOrDefault()?.Id ?? string.Empty;
             }
 
             return string.Empty;

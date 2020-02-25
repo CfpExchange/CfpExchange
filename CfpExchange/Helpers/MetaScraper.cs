@@ -18,21 +18,17 @@ namespace CfpExchange.Helpers
 		{
 			try
 			{
-				using (var httpClient = new HttpClient())
-				{
-					httpClient.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", apikey);
+                using var httpClient = new HttpClient();
+                httpClient.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", apikey);
 
-					using (Stream s = httpClient.GetStreamAsync($"https://api.labs.cognitive.microsoft.com/urlpreview/v7.0/search?q={url}").Result)
-					using (StreamReader sr = new StreamReader(s))
-					using (JsonReader reader = new JsonTextReader(sr))
-					{
-						var serializer = new JsonSerializer();
-						var result = serializer.Deserialize<UrlPreviewResult>(reader);
+                using Stream s = httpClient.GetStreamAsync($"https://api.labs.cognitive.microsoft.com/urlpreview/v7.0/search?q={url}").Result;
+                using StreamReader sr = new StreamReader(s);
+                using JsonReader reader = new JsonTextReader(sr);
+                var serializer = new JsonSerializer();
+                var result = serializer.Deserialize<UrlPreviewResult>(reader);
 
-						return new MetaInformation(url, result.Name, result.Description, "", result.PrimaryImageOfPage?.ContentUrl, "");
-					}
-				}
-			}
+                return new MetaInformation(url, result.Name, result.Description, "", result.PrimaryImageOfPage?.ContentUrl, "");
+            }
 			catch (Exception ex)
 			{
 				// TODO: We should probably log this somewhere...
