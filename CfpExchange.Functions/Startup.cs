@@ -11,6 +11,7 @@ namespace CfpExchange.Functions
     {
         public override void Configure(IFunctionsHostBuilder builder)
         {
+            builder.Services.AddHttpClient();
             builder.Services.AddScoped<ITwitterService, TwitterService>();
         }
     }
