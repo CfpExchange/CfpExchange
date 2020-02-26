@@ -4,11 +4,11 @@ namespace CfpExchange.Models
 {
     public class SendTweetMessage
     {
-        public string UrlToCfp { get; set; }
+        public string UrlToCfp { get; set; } = string.Empty;
 
-        public string TwitterHandle { get; set; }
+        public string TwitterHandle { get; set; } = string.Empty;
 
-        public string EventName { get; set; }
+        public string EventName { get; set; } = string.Empty;
 
         public DateTime CfpEndDate { get; set; }
 
