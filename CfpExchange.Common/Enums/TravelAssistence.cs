@@ -1,4 +1,4 @@
-﻿namespace CfpExchange.Enums
+﻿namespace CfpExchange.Common.Enums
 {
 	public enum TravelAssistence
 	{

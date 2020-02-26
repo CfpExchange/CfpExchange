@@ -87,7 +87,7 @@ namespace CfpExchange
                     .GetRequiredService<IServiceScopeFactory>().CreateScope();
                 serviceScope.ServiceProvider.GetService<CfpContext>().Database.Migrate();
             }
-            catch (Exception ex)
+            catch
             {
             }
 

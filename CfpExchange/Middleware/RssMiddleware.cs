@@ -43,8 +43,8 @@ namespace CfpExchange.Middleware
 				foreach (var cfp in _cfpContext.Cfps.Where(cfp => cfp.CfpEndDate > DateTime.UtcNow))
 				{
 					rssContent += "<item>";
-					rssContent += $"<title>{cfp.EventName}, CFP closes: {cfp.CfpEndDate.ToString("dd MMM yyyy")}</title>";
-					rssContent += $"<pubDate>{cfp.CfpAdded.ToString("r")}</pubDate>";
+					rssContent += $"<title>{cfp.EventName}, CFP closes: {cfp.CfpEndDate:dd MMM yyyy}</title>";
+					rssContent += $"<pubDate>{cfp.CfpAdded:r}</pubDate>";
 					rssContent += $"<link>{_rootUrl}/cfp/details/{cfp.Slug}</link>";
 					rssContent += $"<guid>{_rootUrl}/cfp/details/{cfp.Slug}</guid>";
 					rssContent += $"<description>{cfp.EventDescription}</description>";
