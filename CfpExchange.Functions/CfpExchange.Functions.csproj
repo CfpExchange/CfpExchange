@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CfpExchange.Models\CfpExchange.Models.csproj" />
+    <ProjectReference Include="..\CfpExchange.Services\CfpExchange.Services.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="host.json">
