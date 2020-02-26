@@ -1,17 +1,28 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Remote;
 
 namespace CfpExchange.FunctionalTests.PageObjectModels
 {
-    public class CfpSubmitPage : SharedPageActions
+    public class CfpSubmitPage : BasePage
     {
-        public CfpSubmitPage(RemoteWebDriver driver) : base(driver)
+        #region Constructors
+
+        public CfpSubmitPage(IWebDriver driver) : base(driver)
         {
         }
+
+        #endregion
 
         public bool OnCfpSubmitPage()
         {
             return IsElementPresent(By.Id("SubmitCfpTitle"));
         }
+
+        public CfpSubmitPage NavigateToNewCfp()
+        {
+            _driver.FindElement(By.Id("submitCfpButton")).Click();
+
+            return new CfpSubmitPage(_driver);
+        }
+
     }
 }

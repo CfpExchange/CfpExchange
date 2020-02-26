@@ -1,16 +1,23 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Remote;
 
 namespace CfpExchange.FunctionalTests.PageObjectModels
 {
-    public class CfpSingleItemPage : PageFunctions
+    public class CfpSingleItemPage : BasePage
     {
+        #region Fields
+
         private readonly IWebElement _webElement;
 
-        public CfpSingleItemPage(RemoteWebDriver driver, IWebElement webElement) : base(driver)
+        #endregion
+
+        #region Constructors
+
+        public CfpSingleItemPage(IWebDriver driver, IWebElement webElement) : base(driver)
         {
             _webElement = webElement;
         }
+
+        #endregion
 
         public bool HasClickableTitle()
         {
