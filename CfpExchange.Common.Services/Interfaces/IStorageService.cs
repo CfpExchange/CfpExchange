@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace CfpExchange.Services.Interfaces
+namespace CfpExchange.Common.Services.Interfaces
 {
     public interface IStorageService
     {

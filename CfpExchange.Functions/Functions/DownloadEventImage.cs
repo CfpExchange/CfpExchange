@@ -4,8 +4,9 @@ using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
 
-using CfpExchange.Models;
-using CfpExchange.Services.Interfaces;
+using CfpExchange.Common;
+using CfpExchange.Common.Models;
+using CfpExchange.Common.Services.Interfaces;
 
 namespace CfpExchange.Functions
 {
@@ -29,7 +30,7 @@ namespace CfpExchange.Functions
         [FunctionName(nameof(DownloadEventImage))]
         public async Task Run(
             [ServiceBusTrigger(Constants.QUEUE_IMAGES, Connection = "ServicebusQueueConnectionString")]
-            DownloadEventImageMessage eventImageMessage, Binder binder, ILogger log)
+            DownloadEventImageMessage eventImageMessage, ILogger log)
         {
             log.LogInformation($"Processing the download event image for identifier `{eventImageMessage.Id}`");
 
@@ -49,7 +50,5 @@ namespace CfpExchange.Functions
 
             log.LogInformation($"Done processing the download event image for identifier `{eventImageMessage.Id}`");
         }
-
-
     }
 }

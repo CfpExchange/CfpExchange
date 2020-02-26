@@ -1,4 +1,4 @@
-﻿namespace CfpExchange.Functions
+﻿namespace CfpExchange.Common
 {
     public static class Constants
     {

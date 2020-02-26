@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CfpExchange.Services
+namespace CfpExchange.Common.Services
 {
     public abstract class BaseService
     {

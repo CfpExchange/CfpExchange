@@ -1,8 +1,8 @@
 ﻿using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 
-using CfpExchange.Services;
-using CfpExchange.Services.Interfaces;
+using CfpExchange.Common.Services;
+using CfpExchange.Common.Services.Interfaces;
 
 [assembly: FunctionsStartup(typeof(CfpExchange.Functions.Startup))]
 namespace CfpExchange.Functions

@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 
-using CfpExchange.Models;
+using CfpExchange.Common.Models;
 
-namespace CfpExchange.Services.Interfaces
+namespace CfpExchange.Common.Services.Interfaces
 {
     public interface ITwitterService
     {

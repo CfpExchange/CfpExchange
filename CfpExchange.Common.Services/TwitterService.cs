@@ -4,10 +4,10 @@ using System.Threading.Tasks;
 
 using LinqToTwitter;
 
-using CfpExchange.Models;
-using CfpExchange.Services.Interfaces;
+using CfpExchange.Common.Models;
+using CfpExchange.Common.Services.Interfaces;
 
-namespace CfpExchange.Services
+namespace CfpExchange.Common.Services
 {
     public class TwitterService : BaseService, ITwitterService
     {

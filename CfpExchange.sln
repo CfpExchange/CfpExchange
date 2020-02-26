@@ -8,7 +8,7 @@ Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "Deployment", "Deployment\De
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CfpExchange.Functions", "CfpExchange.Functions\CfpExchange.Functions.csproj", "{47B5CEEB-CE52-475C-9C27-68E7B8BD1CEE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CfpExchange.Models", "CfpExchange.Models\CfpExchange.Models.csproj", "{EB288852-AB0D-405A-903A-B2E1736FE9EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CfpExchange.Common.Models", "CfpExchange.Common.Models\CfpExchange.Common.Models.csproj", "{EB288852-AB0D-405A-903A-B2E1736FE9EB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution items", "Solution items", "{461CF3AA-7C6A-46E9-BC38-D690C67C0059}"
 	ProjectSection(SolutionItems) = preProject
@@ -21,7 +21,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CfpExchange.FunctionalTests
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CfpExchange.UnitTests", "CfpExchange.Unittests\CfpExchange.UnitTests.csproj", "{41677218-A626-4C74-93DE-0463A8B3D57E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CfpExchange.Services", "CfpExchange.Services\CfpExchange.Services.csproj", "{CEFA6644-4F16-49E9-A5ED-AF038117FC01}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CfpExchange.Common", "CfpExchange.Common\CfpExchange.Common.csproj", "{660EB9E7-9826-4FEB-8B5F-86260EB2E06B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CfpExchange.Tests", "CfpExchange.Tests", "{03358E35-CFE0-4912-9CB8-A39700179E3A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{7EAC52BB-156D-43FF-8D29-117E6DD11FEA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CfpExchange.Common.Services", "CfpExchange.Common.Services\CfpExchange.Common.Services.csproj", "{EE94E5BC-852E-4A34-9CA8-B6855F4C7AC1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,13 +59,24 @@ Global
 		{41677218-A626-4C74-93DE-0463A8B3D57E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{41677218-A626-4C74-93DE-0463A8B3D57E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{41677218-A626-4C74-93DE-0463A8B3D57E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CEFA6644-4F16-49E9-A5ED-AF038117FC01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CEFA6644-4F16-49E9-A5ED-AF038117FC01}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CEFA6644-4F16-49E9-A5ED-AF038117FC01}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CEFA6644-4F16-49E9-A5ED-AF038117FC01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{660EB9E7-9826-4FEB-8B5F-86260EB2E06B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{660EB9E7-9826-4FEB-8B5F-86260EB2E06B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{660EB9E7-9826-4FEB-8B5F-86260EB2E06B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{660EB9E7-9826-4FEB-8B5F-86260EB2E06B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE94E5BC-852E-4A34-9CA8-B6855F4C7AC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE94E5BC-852E-4A34-9CA8-B6855F4C7AC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE94E5BC-852E-4A34-9CA8-B6855F4C7AC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE94E5BC-852E-4A34-9CA8-B6855F4C7AC1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EB288852-AB0D-405A-903A-B2E1736FE9EB} = {7EAC52BB-156D-43FF-8D29-117E6DD11FEA}
+		{16A3B296-3E87-4AB6-B17C-3CC89AB3F3BE} = {03358E35-CFE0-4912-9CB8-A39700179E3A}
+		{41677218-A626-4C74-93DE-0463A8B3D57E} = {03358E35-CFE0-4912-9CB8-A39700179E3A}
+		{660EB9E7-9826-4FEB-8B5F-86260EB2E06B} = {7EAC52BB-156D-43FF-8D29-117E6DD11FEA}
+		{EE94E5BC-852E-4A34-9CA8-B6855F4C7AC1} = {7EAC52BB-156D-43FF-8D29-117E6DD11FEA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {455D1C0B-EC50-4391-8AF4-88F725609D48}

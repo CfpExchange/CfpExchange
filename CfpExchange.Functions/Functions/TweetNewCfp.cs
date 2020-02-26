@@ -1,7 +1,8 @@
 ﻿using System.Threading.Tasks;
 
-using CfpExchange.Models;
-using CfpExchange.Services.Interfaces;
+using CfpExchange.Common;
+using CfpExchange.Common.Models;
+using CfpExchange.Common.Services.Interfaces;
 
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;

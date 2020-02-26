@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CfpExchange.Models
+namespace CfpExchange.Common.Models
 {
     public class DownloadEventImageMessage
     {

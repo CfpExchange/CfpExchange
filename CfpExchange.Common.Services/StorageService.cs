@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 using Azure.Storage.Blobs;
 
-using CfpExchange.Services.Interfaces;
+using CfpExchange.Common.Services.Interfaces;
 
-namespace CfpExchange.Services
+namespace CfpExchange.Common.Services
 {
     public class StorageService : BaseService, IStorageService
     {
