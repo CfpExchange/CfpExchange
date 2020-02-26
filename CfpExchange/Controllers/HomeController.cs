@@ -8,6 +8,7 @@ using CfpExchange.Services;
 using CfpExchange.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace CfpExchange.Controllers
 {
@@ -16,13 +17,15 @@ namespace CfpExchange.Controllers
         private readonly CfpContext _cfpContext;
         private readonly IEmailSender _emailSender;
         private readonly IConfiguration _configuration;
+        private readonly ILogger<HomeController> _logger;
 
         public HomeController(CfpContext cfpContext, IEmailSender emailSender,
-            IConfiguration configuration)
+            IConfiguration configuration, ILogger<HomeController> logger)
         {
             _cfpContext = cfpContext;
             _emailSender = emailSender;
             _configuration = configuration;
+            _logger = logger;
         }
 
         public IActionResult Index()
