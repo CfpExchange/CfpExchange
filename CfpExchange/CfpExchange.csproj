@@ -49,9 +49,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Remove="Data\DatabaseInitializer.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="wwwroot\images\exchange100x100.png" />
     <None Include="wwwroot\images\exchange50x50.png" />
     <None Include="wwwroot\robots.txt" />
