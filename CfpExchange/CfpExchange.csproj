@@ -17,7 +17,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CfpExchange.Common.Models\CfpExchange.Common.Models.csproj" />
-    <ProjectReference Include="..\CfpExchange.Models\CfpExchange.Common.Models.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="wwwroot\js\" />

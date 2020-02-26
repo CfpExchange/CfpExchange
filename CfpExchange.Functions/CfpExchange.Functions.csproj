@@ -12,10 +12,9 @@
     <PackageReference Include="System.Data.SqlClient" Version="4.8.1" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CfpExchange.Common\CfpExchange.Common.csproj" />
     <ProjectReference Include="..\CfpExchange.Common.Models\CfpExchange.Common.Models.csproj" />
     <ProjectReference Include="..\CfpExchange.Common.Services\CfpExchange.Common.Services.csproj" />
-    <ProjectReference Include="..\CfpExchange.Common\CfpExchange.Common.csproj" />
-    <ProjectReference Include="..\CfpExchange.Models\CfpExchange.Common.Models.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="host.json">
