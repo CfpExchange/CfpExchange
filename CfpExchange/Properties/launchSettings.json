@@ -4,7 +4,7 @@
     "anonymousAuthentication": true,
     "iisExpress": {
       "applicationUrl": "http://localhost:55556/",
-      "sslPort": 0
+      "sslPort": 44340
     }
   },
   "profiles": {
@@ -18,10 +18,10 @@
     "CfpExchange": {
       "commandName": "Project",
       "launchBrowser": true,
+      "applicationUrl": "http://localhost:5001/",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "applicationUrl": "http://localhost:5001/"
+      }
     }
   }
 }

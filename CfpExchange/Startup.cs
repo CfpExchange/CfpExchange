@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Globalization;
-using CfpExchange.Data;
-using CfpExchange.Helpers;
-using CfpExchange.Middleware;
-using CfpExchange.Models;
-using CfpExchange.Services;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -13,34 +9,37 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+
+using CfpExchange.Data;
+using CfpExchange.Helpers;
+using CfpExchange.Middleware;
+using CfpExchange.Models;
+using CfpExchange.Services;
 
 namespace CfpExchange
 {
     public class Startup
     {
-        private readonly IWebHostEnvironment _environment;
-        private readonly ILogger _logger;
+        #region Fields
 
         public IConfiguration Configuration { get; }
 
-        public Startup(IWebHostEnvironment env, ILoggerFactory loggerFactory)
-        {
-            _environment = env;
-            _logger = loggerFactory.CreateLogger<Startup>();
+        #endregion
 
-            Configuration = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: false)
-                .AddEnvironmentVariables()
-                .AddUserSecrets<Startup>()
-                .Build();
+        #region Constructors
+
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
         }
+
+        #endregion
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            if (_environment.EnvironmentName.Equals("Development"))
+            var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            if (env.Equals("Development"))
             {
                 services.AddDbContext<CfpContext>(opt => opt.UseInMemoryDatabase("Cfps"));
             }
@@ -68,25 +67,18 @@ namespace CfpExchange
             services.AddAuthorization();
             services.AddMvc((mvcOptions) => mvcOptions.EnableEndpointRouting = false);
 
-            AddServices(services);
-        }
-
-        private void AddServices(IServiceCollection services)
-        {
-            if (_environment.EnvironmentName.Equals("Production"))
-            {
-                services.AddTransient<IEmailSender, MailGunEmailSender>();
-            }
-            else
+            if (env.Equals("Development"))
             {
                 services.AddTransient<IEmailSender, MockEmailSender>();
             }
-
+            else
+            {
+                services.AddTransient<IEmailSender, MailGunEmailSender>();
+            }
             services.AddTransient<IMessageSender, MessageSender>();
             services.AddTransient<ICfpService, CfpService>();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             try
@@ -97,7 +89,6 @@ namespace CfpExchange
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Failed to migrate or seed database");
             }
 
             if (env.EnvironmentName.Equals("Development"))
@@ -111,7 +102,6 @@ namespace CfpExchange
                 app.UseExceptionHandler("/Home/Error");
                 app.UseSitemapMiddleware(Constants.WebsiteRootUrl);
                 app.UseRssMiddleware(Constants.WebsiteRootUrl);
-
             }
 
             var supportedCultures = new[]
