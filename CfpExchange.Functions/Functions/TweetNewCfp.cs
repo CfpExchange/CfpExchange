@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 
 using CfpExchange.Common;
+using CfpExchange.Common.Helpers;
 using CfpExchange.Common.Models;
 using CfpExchange.Common.Services.Interfaces;
 
@@ -9,7 +10,7 @@ using Microsoft.Extensions.Logging;
 
 namespace CfpExchange.Functions
 {
-    public class TweetNewCfp : BaseFunction
+    public class TweetNewCfp
     {
         #region Fields
 
@@ -31,7 +32,7 @@ namespace CfpExchange.Functions
             [ServiceBusTrigger(Constants.QUEUE_TWITTER, Connection = "ServicebusQueueConnectionString")]
             SendTweetMessage sendTweetMessage, ILogger log)
         {
-            if (!GetEnvironmentVariable("AZURE_FUNCTIONS_ENVIRONMENT").Equals("Development"))
+            if (!SettingsHelper.GetEnvironmentVariable("AZURE_FUNCTIONS_ENVIRONMENT").Equals("Development"))
             {
                 await _twitterService.SendTweetAsync(sendTweetMessage);
             }

@@ -10,7 +10,7 @@ using CfpExchange.Common.Services.Interfaces;
 
 namespace CfpExchange.Functions
 {
-    public class DownloadEventImage : BaseFunction
+    public class DownloadEventImage
     {
         #region Fields
 
