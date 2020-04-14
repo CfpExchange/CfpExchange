@@ -1,32 +1,36 @@
-﻿using OpenQA.Selenium.Remote;
+﻿using OpenQA.Selenium;
 
 namespace CfpExchange.FunctionalTests.PageObjectModels
 {
-    public class HomePage : SharedPageActions
+    public class HomePage : BasePage
     {
-        public HomePage(RemoteWebDriver driver) : base(driver)
+        #region Constructors
+
+        public HomePage(IWebDriver driver) : base(driver)
         {
         }
 
+        #endregion
+
         public CfpSingleItemPage ShowsNewestCfp()
         {
-            var webElement = Driver.FindElementById("NewestCfpContent");
+            var webElement = _driver.FindElement(By.Id("NewestCfpContent"));
             
-            return new CfpSingleItemPage(Driver, webElement);
+            return new CfpSingleItemPage(_driver, webElement);
         }
 
         public CfpSingleItemPage ShowsMostViewedCfp()
         {
-            var webElement = Driver.FindElementById("MostViewedCfpContent");
+            var webElement = _driver.FindElement(By.Id("MostViewedCfpContent"));
 
-            return new CfpSingleItemPage(Driver, webElement);
+            return new CfpSingleItemPage(_driver, webElement);
         }
 
         public CfpSingleItemPage ShowsRandomCfp()
         {
-            var webElement = Driver.FindElementById("RandomCfpContent");
+            var webElement = _driver.FindElement(By.Id("RandomCfpContent"));
 
-            return new CfpSingleItemPage(Driver, webElement);
+            return new CfpSingleItemPage(_driver, webElement);
         }
     }
 }

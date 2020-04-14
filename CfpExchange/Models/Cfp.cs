@@ -1,12 +1,12 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using CfpExchange.Enums;
+using CfpExchange.Common.Enums;
 using CfpExchange.Helpers;
 
 namespace CfpExchange.Models
 {
-	public class Cfp
+    public class Cfp
 	{
 		[Key]
 		public Guid Id { get; set; }

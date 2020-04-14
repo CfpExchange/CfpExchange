@@ -57,7 +57,7 @@ namespace CfpExchange.Middleware
 				{
 					sitemapContent += "<url>";
 					sitemapContent += $"<loc>{_rootUrl}/cfp/details/{cfp.Slug}</loc>";
-					sitemapContent += $"<lastmod>{cfp.CfpAdded.ToString("yyyy-MM-dd")}</lastmod>";
+					sitemapContent += $"<lastmod>{cfp.CfpAdded:yyyy-MM-dd}</lastmod>";
 					sitemapContent += "</url>";
 				}
 

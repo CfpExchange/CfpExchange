@@ -2,16 +2,19 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <AzureFunctionsVersion>v3</AzureFunctionsVersion>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="linqtotwitter" Version="5.0.0" />
     <PackageReference Include="Microsoft.Azure.Functions.Extensions" Version="1.0.0" />
-    <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.ServiceBus" Version="4.0.0" />
+    <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.ServiceBus" Version="4.1.0" />
     <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.Storage" Version="3.0.10" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CfpExchange.Models\CfpExchange.Models.csproj" />
+    <ProjectReference Include="..\CfpExchange.Common\CfpExchange.Common.csproj" />
+    <ProjectReference Include="..\CfpExchange.Common.Models\CfpExchange.Common.Models.csproj" />
+    <ProjectReference Include="..\CfpExchange.Common.Services\CfpExchange.Common.Services.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="host.json">

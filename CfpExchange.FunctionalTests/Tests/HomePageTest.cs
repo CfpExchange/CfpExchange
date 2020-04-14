@@ -1,4 +1,5 @@
 ﻿using CfpExchange.FunctionalTests.PageObjectModels;
+
 using Xunit;
 
 namespace CfpExchange.FunctionalTests.Tests
@@ -8,28 +9,25 @@ namespace CfpExchange.FunctionalTests.Tests
         [Fact]
         public void HomePage_ShouldShowNewestCfp()
         {
-            var homePage = new HomePage(Driver);
+            var homePage = new HomePage(_chromeDriver);
 
-            Assert.True(homePage.ShowsNewestCfp()
-                .HasClickableTitle());
+            Assert.True(homePage.ShowsNewestCfp().HasClickableTitle());
         }
 
         [Fact]
         public void HomePage_ShouldShowMostViewedCfp()
         {
-            var homePage = new HomePage(Driver);
+            var homePage = new HomePage(_chromeDriver);
 
-            Assert.True(homePage.ShowsMostViewedCfp()
-                .HasClickableTitle());
+            Assert.True(homePage.ShowsMostViewedCfp().HasClickableTitle());
         }
 
         [Fact]
         public void HomePage_ShouldShowRandomCfp()
         {
-            var homePage = new HomePage(Driver);
+            var homePage = new HomePage(_chromeDriver);
 
-            Assert.True(homePage.ShowsRandomCfp()
-                .HasClickableTitle());
+            Assert.True(homePage.ShowsRandomCfp().HasClickableTitle());
         }
     }
 }

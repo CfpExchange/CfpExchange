@@ -1,12 +1,12 @@
 ﻿using System;
 
-namespace CfpExchange.Models
+namespace CfpExchange.Common.Models
 {
     public class DownloadEventImageMessage
     {
         public Guid Id { get; set; }
 
-        public string ImageUrl { get; set; }
+        public string ImageUrl { get; set; } = string.Empty;
 
         public bool HasDefaultImage()
         {
