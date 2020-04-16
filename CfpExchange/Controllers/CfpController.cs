@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net.Http;
@@ -24,7 +25,7 @@ namespace CfpExchange.Controllers
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IMessageSender _messageSender;
         private readonly ICfpService _cfpService;
-        private ILogger<CfpController> _logger;
+        private readonly ILogger<CfpController> _logger;
 
         public CfpController(
             IConfiguration configuration,
@@ -68,22 +69,29 @@ namespace CfpExchange.Controllers
         public IActionResult CheckDuplicates(string url)
         {
             if (string.IsNullOrWhiteSpace(url))
+            {
                 return NotFound();
+            }
 
             var validatedUrl = url.ToLower();
 
             if (!validatedUrl.StartsWith("http://", StringComparison.Ordinal)
                 && !validatedUrl.StartsWith("https://", StringComparison.Ordinal))
+            {
                 validatedUrl = $"http://{validatedUrl}";
+            }
 
-            Uri.TryCreate(validatedUrl, UriKind.Absolute, out var parsedUri);
+            List<Cfp> similarCfps = new List<Cfp>();
 
-            var alreadyInDatabase = _cfpService.IsAlreadyInDatabase(parsedUri);
+            if (Uri.TryCreate(validatedUrl, UriKind.Absolute, out var parsedUri))
+            {
+                similarCfps = _cfpService.IsAlreadyInDatabase(parsedUri);
+            }
 
             var result = new
             {
-                IsKnown = alreadyInDatabase.Any(),
-                SimilarCfps = alreadyInDatabase.ToArray()
+                IsKnown = similarCfps.Any(),
+                SimilarCfps = similarCfps.ToArray()
             };
 
             return Json(result);
@@ -103,7 +111,7 @@ namespace CfpExchange.Controllers
 
             if (eventdate != "0")
             {
-                if (DateTime.TryParseExact(eventdate, "yyyy-M", new CultureInfo("en-us"), System.Globalization.DateTimeStyles.None, out startDateTime))
+                if (DateTime.TryParseExact(eventdate, "yyyy-M", new CultureInfo("en-us"), DateTimeStyles.None, out startDateTime))
                 {
                     endDateTime = startDateTime.AddMonths(1).AddDays(-1);
                 }
@@ -214,8 +222,8 @@ namespace CfpExchange.Controllers
                 CfpEndDate = submittedCfp.CfpEndDate.Date,
                 CfpAdded = DateTime.Now,
                 CfpUrl = submittedCfp.CfpUrl,
-                EventStartDate = submittedCfp.EventStartDate?.Date ?? default(DateTime),
-                EventEndDate = submittedCfp.EventEndDate?.Date ?? default(DateTime),
+                EventStartDate = submittedCfp.EventStartDate?.Date ?? default,
+                EventEndDate = submittedCfp.EventEndDate?.Date ?? default,
                 ProvidesAccommodation = submittedCfp.ProvidesAccommodation,
                 ProvidesTravelAssistance = submittedCfp.ProvidesTravelAssistance,
                 SubmittedByName = submittedCfp.SubmittedByName,
@@ -223,7 +231,7 @@ namespace CfpExchange.Controllers
                 EventTimezone = timezone,
                 Slug = cfpToAddSlug,
                 EventTags = submittedCfp.EventTags,
-                CfpDecisionDate = submittedCfp.CfpDecisionDate?.Date ?? default(DateTime)
+                CfpDecisionDate = submittedCfp.CfpDecisionDate?.Date ?? default
             };
 
             return cfpToAdd;

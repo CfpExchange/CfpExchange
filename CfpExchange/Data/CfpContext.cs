@@ -2,6 +2,7 @@
 using System.Linq;
 using CfpExchange.Helpers;
 using CfpExchange.Models;
+using CfpExchange.Common.Enums;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -43,8 +44,8 @@ namespace CfpExchange.Data
 					EventImage = "https://techorama.nl/wp-content/uploads/sites/2/2017/10/TVrobot@4x.svg",
 					EventStartDate = DateTime.Now.AddDays(1),
 					EventEndDate = DateTime.Now.AddDays(2),
-					ProvidesAccommodation = Enums.Accommodation.Unknown,
-					ProvidesTravelAssistance = Enums.TravelAssistence.Yes,
+					ProvidesAccommodation = Accommodation.Unknown,
+					ProvidesTravelAssistance = TravelAssistence.Yes,
 					Slug = "techorama-be",
 					EventTags = ".NET;Awesome;Unicorns"
 				});
@@ -62,8 +63,8 @@ namespace CfpExchange.Data
 					EventImage = "https://techorama.nl/wp-content/uploads/sites/2/2017/10/TVrobot@4x.svg",
 					EventStartDate = DateTime.Now.AddMonths(1),
 					EventEndDate = DateTime.Now.AddMonths(1).AddDays(2),
-					ProvidesAccommodation = Enums.Accommodation.No,
-					ProvidesTravelAssistance = Enums.TravelAssistence.Unknown,
+					ProvidesAccommodation = Accommodation.No,
+					ProvidesTravelAssistance = TravelAssistence.Unknown,
 					Slug = "techorama-nl",
 					EventTags = ".NET;Awesome;Unicorns;Dutch"
 				});
@@ -78,8 +79,8 @@ namespace CfpExchange.Data
 					EventLocationName = "Minnesota, USA",
 					EventDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
 					CfpEndDate = DateTime.Now.AddDays(1),
-					ProvidesAccommodation = Enums.Accommodation.Yes,
-					ProvidesTravelAssistance = Enums.TravelAssistence.Yes,
+					ProvidesAccommodation = Accommodation.Yes,
+					ProvidesTravelAssistance = TravelAssistence.Yes,
 					Slug = "ndc-minnesota",
 					EventTags = ".NET;Awesome;Unicorns;PubConf"
 				});
@@ -97,8 +98,8 @@ namespace CfpExchange.Data
 					EventLocationLng = -0.127758299999982,
 					EventDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit2.",
 					CfpEndDate = DateTime.Now.AddHours(-24),
-					ProvidesAccommodation = Enums.Accommodation.No,
-					ProvidesTravelAssistance = Enums.TravelAssistence.No,
+					ProvidesAccommodation = Accommodation.No,
+					ProvidesTravelAssistance = TravelAssistence.No,
 					Slug = "ndc-london",
 					EventTags = ".NET;Awesome;Unicorns;Bla"
 				});
@@ -127,8 +128,8 @@ namespace CfpExchange.Data
 					EventLocationName = "Zeist, The Netherlands",
 					EventDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit2.",
 					CfpEndDate = DateTime.Now.AddDays(7),
-					ProvidesAccommodation = Enums.Accommodation.Unknown,
-					ProvidesTravelAssistance = Enums.TravelAssistence.Unknown,
+					ProvidesAccommodation = Accommodation.Unknown,
+					ProvidesTravelAssistance = TravelAssistence.Unknown,
 					Slug = "sdn-event",
 					EventTags = ""
 				});
@@ -144,8 +145,8 @@ namespace CfpExchange.Data
 					EventLocationName = "Zeist, The Netherlands",
 					EventDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit1.",
 					CfpEndDate = DateTime.Now.AddDays(4),
-					ProvidesAccommodation = Enums.Accommodation.Unknown,
-					ProvidesTravelAssistance = Enums.TravelAssistence.Unknown,
+					ProvidesAccommodation = Accommodation.Unknown,
+					ProvidesTravelAssistance = TravelAssistence.Unknown,
 					DuplicateOfId = new Guid("dd3f7150-c9a7-46ed-9481-9246aed2329d"),
 					Slug = "sdn-event-1",
 					EventTags = ".NET;Awesome;Unicorns;SDN"

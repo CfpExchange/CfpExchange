@@ -1,4 +1,5 @@
 ﻿using CfpExchange.FunctionalTests.PageObjectModels;
+
 using Xunit;
 
 namespace CfpExchange.FunctionalTests.Tests
@@ -8,10 +9,9 @@ namespace CfpExchange.FunctionalTests.Tests
         [Fact]
         public void CfpSubmitPage()
         {
-            var cfpSubmitPage = new CfpSubmitPage(Driver);
+            var cfpSubmitPage = new CfpSubmitPage(_chromeDriver);
 
-            Assert.True(cfpSubmitPage.NavigateToNewCfp()
-                .OnCfpSubmitPage());
+            Assert.True(cfpSubmitPage.NavigateToNewCfp().OnCfpSubmitPage());
         }
     }
 }

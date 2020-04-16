@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Text;
 using System.Threading.Tasks;
-using CfpExchange.Models;
+
+using Newtonsoft.Json;
 using Microsoft.Azure.ServiceBus;
 using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
+
+using CfpExchange.Common.Models;
+using CfpExchange.Models;
 
 namespace CfpExchange.Services
 {

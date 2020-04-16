@@ -1,17 +1,18 @@
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+
 namespace CfpExchange.Services
 {
 	public class MailGunEmailSender : IEmailSender
 	{
-		private ILogger _logger;
+		private readonly ILogger _logger;
 		private readonly EmailSettings _emailSettings;
 
 		public MailGunEmailSender(ILoggerFactory loggerFactory, IOptions<EmailSettings> emailOptions)

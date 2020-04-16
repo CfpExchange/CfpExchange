@@ -1,10 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using CfpExchange.Enums;
+using CfpExchange.Common.Enums;
 
 namespace CfpExchange.ViewModels
 {
-	public class SubmittedCfp
+    public class SubmittedCfp
 	{
 		[Required(ErrorMessage ="The event URL is required")]
 		[DataType(DataType.Url)]
