@@ -39,7 +39,7 @@ namespace CfpExchange
         public void ConfigureServices(IServiceCollection services)
         {
             var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-            if (env.Equals("Development"))
+            if (env != null && env.Equals("Development"))
             {
                 services.AddDbContext<CfpContext>(opt => opt.UseInMemoryDatabase("Cfps"));
             }
