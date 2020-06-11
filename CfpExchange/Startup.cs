@@ -42,10 +42,12 @@ namespace CfpExchange
             if (env != null && env.Equals("Development"))
             {
                 services.AddDbContext<CfpContext>(opt => opt.UseInMemoryDatabase("Cfps"));
+                services.AddTransient<IEmailSender, MockEmailSender>();
             }
             else
             {
                 services.AddDbContext<CfpContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("CfpExchangeDb")));
+                services.AddTransient<IEmailSender, MailGunEmailSender>();
             }
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options => { options.User.RequireUniqueEmail = true; })
@@ -67,14 +69,6 @@ namespace CfpExchange
             services.AddAuthorization();
             services.AddMvc((mvcOptions) => mvcOptions.EnableEndpointRouting = false);
 
-            if (env.Equals("Development"))
-            {
-                services.AddTransient<IEmailSender, MockEmailSender>();
-            }
-            else
-            {
-                services.AddTransient<IEmailSender, MailGunEmailSender>();
-            }
             services.AddTransient<IMessageSender, MessageSender>();
             services.AddTransient<ICfpService, CfpService>();
         }
