@@ -56,6 +56,26 @@ stages:
         arguments: '--configuration $(BuildConfiguration) /p:platform="$(BuildPlatform)" /p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation=$(build.artifactstagingdirectory)'
         
     - task: DotNetCoreCLI@2
+      displayName: 'Publish CfpExchange Azure Functions project'
+      inputs:
+        command: publish
+        arguments: '--configuration $(BuildConfiguration) --output publish_output'
+        projects: '**/CfpExchange.Functions/CfpExchange.Functions.csproj'
+        publishWebProjects: false
+        modifyOutputPath: false
+        zipAfterPublish: false
+    - task: ArchiveFiles@2
+      displayName: "Archive files"
+      inputs:
+        rootFolderOrFile: "$(System.DefaultWorkingDirectory)/publish_output"
+        includeRootFolder: false
+        archiveFile: "$(System.DefaultWorkingDirectory)/CfpExchange.Functions.zip"
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(System.DefaultWorkingDirectory)/CfpExchange.Functions.zip'
+        artifactName: 'drop'
+        
+    - task: DotNetCoreCLI@2
       displayName: 'Run CfpExchange unit tests'
       inputs:
         command: test
