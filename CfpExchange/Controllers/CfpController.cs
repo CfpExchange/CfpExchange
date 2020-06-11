@@ -328,13 +328,18 @@ namespace CfpExchange.Controllers
         {
             var linkedCfp = _cfpService.GetCfpById(id);
 
+            // Prevent open redirect
+            if (linkedCfp.CfpUrl.ToLowerInvariant() != url.ToLowerInvariant()
+                && linkedCfp.EventUrl.ToLowerInvariant() != url.ToLowerInvariant())
+                return BadRequest();
+
             if (linkedCfp != null)
             {
                 linkedCfp.ClicksToCfpUrl++;
 
                 await _cfpService.SaveChangesAsync();
             }
-            
+
             return Redirect(url);
         }
 
