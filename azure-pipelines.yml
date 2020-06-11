@@ -43,9 +43,15 @@ stages:
         gulpjs: 'node_modules/gulp/bin/gulp.js'
 
     - task: DotNetCoreCLI@2
-      displayName: 'Build CfpExchange projects'
+      displayName: 'Build CfpExchange main project'
       inputs:
-        projects: '**/*.csproj'
+        projects: '**/CfpExchange/CfpExchange.csproj'
+        arguments: '--configuration $(BuildConfiguration) /p:platform="$(BuildPlatform)" /p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation=$(build.artifactstagingdirectory)'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Build CfpExchange Azure Functions project'
+      inputs:
+        projects: '**/CfpExchange.Functions/CfpExchange.Functions.csproj'
         arguments: '--configuration $(BuildConfiguration) /p:platform="$(BuildPlatform)" /p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation=$(build.artifactstagingdirectory)'
 
     - task: DotNetCoreCLI@2
