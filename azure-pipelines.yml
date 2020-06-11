@@ -51,11 +51,10 @@ stages:
     - task: DotNetCoreCLI@2
       displayName: 'Build CfpExchange Azure Functions project'
       inputs:
-        command: 'publish'
+        command: 'build'
         projects: '**/CfpExchange.Functions/CfpExchange.Functions.csproj'
         arguments: '--configuration $(BuildConfiguration) /p:platform="$(BuildPlatform)" /p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation=$(build.artifactstagingdirectory)'
-        publishWebProjects: true
-        zipAfterPublish: true
+        
     - task: DotNetCoreCLI@2
       displayName: 'Run CfpExchange unit tests'
       inputs:
