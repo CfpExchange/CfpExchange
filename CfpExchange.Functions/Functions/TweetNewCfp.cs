@@ -29,13 +29,15 @@ namespace CfpExchange.Functions
 
         [FunctionName(nameof(TweetNewCfp))]
         public async Task Run(
-            [ServiceBusTrigger(Constants.QUEUE_TWITTER, Connection = "ServicebusTwitterQueueConnectionString")]
+            [ServiceBusTrigger(Constants.QUEUE_TWITTER, Connection = "ServicebusQueueConnectionString")]
             SendTweetMessage sendTweetMessage, ILogger log)
         {
             var currentEnvironment = SettingsHelper.GetEnvironmentVariable("AZURE_FUNCTIONS_ENVIRONMENT");
 
             if (currentEnvironment != null && !currentEnvironment.Equals("Development"))
             {
+                log.LogInformation("Sending tweet...");
+
                 await _twitterService.SendTweetAsync(sendTweetMessage);
             }
             else 
