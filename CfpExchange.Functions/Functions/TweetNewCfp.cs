@@ -34,7 +34,7 @@ namespace CfpExchange.Functions
         {
             var currentEnvironment = SettingsHelper.GetEnvironmentVariable("AZURE_FUNCTIONS_ENVIRONMENT");
 
-            if (currentEnvironment != null && !currentEnvironment.Equals("Development"))
+            if (currentEnvironment == null || !currentEnvironment.Equals("Development"))
             {
                 log.LogInformation("Sending tweet...");
 
