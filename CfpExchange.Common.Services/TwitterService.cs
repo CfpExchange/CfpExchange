@@ -60,7 +60,7 @@ namespace CfpExchange.Common.Services
             tweetMessageBuilder.AppendLine();
             tweetMessageBuilder.AppendLine($"#cfp #cfpexchange {sendTweetMessage.UrlToCfp}");
 
-            return tweetMessageBuilder.ToString(0, Math.Max(tweetMessageBuilder.Length-1, 280));
+            return tweetMessageBuilder.ToString(0, Math.Min(tweetMessageBuilder.Length, 280));
         }
 
         #endregion
