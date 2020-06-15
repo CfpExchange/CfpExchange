@@ -12,12 +12,11 @@ using CfpExchange.Common.Services.Interfaces;
 
 namespace CfpExchange.Common.Services
 {
-    public class MessageSender : IMessageSender
+    public class QueueMessageService : IQueueMessageService
     {
         private readonly IConfiguration _configuration;
         
-
-        public MessageSender(IConfiguration configuration)
+        public QueueMessageService(IConfiguration configuration)
         {
             _configuration = configuration;
         }

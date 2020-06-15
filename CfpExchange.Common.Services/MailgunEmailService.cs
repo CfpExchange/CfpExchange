@@ -12,7 +12,7 @@ using CfpExchange.Common.Services.Interfaces;
 
 namespace CfpExchange.Common.Services
 {
-    public class MailGunEmailSender : IEmailSender
+    public class MailgunEmailService : IEmailService
     {
         #region Fields
 
@@ -23,9 +23,9 @@ namespace CfpExchange.Common.Services
 
         #region Constructors
 
-        public MailGunEmailSender(ILoggerFactory loggerFactory, IOptions<EmailSettings> emailOptions)
+        public MailgunEmailService(ILoggerFactory loggerFactory, IOptions<EmailSettings> emailOptions)
         {
-            _logger = loggerFactory.CreateLogger<MailGunEmailSender>();
+            _logger = loggerFactory.CreateLogger<MailgunEmailService>();
             _emailSettings = emailOptions.Value;
         }
 

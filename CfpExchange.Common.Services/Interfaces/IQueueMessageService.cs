@@ -5,7 +5,7 @@ using CfpExchange.Common.Models;
 
 namespace CfpExchange.Common.Services.Interfaces
 {
-    public interface IMessageSender
+    public interface IQueueMessageService
     {
         Task SendDownloadEventImageMessageAsync(Guid cfpPublicId, string cfpEventImageUrl);
 

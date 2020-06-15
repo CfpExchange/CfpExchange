@@ -25,17 +25,17 @@ namespace CfpExchange.Controllers
         private const int MaximumPageToShow = 3000;
 
         private readonly IConfiguration _configuration;
-        private readonly IEmailSender _emailSender;
+        private readonly IEmailService _emailSender;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        private readonly IMessageSender _messageSender;
+        private readonly IQueueMessageService _messageSender;
         private readonly ICfpService _cfpService;
         private readonly ILogger<CfpController> _logger;
 
         public CfpController(
             IConfiguration configuration,
-            IEmailSender emailSender,
+            IEmailService emailSender,
             IWebHostEnvironment env,
-            IMessageSender messageSender,
+            IQueueMessageService messageSender,
             ICfpService cfpService,
             ILogger<CfpController> logger)
         {

@@ -16,11 +16,11 @@ namespace CfpExchange.Controllers
     public class HomeController : Controller
     {
         private readonly CfpContext _cfpContext;
-        private readonly IEmailSender _emailSender;
+        private readonly IEmailService _emailSender;
         private readonly IConfiguration _configuration;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(CfpContext cfpContext, IEmailSender emailSender,
+        public HomeController(CfpContext cfpContext, IEmailService emailSender,
             IConfiguration configuration, ILogger<HomeController> logger)
         {
             _cfpContext = cfpContext;
