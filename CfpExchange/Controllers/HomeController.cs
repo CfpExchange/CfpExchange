@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using CfpExchange.Common.Services.Interfaces;
 using CfpExchange.Data;
 using CfpExchange.Models;
 using CfpExchange.Services;

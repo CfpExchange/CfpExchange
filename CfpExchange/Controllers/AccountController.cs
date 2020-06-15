@@ -1,11 +1,13 @@
 ﻿using System.Threading.Tasks;
-using CfpExchange.Models;
-using CfpExchange.Services;
-using CfpExchange.ViewModels;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+
+using CfpExchange.Common.Services.Interfaces;
+using CfpExchange.Models;
+using CfpExchange.ViewModels;
 
 namespace CfpExchange.Controllers
 {

@@ -15,6 +15,8 @@ using CfpExchange.Helpers;
 using CfpExchange.Middleware;
 using CfpExchange.Models;
 using CfpExchange.Services;
+using CfpExchange.Common.Services.Interfaces;
+using CfpExchange.Common.Services;
 
 namespace CfpExchange
 {
@@ -42,7 +44,8 @@ namespace CfpExchange
             if (env != null && env.Equals("Development"))
             {
                 services.AddDbContext<CfpContext>(opt => opt.UseInMemoryDatabase("Cfps"));
-                services.AddTransient<IEmailSender, MockEmailSender>();
+                // TODO Fix!!
+                //services.AddTransient<IEmailSender, MockEmailSender>();
             }
             else
             {

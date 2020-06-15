@@ -31,6 +31,11 @@ namespace CfpExchange.Common.Services
 
         #endregion
 
+        public async Task SendEmailAsync(string emailAddress, string subject, string body)
+        {
+            await SendEmailAsync(emailAddress, _emailSettings.From, subject, body);
+        }
+
         public async Task SendEmailAsync(string emailAddress, string from, string subject, string body)
         {
             var correlationId = Guid.NewGuid();
