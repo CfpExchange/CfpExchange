@@ -4,15 +4,19 @@ using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using CfpExchange.Helpers;
-using CfpExchange.Models;
-using CfpExchange.Services;
-using CfpExchange.ViewModels;
+
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+
+using CfpExchange.Common.Services.Interfaces;
+using CfpExchange.Helpers;
+using CfpExchange.Models;
+using CfpExchange.Services;
+using CfpExchange.ViewModels;
+using CfpExchange.Common.Models;
 
 namespace CfpExchange.Controllers
 {
@@ -139,7 +143,7 @@ namespace CfpExchange.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Submit([FromForm]SubmittedCfp submittedCfp)
+        public async Task<IActionResult> Submit([FromForm] SubmittedCfp submittedCfp)
         {
             // TODO
             // Check validity
@@ -167,7 +171,17 @@ namespace CfpExchange.Controllers
         {
             try
             {
-                await _messageSender.SendTwitterMessageAsync(cfpToAdd, Url.Action("details", "cfp", new { id = cfpToAdd.Id }, "https", "cfp.exchange"));
+                var cfpInfo = new CfpInformation 
+                {
+                    CfpEndDate = cfpToAdd.CfpEndDate,
+                    EventStartDate = cfpToAdd.EventStartDate,
+                    EventEndDate = cfpToAdd.EventEndDate,
+                    EventLocationLatitude = (decimal)cfpToAdd.EventLocationLat,
+                    EventLocationLongitude = (decimal)cfpToAdd.EventLocationLng,
+                    EventName = cfpToAdd.EventName,
+                    TwitterHandle = cfpToAdd.EventTwitterHandle
+                };
+                await _messageSender.SendTwitterMessageAsync(cfpInfo, Url.Action("details", "cfp", new { id = cfpToAdd.Id }, "https", "cfp.exchange"));
             }
             catch (Exception ex)
             {
@@ -188,7 +202,7 @@ namespace CfpExchange.Controllers
                     _logger.LogInformation("Not downloading event image locally.");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
             }
@@ -295,7 +309,7 @@ namespace CfpExchange.Controllers
 
             if (selectedCfp.DuplicateOfId != null && selectedCfp.DuplicateOfId != Guid.Empty)
             {
-                var originalCfp = _cfpService.GetCfpById((Guid) selectedCfp.DuplicateOfId);
+                var originalCfp = _cfpService.GetCfpById((Guid)selectedCfp.DuplicateOfId);
                 return RedirectToAction("details", "cfp", new { id = originalCfp.Slug });
             }
 

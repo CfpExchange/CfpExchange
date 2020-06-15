@@ -6,8 +6,8 @@ using Newtonsoft.Json;
 using Microsoft.Azure.ServiceBus;
 using Microsoft.Extensions.Configuration;
 
+using CfpExchange.Common.Messages;
 using CfpExchange.Common.Models;
-using CfpExchange.Models;
 using CfpExchange.Common.Services.Interfaces;
 
 namespace CfpExchange.Common.Services
@@ -39,20 +39,20 @@ namespace CfpExchange.Common.Services
             await queueClient.SendAsync(message);
         }
 
-        public async Task SendTwitterMessageAsync(Cfp cfpToAdd, string urlToCfp)
+        public async Task SendTwitterMessageAsync(CfpInformation cfpInfo, string urlToCfp)
         {
             var servicebusConnectionstring = _configuration["ServicebusTwitterQueueConnectionString"];
 
             var queueClient = new QueueClient(new ServiceBusConnectionStringBuilder(servicebusConnectionstring));
             var sendTweetMessage = new SendTweetMessage
             {
-                CfpEndDate = cfpToAdd.CfpEndDate,
-                EventStartDate = cfpToAdd.EventStartDate,
-                EventEndDate = cfpToAdd.EventEndDate,
-                EventLocationLatitude = (decimal)cfpToAdd.EventLocationLat,
-                EventLocationLongitude = (decimal)cfpToAdd.EventLocationLng,
-                EventName = cfpToAdd.EventName,
-                TwitterHandle = cfpToAdd.EventTwitterHandle,
+                CfpEndDate = cfpInfo.CfpEndDate,
+                EventStartDate = cfpInfo.EventStartDate,
+                EventEndDate = cfpInfo.EventEndDate,
+                EventLocationLatitude = cfpInfo.EventLocationLatitude,
+                EventLocationLongitude = cfpInfo.EventLocationLongitude,
+                EventName = cfpInfo.EventName,
+                TwitterHandle = cfpInfo.TwitterHandle,
                 UrlToCfp = urlToCfp
             };
             var messageBody = JsonConvert.SerializeObject(sendTweetMessage);

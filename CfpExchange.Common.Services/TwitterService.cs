@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 using LinqToTwitter;
 
-using CfpExchange.Common.Models;
+using CfpExchange.Common.Messages;
 using CfpExchange.Common.Services.Interfaces;
 
 namespace CfpExchange.Common.Services

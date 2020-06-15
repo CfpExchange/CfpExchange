@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using CfpExchange.Models;
+
+using CfpExchange.Common.Models;
 
 namespace CfpExchange.Common.Services.Interfaces
 {
@@ -8,6 +9,6 @@ namespace CfpExchange.Common.Services.Interfaces
     {
         Task SendDownloadEventImageMessageAsync(Guid cfpPublicId, string cfpEventImageUrl);
 
-        Task SendTwitterMessageAsync(Cfp cfpToAdd, string urlToCfp);
+        Task SendTwitterMessageAsync(CfpInformation cfp, string urlToCfp);
     }
 }
