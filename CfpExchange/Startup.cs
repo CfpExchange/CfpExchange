@@ -55,7 +55,7 @@ namespace CfpExchange
             services.AddIdentity<ApplicationUser, IdentityRole>(options => { options.User.RequireUniqueEmail = true; })
                 .AddEntityFrameworkStores<CfpContext>()
                 .AddDefaultTokenProviders();
-
+            services.AddHttpClient();
             services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
 
             services.ConfigureApplicationCookie(options =>

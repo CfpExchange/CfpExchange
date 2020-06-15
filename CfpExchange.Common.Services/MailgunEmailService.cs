@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 using CfpExchange.Common.Services.Interfaces;
+using CfpExchange.Common.Helpers;
 
 namespace CfpExchange.Common.Services
 {
@@ -18,13 +19,15 @@ namespace CfpExchange.Common.Services
 
         private readonly ILogger _logger;
         private readonly EmailSettings _emailSettings;
+        private readonly IHttpClientFactory _httpClientFactory;
 
         #endregion
 
         #region Constructors
 
-        public MailgunEmailService(ILoggerFactory loggerFactory, IOptions<EmailSettings> emailOptions)
+        public MailgunEmailService(IHttpClientFactory httpClientFactory, ILoggerFactory loggerFactory, IOptions<EmailSettings> emailOptions)
         {
+            _httpClientFactory = httpClientFactory;
             _logger = loggerFactory.CreateLogger<MailgunEmailService>();
             _emailSettings = emailOptions.Value;
         }
@@ -38,10 +41,15 @@ namespace CfpExchange.Common.Services
 
         public async Task SendEmailAsync(string emailAddress, string from, string subject, string body)
         {
+            Guard.IsNotNull(emailAddress, nameof(emailAddress));
+            Guard.IsNotNull(from, nameof(from));
+            Guard.IsNotNull(subject, nameof(subject));
+            Guard.IsNotNull(body, nameof(body));
+
             var correlationId = Guid.NewGuid();
             _logger.LogInformation($"{correlationId}: Sending email to '{emailAddress}' with subject '{subject}': '{body}'");
 
-            using var client = new HttpClient();
+            using var client = _httpClientFactory.CreateClient();
             client.DefaultRequestHeaders.Authorization =
                 new AuthenticationHeaderValue("Basic",
                     Convert.ToBase64String(Encoding.ASCII.GetBytes($"api:{_emailSettings.ApiKey}")));
