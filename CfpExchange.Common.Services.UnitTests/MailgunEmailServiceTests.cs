@@ -24,7 +24,7 @@ namespace CfpExchange.Common.Services.UnitTests
 
         #region Fields
 
-        private static EmailSettings _emailSettings = new EmailSettings { ApiKey = "FakeApiKey", ApiUri = "https://www.example.com/api/", From = "Unit Test <ut@example.com>" };
+        private readonly static EmailSettings _emailSettings = new EmailSettings { ApiKey = "FakeApiKey", ApiUri = "https://www.example.com/api/", From = "Unit Test <ut@example.com>" };
         private MailgunEmailService _mailgunEmailService;
 
         #endregion
