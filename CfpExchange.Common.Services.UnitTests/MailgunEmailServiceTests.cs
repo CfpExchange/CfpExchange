@@ -1,8 +1,13 @@
 ﻿using System;
+using System.Net.Http;
 using System.Threading.Tasks;
+
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Moq;
 using Xunit;
+
+using CfpExchange.Common.Services.UnitTests.Stubs;
 
 namespace CfpExchange.Common.Services.UnitTests
 {
@@ -19,7 +24,8 @@ namespace CfpExchange.Common.Services.UnitTests
 
         #region Fields
 
-        private readonly MailgunEmailService _mailgunEmailService;
+        private static EmailSettings _emailSettings = new EmailSettings { ApiKey = "FakeApiKey", ApiUri = "https://www.example.com/api/", From = "Unit Test <ut@example.com>" };
+        private MailgunEmailService _mailgunEmailService;
 
         #endregion
 
@@ -27,12 +33,10 @@ namespace CfpExchange.Common.Services.UnitTests
 
         public MailgunEmailServiceTests()
         {
-            var emailSettings = new EmailSettings { ApiKey = string.Empty, ApiUri = string.Empty, From = "Unit Test <ut@example.com>" };
-            _mailgunEmailService = new MailgunEmailService(new LoggerFactory(), Options.Create(emailSettings));
+            _mailgunEmailService = new MailgunEmailService(null, new LoggerFactory(), Options.Create(_emailSettings));
         }
 
         #endregion
-
 
         [Theory]
         [InlineData(null, SUBJECT, BODY)]
@@ -63,5 +67,35 @@ namespace CfpExchange.Common.Services.UnitTests
             var exception = await Assert.ThrowsAsync<ArgumentNullException>(() => _mailgunEmailService.SendEmailAsync(EMAIL_ADDRESS, null, SUBJECT, BODY));
             Assert.Equal("from", exception.ParamName);
         }
+
+        [Fact]
+        public async Task SendEmail_WithValidParameters_ReturnsTrue()
+        {
+            SetupWithMockHttpClientFactory();
+            var result = await _mailgunEmailService.SendEmailAsync(EMAIL_ADDRESS, FROM, SUBJECT, BODY);
+            Assert.True(result);
+        }
+
+        [Fact]
+        public async Task SendEmail_WithValidParameters_ReturnsFalse()
+        {
+            SetupWithMockHttpClientFactory(false);
+            var result = await _mailgunEmailService.SendEmailAsync(EMAIL_ADDRESS, FROM, SUBJECT, BODY);
+            Assert.False(result);
+        }
+
+        #region Private methods
+
+        private void SetupWithMockHttpClientFactory(bool success = true)
+        {
+            var mockHttpClientFactory = new Mock<IHttpClientFactory>();
+            var clientHandlerStub = new DelegatingHandlerStub(success);
+            var client = new HttpClient(clientHandlerStub);
+
+            mockHttpClientFactory.Setup(_ => _.CreateClient(It.IsAny<string>())).Returns(client);
+            _mailgunEmailService = new MailgunEmailService(mockHttpClientFactory.Object, new LoggerFactory(), Options.Create(_emailSettings));
+        }
+
+        #endregion
     }
 }
