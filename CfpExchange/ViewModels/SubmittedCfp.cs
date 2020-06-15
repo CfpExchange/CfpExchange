@@ -57,5 +57,7 @@ namespace CfpExchange.ViewModels
 
 	    [DataType(DataType.Date)]
 	    public DateTime? CfpDecisionDate { get; set; } = default(DateTime);
-    }
+
+		public bool IsVirtual { get; set; }
+	}
 }

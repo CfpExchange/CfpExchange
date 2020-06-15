@@ -67,7 +67,11 @@
                         <div class="col-lg-3 col-sm-3">
                             <p><i class="fa fa-map-marker" aria-hidden="true"></i> Event Location:</p>
                             <p>
-                                @if (Model.EventLocationLat != 0 && Model.EventLocationLng != 0)
+                                @if (Model.IsVirtual)
+                                {
+                                    <strong>Online/virtual</strong>
+                                }
+                                else if (Model.EventLocationLat != 0 && Model.EventLocationLng != 0)
                                 {
                                     <strong><a href="http://www.google.com/maps/place/@Model.EventLocationLat,@Model.EventLocationLng" target="_blank">@Model.EventLocationName</a></strong>
                                 }

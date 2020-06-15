@@ -231,7 +231,8 @@ namespace CfpExchange.Controllers
                 EventTimezone = timezone,
                 Slug = cfpToAddSlug,
                 EventTags = submittedCfp.EventTags,
-                CfpDecisionDate = submittedCfp.CfpDecisionDate?.Date ?? default
+                CfpDecisionDate = submittedCfp.CfpDecisionDate?.Date ?? default,
+                IsVirtual = submittedCfp.IsVirtual
             };
 
             return cfpToAdd;

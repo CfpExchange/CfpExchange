@@ -82,7 +82,8 @@ namespace CfpExchange.Data
 					ProvidesAccommodation = Accommodation.Yes,
 					ProvidesTravelAssistance = TravelAssistence.Yes,
 					Slug = "ndc-minnesota",
-					EventTags = ".NET;Awesome;Unicorns;PubConf"
+					EventTags = ".NET;Awesome;Unicorns;PubConf",
+					IsVirtual = true
 				});
 
 				// Give this one a static GUID to be able to access it

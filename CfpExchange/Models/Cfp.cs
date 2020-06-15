@@ -51,6 +51,7 @@ namespace CfpExchange.Models
 		public string EventTwitterHandle { get; set; }
 		public Guid? DuplicateOfId { get; set; }
 		public string Slug { get; set; }
+		public bool IsVirtual { get; set; }
 
 		[NotMapped]
 		public string ShortDescription
