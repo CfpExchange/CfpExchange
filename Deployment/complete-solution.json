@@ -602,7 +602,7 @@
           "properties": {
             "AzureWebJobsStorage": "[concat('DefaultEndpointsProtocol=https;AccountName=',parameters('storageAccountName'),';AccountKey=',listkeys(resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName')), '2015-05-01-preview').key1,';')]",
             "AzureWebJobsDashboard": "[concat('DefaultEndpointsProtocol=https;AccountName=',parameters('storageAccountName'),';AccountKey=',listkeys(resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName')), '2015-05-01-preview').key1,';')]",
-            "FUNCTIONS_EXTENSION_VERSION": "~1",
+            "FUNCTIONS_EXTENSION_VERSION": "~3",
             "ServicebusQueueConnectionString": "[parameters('servicebusManageConnectionString')]",
             "StorageAccountName": "[parameters('storageAccountName')]",
             "StorageAccountConnectionString": "[parameters('storageAccountConnectionString')]",
