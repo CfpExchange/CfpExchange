@@ -15,15 +15,15 @@ namespace CfpExchange.Common.Services
             _logger = loggerFactory.CreateLogger<MockEmailService>();
         }
 
-        public Task SendEmailAsync(string emailAddress, string subject, string body)
+        public Task<bool> SendEmailAsync(string emailAddress, string subject, string body)
         {
             return SendEmailAsync(emailAddress, "Mocky Mockings <mock@example.com>", subject, body);
         }
 
-        public Task SendEmailAsync(string emailAddress, string from, string subject, string body)
+        public Task<bool> SendEmailAsync(string emailAddress, string from, string subject, string body)
         {
             _logger.LogInformation("Sending email to {EmailAddress}, from {From} with subject {Subject}: {Body}", emailAddress, from, subject, body);
-            return Task.CompletedTask;
+            return Task.FromResult(true);
         }
     }
 }

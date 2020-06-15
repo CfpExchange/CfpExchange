@@ -34,12 +34,12 @@ namespace CfpExchange.Common.Services
 
         #endregion
 
-        public async Task SendEmailAsync(string emailAddress, string subject, string body)
+        public async Task<bool> SendEmailAsync(string emailAddress, string subject, string body)
         {
-            await SendEmailAsync(emailAddress, _emailSettings.From, subject, body);
+            return await SendEmailAsync(emailAddress, _emailSettings.From, subject, body);
         }
 
-        public async Task SendEmailAsync(string emailAddress, string from, string subject, string body)
+        public async Task<bool> SendEmailAsync(string emailAddress, string from, string subject, string body)
         {
             Guard.IsNotNull(emailAddress, nameof(emailAddress));
             Guard.IsNotNull(from, nameof(from));
@@ -71,6 +71,8 @@ namespace CfpExchange.Common.Services
             {
                 _logger.LogInformation($"{correlationId}: Sent email to '{emailAddress}' successfully.");
             }
+
+            return result.IsSuccessStatusCode;
         }
     }
 }
