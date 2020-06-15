@@ -44,8 +44,7 @@ namespace CfpExchange
             if (env != null && env.Equals("Development"))
             {
                 services.AddDbContext<CfpContext>(opt => opt.UseInMemoryDatabase("Cfps"));
-                // TODO Fix!!
-                //services.AddTransient<IEmailSender, MockEmailSender>();
+                services.AddTransient<IEmailService, MockEmailService>();
             }
             else
             {
