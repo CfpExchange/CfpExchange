@@ -15,7 +15,6 @@
     <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="3.1.5" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CfpExchange.Common.Models\CfpExchange.Common.Models.csproj" />
     <ProjectReference Include="..\CfpExchange.Common\CfpExchange.Common.csproj" />
   </ItemGroup>
   <ItemGroup>
