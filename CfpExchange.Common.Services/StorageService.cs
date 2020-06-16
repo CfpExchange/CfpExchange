@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 
 using Azure.Storage.Blobs;
 
+using CfpExchange.Common.Helpers;
 using CfpExchange.Common.Services.Interfaces;
 
 namespace CfpExchange.Common.Services
 {
-    public class StorageService : BaseService, IStorageService
+    public class StorageService : IStorageService
     {
         #region Constants
 
@@ -40,7 +41,7 @@ namespace CfpExchange.Common.Services
             var filename = Path.GetFileName(uri.LocalPath);
             var downloadLocationForEventImage = $"{id}/{filename}";
 
-            var connectionString = GetEnvironmentVariable("StorageAccountConnectionString");
+            var connectionString = SettingsHelper.GetEnvironmentVariable("StorageAccountConnectionString");
             var container = await new BlobServiceClient(connectionString).CreateBlobContainerAsync(CONTAINER_NAME);
             var image = await (await _httpClient.GetAsync(url)).Content.ReadAsStreamAsync();
             _ = await container.Value.UploadBlobAsync(downloadLocationForEventImage, image);
@@ -50,9 +51,9 @@ namespace CfpExchange.Common.Services
 
         public void UpdateRecordInTheCfpRepository(Guid id, string relativeLocationOfStoredImage)
         {
-            var storageAccountName = GetEnvironmentVariable("StorageAccountName");
+            var storageAccountName = SettingsHelper.GetEnvironmentVariable("StorageAccountName");
             var absoluteImageLocation = $"https://{storageAccountName}.blob.core.windows.net/{relativeLocationOfStoredImage}";
-            var connectionstring = GetEnvironmentVariable("CfpExchangeDb");
+            var connectionstring = SettingsHelper.GetEnvironmentVariable("CfpExchangeDb");
 
             using var connection = new SqlConnection(connectionstring);
             var command = connection.CreateCommand();
