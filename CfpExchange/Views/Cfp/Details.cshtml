@@ -108,6 +108,8 @@
                                 </strong>
                             </p>
                         </div>
+                        @if (!Model.IsVirtual)
+                        {
                         <div class="col-lg-3 col-sm-3">
                             <p><i class="fa fa-home"></i> Accommodation:</p>
                             <p>
@@ -120,6 +122,7 @@
                                 <strong>@Model.ProvidesTravelAssistance</strong>
                             </p>
                         </div>
+                        }
                     </div>
                 </div>
 
