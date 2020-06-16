@@ -206,20 +206,12 @@
           "FeatureToggle:HostOwnImages": {
             "value": "[parameters('FeatureToggle:HostOwnImages')]"
           },
-          "servicebusEventImagesQueueConnectionString": {
+          "servicebusConnectionString": {
             "reference": {
               "keyVault": {
                 "id": "[resourceId(subscription().subscriptionId,  parameters('resourcegroup'), 'Microsoft.KeyVault/vaults', parameters('vaultName'))]"
               },
-              "secretName": "ServicebusEventImagesQueueConnectionString"
-            }
-          },
-          "servicebusTwitterQueueConnectionString": {
-            "reference": {
-              "keyVault": {
-                "id": "[resourceId(subscription().subscriptionId,  parameters('resourcegroup'), 'Microsoft.KeyVault/vaults', parameters('vaultName'))]"
-              },
-              "secretName": "ServicebusTwitterQueueConnectionString"
+              "secretName": "ServicebusConnectionString"
             }
           },
           "servicebusManageConnectionString": {
