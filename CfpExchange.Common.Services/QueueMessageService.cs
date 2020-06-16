@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 
 using Newtonsoft.Json;
 using Microsoft.Azure.ServiceBus;
-using Microsoft.Extensions.Configuration;
 
 using CfpExchange.Common.Messages;
 using CfpExchange.Common.Models;
@@ -17,17 +16,15 @@ namespace CfpExchange.Common.Services
     {
         #region Fields
 
-        private readonly IConfiguration _configuration;
         private readonly IQueueClient _queueClient;
 
         #endregion
 
         #region Constructors
 
-        public QueueMessageService(IConfiguration configuration, IQueueClient queueClient)
+        public QueueMessageService(IQueueClient queueClient)
         {
             _queueClient = queueClient;
-            _configuration = configuration;
         }
 
         #endregion

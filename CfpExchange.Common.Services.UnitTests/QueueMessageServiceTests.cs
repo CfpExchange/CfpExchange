@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 
 using Microsoft.Azure.ServiceBus;
-using Microsoft.Extensions.Configuration;
 using Moq;
 using Xunit;
 
@@ -31,9 +30,8 @@ namespace CfpExchange.Common.Services.UnitTests
 
         public QueueMessageServiceTests()
         {
-            var builder = new ConfigurationBuilder();
             _mockQueueClient = new Mock<IQueueClient>();
-            _queueMessageService = new QueueMessageService(builder.Build(), _mockQueueClient.Object);
+            _queueMessageService = new QueueMessageService(_mockQueueClient.Object);
         }
 
         #endregion

@@ -3,11 +3,13 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Text.RegularExpressions;
-using CfpExchange.Models;
+
 using HtmlAgilityPack;
 using Newtonsoft.Json;
 
-namespace CfpExchange.Helpers
+using CfpExchange.Common.Models;
+
+namespace CfpExchange.Common.Helpers
 {
 	// Taken from https://codeshare.co.uk/blog/how-to-scrape-meta-data-from-a-url-using-htmlagilitypack-in-c/
 	// And modified

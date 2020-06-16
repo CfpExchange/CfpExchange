@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Linq;
-using CfpExchange.Data;
-using CfpExchange.Models;
+
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using Moq.AutoMock;
+
+using CfpExchange.Data;
+using CfpExchange.Models;
 
 namespace CfpExchange.UnitTests
 {
@@ -27,8 +29,6 @@ namespace CfpExchange.UnitTests
             var mockSet = new Mock<DbSet<Cfp>>();
             mockSet.As<IQueryable<Cfp>>().Setup(m => m.Provider).Returns(cfps.Provider);
             mockSet.As<IQueryable<Cfp>>().Setup(m => m.Expression).Returns(cfps.Expression);
-            mockSet.As<IQueryable<Cfp>>().Setup(m => m.ElementType).Returns(cfps.ElementType);
-            mockSet.As<IQueryable<Cfp>>().Setup(m => m.GetEnumerator()).Returns(cfps.GetEnumerator());
 
             var mockContext = new Mock<CfpContext>();
             mockContext.Setup(c => c.Cfps).Returns(mockSet.Object);

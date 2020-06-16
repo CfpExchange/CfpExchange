@@ -1,9 +1,9 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace CfpExchange.Models
+namespace CfpExchange.ViewModels
 {
-	public class Issue
+	public class IssueViewModel
 	{
 		[Required]
 		public Guid CfpId { get; set; }

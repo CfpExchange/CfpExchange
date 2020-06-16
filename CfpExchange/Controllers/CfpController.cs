@@ -11,12 +11,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
+using CfpExchange.Common;
+using CfpExchange.Common.Helpers;
+using CfpExchange.Common.Models;
 using CfpExchange.Common.Services.Interfaces;
-using CfpExchange.Helpers;
 using CfpExchange.Models;
 using CfpExchange.Services;
 using CfpExchange.ViewModels;
-using CfpExchange.Common.Models;
 
 namespace CfpExchange.Controllers
 {
@@ -320,7 +321,7 @@ namespace CfpExchange.Controllers
             return View(selectedCfp);
         }
 
-        public async Task<IActionResult> SendReportIssue(Issue issue)
+        public async Task<IActionResult> SendReportIssue(IssueViewModel issue)
         {
             if (ModelState.IsValid)
             {
