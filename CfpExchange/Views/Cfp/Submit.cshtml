@@ -1,9 +1,7 @@
 ﻿@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
 
 @model SubmittedCfp
-@{
-    ViewData["Title"] = "Submit new CFP";
-}
+@{ ViewData["Title"] = "Submit new CFP"; }
 
 <!-- Submit CFP-->
 <div class="submit">
@@ -73,9 +71,15 @@
                         <div class="form-group">
                             <label>Event Location</label>
                             <input asp-for="LocationName" class="form-control" id="eventLocation" type="text">
+
+                            <div class="form-group">
+                                <input asp-for="IsVirtual" type="checkbox" class="control-checkbox" id="eventIsVirtual" style="vertical-align: bottom;">
+                                <label class="custom-control-label" for="eventIsVirtual" style="vertical-align: middle;">Virtual event</label>
+                            </div>
+
                             <span asp-validation-for="LocationName" style="display: none;" id="locationErrorMessage" class="text-danger">Please search for a location and select a value from the dropdown</span>
                         </div>
-
+                        
                         <div class="form-group">
                             <label>Tags</label>
                             <input asp-for="EventTags" name="tags" id="tags" class="form-control" type="text">
@@ -159,8 +163,8 @@
         cfpToSubmit.eventImageUrl = null;
         cfpToSubmit.eventTitle = null;
         cfpToSubmit.eventDescription = null;
-        cfpToSubmit.locationLat = null;
-        cfpToSubmit.locationLng = null;
+        cfpToSubmit.locationLat = 0;
+        cfpToSubmit.locationLng = 0;
         cfpToSubmit.cfpEndDate = null;
         cfpToSubmit.eventStartDate = null;
         cfpToSubmit.eventEndDate = null;
@@ -171,6 +175,7 @@
         cfpToSubmit.eventTwitterHandle = null;
         cfpToSubmit.eventTags = null;
         cfpToSubmit.cfpDecisionDate = null;
+        cfpToSubmit.isVirtual = false;
 
         function submitCfp()
         {
@@ -183,9 +188,11 @@
 
             formValid = $('#submitForm').valid();
 
-            if (cfpToSubmit.locationName === undefined || cfpToSubmit.locationName === null || cfpToSubmit.locationName === '') {
-                $('#locationErrorMessage').show();
-                locationValid = false;
+            if (!cfpToSubmit.isVirtual) {
+                if (cfpToSubmit.locationName === undefined || cfpToSubmit.locationName === null || cfpToSubmit.locationName === '') {
+                    $('#locationErrorMessage').show();
+                    locationValid = false;
+                }
             }
 
             if (cfpToSubmit.eventTags === undefined || cfpToSubmit.eventTags === null || cfpToSubmit.eventTags === '') {
@@ -209,6 +216,7 @@
             cfpToSubmit.providesTravelAssistance = $('#travelassistance').val();
             cfpToSubmit.submittedByName = $('#submitterName').val();
             cfpToSubmit.eventTwitterHandle = $('#eventTwitterHandle').val();
+            cfpToSubmit.isVirtual = $('#eventIsVirtual').val() === "true" ? true : false;
 
             $('#submitCfpButton').prop('disabled', true);
             $.ajax({
@@ -393,6 +401,17 @@
                       }).join(";");
 
                     cfpToSubmit.eventTags = tags;
+                }
+            });
+
+            $('#eventIsVirtual').change(function () {
+                if (this.checked) {
+                    $('#eventLocation').hide();
+                    cfpToSubmit.isVirtual = true;
+                }
+                else {
+                    $('#eventLocation').show();
+                    cfpToSubmit.isVirtual = false;
                 }
             });
         });

@@ -33,9 +33,9 @@ namespace CfpExchange.Services
             var allActiveCfps = _cfpContext.Cfps
                 .Where(cfp => cfp.CfpEndDate > DateTime.UtcNow)
                 .Where(cfp => cfp.DuplicateOfId == null)
-                .Where(cfp => cfp.EventName.ToLowerInvariant().Contains(lowercaseSearchTerm)
-                              || cfp.EventLocationName.ToLowerInvariant().Contains(lowercaseSearchTerm)
-                              || cfp.EventTags.ToLowerInvariant().Contains(lowercaseSearchTerm))
+                .Where(cfp => cfp.EventName.ToLower().Contains(lowercaseSearchTerm)
+                              || cfp.EventLocationName.ToLower().Contains(lowercaseSearchTerm)
+                              || cfp.EventTags.ToLower().Contains(lowercaseSearchTerm))
                 .Where(cfp => cfp.EventStartDate == default || cfp.EventEndDate == default ||
                               cfp.EventStartDate >= startDateTime && cfp.EventEndDate <= endDateTime)
                 .OrderBy(cfp => cfp.CfpEndDate)

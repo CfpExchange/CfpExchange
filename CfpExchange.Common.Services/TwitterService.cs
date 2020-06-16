@@ -29,7 +29,10 @@ namespace CfpExchange.Common.Services
             var ctx = new TwitterContext(auth);
             var tweetMessage = BuildTweet(sendTweetMessage);
 
-            await ctx.TweetAsync(tweetMessage, sendTweetMessage.EventLocationLatitude, sendTweetMessage.EventLocationLongitude, true);
+            if (sendTweetMessage.EventLocationLatitude > 0 && sendTweetMessage.EventLocationLongitude > 0)
+                await ctx.TweetAsync(tweetMessage, sendTweetMessage.EventLocationLatitude, sendTweetMessage.EventLocationLongitude, true);
+            else
+                await ctx.TweetAsync(tweetMessage);
         }
 
         #region Private methods
