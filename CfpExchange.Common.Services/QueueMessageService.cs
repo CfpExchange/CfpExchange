@@ -16,15 +16,17 @@ namespace CfpExchange.Common.Services
     {
         #region Fields
 
-        private readonly IQueueClient _queueClient;
+        private readonly ITwitterQueueClient _twitterQueueClient;
+        private readonly IDownloadImageQueueClient _downloadImageQueueClient;
 
         #endregion
 
         #region Constructors
 
-        public QueueMessageService(IQueueClient queueClient)
+        public QueueMessageService(ITwitterQueueClient twitterQueueClient, IDownloadImageQueueClient downloadImageQueueClient)
         {
-            _queueClient = queueClient;
+            _twitterQueueClient = twitterQueueClient;
+            _downloadImageQueueClient = downloadImageQueueClient;
         }
 
         #endregion
@@ -40,7 +42,7 @@ namespace CfpExchange.Common.Services
             };
             var messageBody = JsonConvert.SerializeObject(downloadEventImageModel);
             var message = new Message(Encoding.UTF8.GetBytes(messageBody));
-            await _queueClient.SendAsync(message);
+            await _downloadImageQueueClient.SendAsync(message);
         }
 
         public async Task SendTwitterMessageAsync(CfpInformation cfpInfo, string urlToCfp)
@@ -62,7 +64,7 @@ namespace CfpExchange.Common.Services
             var messageBody = JsonConvert.SerializeObject(sendTweetMessage);
             var message = new Message(Encoding.UTF8.GetBytes(messageBody));
 
-            await _queueClient.SendAsync(message);
+            await _twitterQueueClient.SendAsync(message);
         }
     }
 }

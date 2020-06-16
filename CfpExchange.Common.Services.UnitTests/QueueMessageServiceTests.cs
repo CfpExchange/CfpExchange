@@ -6,6 +6,7 @@ using Moq;
 using Xunit;
 
 using CfpExchange.Common.Models;
+using CfpExchange.Common.Services.Interfaces;
 
 namespace CfpExchange.Common.Services.UnitTests
 {
@@ -19,7 +20,8 @@ namespace CfpExchange.Common.Services.UnitTests
 
         #region Fields
 
-        private Mock<IQueueClient> _mockQueueClient;
+        private Mock<IDownloadImageQueueClient> _mockDownloadImageQueueClient;
+        private Mock<ITwitterQueueClient> _mockTwitterQueueClient;
         private static Guid _cfpPublicId = Guid.NewGuid();
         private static CfpInformation _cfpInformation = new CfpInformation();
         private readonly QueueMessageService _queueMessageService;
@@ -30,8 +32,9 @@ namespace CfpExchange.Common.Services.UnitTests
 
         public QueueMessageServiceTests()
         {
-            _mockQueueClient = new Mock<IQueueClient>();
-            _queueMessageService = new QueueMessageService(_mockQueueClient.Object);
+            _mockDownloadImageQueueClient = new Mock<IDownloadImageQueueClient>();
+            _mockTwitterQueueClient = new Mock<ITwitterQueueClient>();
+            _queueMessageService = new QueueMessageService(_mockTwitterQueueClient.Object, _mockDownloadImageQueueClient.Object);
         }
 
         #endregion
@@ -54,7 +57,7 @@ namespace CfpExchange.Common.Services.UnitTests
         public async Task SendTwitterMessage_WithValidInformation_ShouldSendMessage()
         {
             await _queueMessageService.SendTwitterMessageAsync(_cfpInformation, URL_TO_CFP);
-            _mockQueueClient.Verify(qc => qc.SendAsync(It.IsAny<Message>()), Times.Once);
+            _mockTwitterQueueClient.Verify(qc => qc.SendAsync(It.IsAny<Message>()), Times.Once);
         }
 
         [Fact]
@@ -68,7 +71,7 @@ namespace CfpExchange.Common.Services.UnitTests
         public async Task SendDownloadEventImageMessage_WithValidInformation_ShouldSendMessage()
         {
             await _queueMessageService.SendDownloadEventImageMessageAsync(_cfpPublicId, URL_TO_CFP);
-            _mockQueueClient.Verify(qc => qc.SendAsync(It.IsAny<Message>()), Times.Once);
+            _mockDownloadImageQueueClient.Verify(qc => qc.SendAsync(It.IsAny<Message>()), Times.Once);
         }
     }
 }

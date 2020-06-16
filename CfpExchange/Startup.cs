@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
-using Microsoft.Azure.ServiceBus;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -72,11 +71,15 @@ namespace CfpExchange
 
             services.AddAuthorization();
             services.AddMvc((mvcOptions) => mvcOptions.EnableEndpointRouting = false);
-
-            services.AddTransient<IQueueClient, QueueClient>((cntxt) => 
+            services.AddTransient<ITwitterQueueClient>((cntxt) =>
             {
                 var servicebusConnectionstring = Configuration["ServicebusConnectionString"];
-                return new QueueClient(new ServiceBusConnectionStringBuilder(servicebusConnectionstring)); 
+                return new TwitterQueueClient(servicebusConnectionstring);
+            });
+            services.AddTransient<IDownloadImageQueueClient>((cntxt) =>
+            {
+                var servicebusConnectionstring = Configuration["ServicebusConnectionString"];
+                return new DownloadImageQueueClient(servicebusConnectionstring);
             });
             services.AddTransient<IQueueMessageService, QueueMessageService>();
             services.AddTransient<ICfpService, CfpService>();
