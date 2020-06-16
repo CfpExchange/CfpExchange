@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.Azure.ServiceBus;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,6 +18,8 @@ using CfpExchange.Models;
 using CfpExchange.Services;
 using CfpExchange.Common.Services.Interfaces;
 using CfpExchange.Common.Services;
+using HtmlAgilityPack;
+using System.Collections;
 
 namespace CfpExchange
 {
@@ -52,12 +55,13 @@ namespace CfpExchange
                 services.AddTransient<IEmailService, MailgunEmailService>();
             }
 
-            services.AddIdentity<ApplicationUser, IdentityRole>(options => { options.User.RequireUniqueEmail = true; })
+            services
+                .AddIdentity<ApplicationUser, IdentityRole>(options => { options.User.RequireUniqueEmail = true; })
                 .AddEntityFrameworkStores<CfpContext>()
                 .AddDefaultTokenProviders();
+
             services.AddHttpClient();
             services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
-
             services.ConfigureApplicationCookie(options =>
             {
                 options.Cookie.SameSite = SameSiteMode.Strict;
@@ -71,6 +75,11 @@ namespace CfpExchange
             services.AddAuthorization();
             services.AddMvc((mvcOptions) => mvcOptions.EnableEndpointRouting = false);
 
+            services.AddTransient<IQueueClient, QueueClient>((cntxt) => 
+            {
+                var servicebusConnectionstring = Configuration["ServicebusConnectionString"];
+                return new QueueClient(new ServiceBusConnectionStringBuilder(servicebusConnectionstring)); 
+            });
             services.AddTransient<IQueueMessageService, QueueMessageService>();
             services.AddTransient<ICfpService, CfpService>();
         }

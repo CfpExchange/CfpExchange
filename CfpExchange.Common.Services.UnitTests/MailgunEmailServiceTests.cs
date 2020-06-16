@@ -42,7 +42,7 @@ namespace CfpExchange.Common.Services.UnitTests
         [InlineData(null, SUBJECT, BODY)]
         [InlineData(EMAIL_ADDRESS, null, BODY)]
         [InlineData(EMAIL_ADDRESS, SUBJECT, null)]
-        public async Task SendEmail_WithOneParamNull_ShouldThrowArgumentException(string emailAddress, string subject, string body)
+        public async Task SendEmail_WithOneParamNull_ShouldThrowArgumentNullException(string emailAddress, string subject, string body)
         {
             string nullParam = null;
             if (emailAddress == null)
@@ -62,7 +62,7 @@ namespace CfpExchange.Common.Services.UnitTests
         }
 
         [Fact]
-        public async Task SendEmail_WithFromNull_ShouldThrowArgumentException()
+        public async Task SendEmail_WithFromNull_ShouldThrowArgumentNullException()
         {
             var exception = await Assert.ThrowsAsync<ArgumentNullException>(() => _mailgunEmailService.SendEmailAsync(EMAIL_ADDRESS, null, SUBJECT, BODY));
             Assert.Equal("from", exception.ParamName);

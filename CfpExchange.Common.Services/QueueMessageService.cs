@@ -9,25 +9,33 @@ using Microsoft.Extensions.Configuration;
 using CfpExchange.Common.Messages;
 using CfpExchange.Common.Models;
 using CfpExchange.Common.Services.Interfaces;
+using CfpExchange.Common.Helpers;
 
 namespace CfpExchange.Common.Services
 {
     public class QueueMessageService : IQueueMessageService
     {
+        #region Fields
+
         private readonly IConfiguration _configuration;
-        
-        public QueueMessageService(IConfiguration configuration)
+        private readonly IQueueClient _queueClient;
+
+        #endregion
+
+        #region Constructors
+
+        public QueueMessageService(IConfiguration configuration, IQueueClient queueClient)
         {
+            _queueClient = queueClient;
             _configuration = configuration;
         }
 
+        #endregion
+
         public async Task SendDownloadEventImageMessageAsync(Guid cfpPublicId, string cfpEventImageUrl)
         {
-            var servicebusConnectionstring = _configuration["ServicebusEventImagesQueueConnectionString"];
+            Guard.IsNotNull(cfpEventImageUrl, nameof(cfpEventImageUrl));
 
-            var queueClient = new QueueClient(
-                new ServiceBusConnectionStringBuilder(servicebusConnectionstring),
-                ReceiveMode.ReceiveAndDelete);
             var downloadEventImageModel = new DownloadEventImageMessage
             {
                 Id = cfpPublicId,
@@ -35,14 +43,14 @@ namespace CfpExchange.Common.Services
             };
             var messageBody = JsonConvert.SerializeObject(downloadEventImageModel);
             var message = new Message(Encoding.UTF8.GetBytes(messageBody));
-            await queueClient.SendAsync(message);
+            await _queueClient.SendAsync(message);
         }
 
         public async Task SendTwitterMessageAsync(CfpInformation cfpInfo, string urlToCfp)
         {
-            var servicebusConnectionstring = _configuration["ServicebusTwitterQueueConnectionString"];
+            Guard.IsNotNull(cfpInfo, nameof(cfpInfo));
+            Guard.IsNotNull(urlToCfp, nameof(urlToCfp));
 
-            var queueClient = new QueueClient(new ServiceBusConnectionStringBuilder(servicebusConnectionstring));
             var sendTweetMessage = new SendTweetMessage
             {
                 CfpEndDate = cfpInfo.CfpEndDate,
@@ -57,7 +65,7 @@ namespace CfpExchange.Common.Services
             var messageBody = JsonConvert.SerializeObject(sendTweetMessage);
             var message = new Message(Encoding.UTF8.GetBytes(messageBody));
 
-            await queueClient.SendAsync(message);
+            await _queueClient.SendAsync(message);
         }
     }
 }
