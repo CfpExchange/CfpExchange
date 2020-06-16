@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace CfpExchange.Models
+namespace CfpExchange.Common.Models
 {
 	public partial class UrlPreviewResult
 	{

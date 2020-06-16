@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Linq;
-using CfpExchange.Helpers;
-using CfpExchange.Models;
-using CfpExchange.Common.Enums;
+
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+
+using CfpExchange.Common.Helpers;
+using CfpExchange.Common.Enums;
+using CfpExchange.Models;
 
 namespace CfpExchange.Data
 {

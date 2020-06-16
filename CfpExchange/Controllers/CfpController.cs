@@ -4,15 +4,20 @@ using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using CfpExchange.Helpers;
-using CfpExchange.Models;
-using CfpExchange.Services;
-using CfpExchange.ViewModels;
+
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+
+using CfpExchange.Common;
+using CfpExchange.Common.Helpers;
+using CfpExchange.Common.Models;
+using CfpExchange.Common.Services.Interfaces;
+using CfpExchange.Models;
+using CfpExchange.Services;
+using CfpExchange.ViewModels;
 
 namespace CfpExchange.Controllers
 {
@@ -21,17 +26,17 @@ namespace CfpExchange.Controllers
         private const int MaximumPageToShow = 3000;
 
         private readonly IConfiguration _configuration;
-        private readonly IEmailSender _emailSender;
+        private readonly IEmailService _emailSender;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        private readonly IMessageSender _messageSender;
+        private readonly IQueueMessageService _messageSender;
         private readonly ICfpService _cfpService;
         private readonly ILogger<CfpController> _logger;
 
         public CfpController(
             IConfiguration configuration,
-            IEmailSender emailSender,
+            IEmailService emailSender,
             IWebHostEnvironment env,
-            IMessageSender messageSender,
+            IQueueMessageService messageSender,
             ICfpService cfpService,
             ILogger<CfpController> logger)
         {
@@ -139,7 +144,7 @@ namespace CfpExchange.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Submit([FromForm]SubmittedCfp submittedCfp)
+        public async Task<IActionResult> Submit([FromForm] SubmittedCfp submittedCfp)
         {
             // TODO
             // Check validity
@@ -167,7 +172,17 @@ namespace CfpExchange.Controllers
         {
             try
             {
-                await _messageSender.SendTwitterMessageAsync(cfpToAdd, Url.Action("details", "cfp", new { id = cfpToAdd.Id }, "https", "cfp.exchange"));
+                var cfpInfo = new CfpInformation 
+                {
+                    CfpEndDate = cfpToAdd.CfpEndDate,
+                    EventStartDate = cfpToAdd.EventStartDate,
+                    EventEndDate = cfpToAdd.EventEndDate,
+                    EventLocationLatitude = (decimal)cfpToAdd.EventLocationLat,
+                    EventLocationLongitude = (decimal)cfpToAdd.EventLocationLng,
+                    EventName = cfpToAdd.EventName,
+                    TwitterHandle = cfpToAdd.EventTwitterHandle
+                };
+                await _messageSender.SendTwitterMessageAsync(cfpInfo, Url.Action("details", "cfp", new { id = cfpToAdd.Id }, "https", "cfp.exchange"));
             }
             catch (Exception ex)
             {
@@ -188,7 +203,7 @@ namespace CfpExchange.Controllers
                     _logger.LogInformation("Not downloading event image locally.");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
             }
@@ -295,7 +310,7 @@ namespace CfpExchange.Controllers
 
             if (selectedCfp.DuplicateOfId != null && selectedCfp.DuplicateOfId != Guid.Empty)
             {
-                var originalCfp = _cfpService.GetCfpById((Guid) selectedCfp.DuplicateOfId);
+                var originalCfp = _cfpService.GetCfpById((Guid)selectedCfp.DuplicateOfId);
                 return RedirectToAction("details", "cfp", new { id = originalCfp.Slug });
             }
 
@@ -306,7 +321,7 @@ namespace CfpExchange.Controllers
             return View(selectedCfp);
         }
 
-        public async Task<IActionResult> SendReportIssue(Issue issue)
+        public async Task<IActionResult> SendReportIssue(IssueViewModel issue)
         {
             if (ModelState.IsValid)
             {

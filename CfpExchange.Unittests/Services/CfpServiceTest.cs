@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using CfpExchange.Models;
-using CfpExchange.Services;
+
 using Moq.AutoMock;
 using Xunit;
+
+using CfpExchange.Models;
+using CfpExchange.Services;
 
 namespace CfpExchange.UnitTests.Services
 {
@@ -24,7 +26,7 @@ namespace CfpExchange.UnitTests.Services
             }.AsQueryable();
 
             var mockContext = SetupMockedCfpContext(cfps);
-            
+
             AutoMocker.Use(mockContext);
             var service = AutoMocker.CreateInstance<CfpService>();
 

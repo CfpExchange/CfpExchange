@@ -5,7 +5,7 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
 
 using CfpExchange.Common;
-using CfpExchange.Common.Models;
+using CfpExchange.Common.Messages;
 using CfpExchange.Common.Services.Interfaces;
 
 namespace CfpExchange.Functions

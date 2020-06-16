@@ -1,11 +1,13 @@
 ﻿using System.Threading.Tasks;
-using CfpExchange.Models;
-using CfpExchange.Services;
-using CfpExchange.ViewModels;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+
+using CfpExchange.Common.Services.Interfaces;
+using CfpExchange.Models;
+using CfpExchange.ViewModels;
 
 namespace CfpExchange.Controllers
 {
@@ -13,13 +15,13 @@ namespace CfpExchange.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly IEmailSender _emailSender;
+        private readonly IEmailService _emailSender;
         private readonly ILogger<AccountController> _logger;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            IEmailSender emailSender,
+            IEmailService emailSender,
             ILogger<AccountController> logger)
         {
             _userManager = userManager;

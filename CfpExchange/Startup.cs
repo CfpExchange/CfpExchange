@@ -10,11 +10,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
+using CfpExchange.Common;
 using CfpExchange.Data;
-using CfpExchange.Helpers;
 using CfpExchange.Middleware;
 using CfpExchange.Models;
 using CfpExchange.Services;
+using CfpExchange.Common.Services.Interfaces;
+using CfpExchange.Common.Services;
 
 namespace CfpExchange
 {
@@ -42,20 +44,21 @@ namespace CfpExchange
             if (env != null && env.Equals("Development"))
             {
                 services.AddDbContext<CfpContext>(opt => opt.UseInMemoryDatabase("Cfps"));
-                services.AddTransient<IEmailSender, MockEmailSender>();
+                services.AddTransient<IEmailService, MockEmailService>();
             }
             else
             {
                 services.AddDbContext<CfpContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("CfpExchangeDb")));
-                services.AddTransient<IEmailSender, MailGunEmailSender>();
+                services.AddTransient<IEmailService, MailgunEmailService>();
             }
 
-            services.AddIdentity<ApplicationUser, IdentityRole>(options => { options.User.RequireUniqueEmail = true; })
+            services
+                .AddIdentity<ApplicationUser, IdentityRole>(options => { options.User.RequireUniqueEmail = true; })
                 .AddEntityFrameworkStores<CfpContext>()
                 .AddDefaultTokenProviders();
 
+            services.AddHttpClient();
             services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
-
             services.ConfigureApplicationCookie(options =>
             {
                 options.Cookie.SameSite = SameSiteMode.Strict;
@@ -68,8 +71,17 @@ namespace CfpExchange
 
             services.AddAuthorization();
             services.AddMvc((mvcOptions) => mvcOptions.EnableEndpointRouting = false);
-
-            services.AddTransient<IMessageSender, MessageSender>();
+            services.AddTransient<ITwitterQueueClient>((cntxt) =>
+            {
+                var servicebusConnectionstring = Configuration["ServicebusConnectionString"];
+                return new TwitterQueueClient(servicebusConnectionstring);
+            });
+            services.AddTransient<IDownloadImageQueueClient>((cntxt) =>
+            {
+                var servicebusConnectionstring = Configuration["ServicebusConnectionString"];
+                return new DownloadImageQueueClient(servicebusConnectionstring);
+            });
+            services.AddTransient<IQueueMessageService, QueueMessageService>();
             services.AddTransient<ICfpService, CfpService>();
         }
 
