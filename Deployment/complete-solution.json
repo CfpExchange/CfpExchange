@@ -95,10 +95,7 @@
     "FeatureToggle:HostOwnImages": {
       "type": "bool"
     },
-    "servicebusEventImagesQueueConnectionString": {
-      "type": "securestring"
-    },
-    "servicebusTwitterQueueConnectionString": {
+    "servicebusConnectionString": {
       "type": "securestring"
     },
     "servicebusManageConnectionString": {
@@ -208,8 +205,7 @@
             "displayName": "appSettings"
           },
           "properties": {
-            "ServicebusEventImagesQueueConnectionString": "[parameters('servicebusEventImagesQueueConnectionString')]",
-            "ServicebusTwitterQueueConnectionString": "[parameters('servicebusTwitterQueueConnectionString')]",
+            "ServicebusConnectionString": "[parameters('servicebusConnectionString')]",
             "FeatureToggle:HostOwnImages": "[parameters('FeatureToggle:HostOwnImages')]",
             "AdminEmailaddress": "[parameters('AdminEmailaddress')]",
             "EmailSettings:ApiKey": "[parameters('EmailSettings:ApiKey')]",

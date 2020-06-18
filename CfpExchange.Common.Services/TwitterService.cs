@@ -4,12 +4,13 @@ using System.Threading.Tasks;
 
 using LinqToTwitter;
 
-using CfpExchange.Common.Models;
+using CfpExchange.Common.Helpers;
+using CfpExchange.Common.Messages;
 using CfpExchange.Common.Services.Interfaces;
 
 namespace CfpExchange.Common.Services
 {
-    public class TwitterService : BaseService, ITwitterService
+    public class TwitterService :  ITwitterService
     {
         public async Task SendTweetAsync(SendTweetMessage sendTweetMessage)
         {
@@ -17,10 +18,10 @@ namespace CfpExchange.Common.Services
             {
                 CredentialStore = new SingleUserInMemoryCredentialStore
                 {
-                    ConsumerKey = GetEnvironmentVariable("TwitterConsumerKey"),
-                    ConsumerSecret = GetEnvironmentVariable("TwitterConsumerSecret"),
-                    OAuthToken = GetEnvironmentVariable("TwitterOAuthToken"),
-                    OAuthTokenSecret = GetEnvironmentVariable("TwitterOAuthTokenSecret")
+                    ConsumerKey = SettingsHelper.GetEnvironmentVariable("TwitterConsumerKey"),
+                    ConsumerSecret = SettingsHelper.GetEnvironmentVariable("TwitterConsumerSecret"),
+                    OAuthToken = SettingsHelper.GetEnvironmentVariable("TwitterOAuthToken"),
+                    OAuthTokenSecret = SettingsHelper.GetEnvironmentVariable("TwitterOAuthTokenSecret")
                 }
             };
 

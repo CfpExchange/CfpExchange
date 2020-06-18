@@ -3,11 +3,13 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CfpExchange.Data;
-using CfpExchange.Helpers;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+
+using CfpExchange.Common;
+using CfpExchange.Data;
 
 namespace CfpExchange.Middleware
 {

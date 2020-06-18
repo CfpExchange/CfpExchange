@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace CfpExchange.Models
+namespace CfpExchange.Common.Models
 {
 	public class MetaInformation
 	{

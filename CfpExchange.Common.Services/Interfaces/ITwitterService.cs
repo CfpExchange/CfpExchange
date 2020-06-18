@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-using CfpExchange.Common.Models;
+using CfpExchange.Common.Messages;
 
 namespace CfpExchange.Common.Services.Interfaces
 {

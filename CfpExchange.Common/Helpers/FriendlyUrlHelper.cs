@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace CfpExchange.Helpers
+namespace CfpExchange.Common.Helpers
 {
 	// Totally ripped from how Stackoverflow does it: https://stackoverflow.com/questions/25259/how-does-stack-overflow-generate-its-seo-friendly-urls/25486
 	public static class FriendlyUrlHelper

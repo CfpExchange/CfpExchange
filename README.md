@@ -44,7 +44,7 @@ The file should have the following layout:
     "FeatureToggle": {
         "HostOwnImages": true
     },
-    "ServicebusEventImagesQueueConnectionString": "ConnectionStringToTheServiceBusQueue"
+    "ServicebusConnectionString": "ConnectionStringToSendToTheServiceBusQueues"
 }
 ```
 

@@ -2,7 +2,7 @@
 
 using CfpExchange.Common;
 using CfpExchange.Common.Helpers;
-using CfpExchange.Common.Models;
+using CfpExchange.Common.Messages;
 using CfpExchange.Common.Services.Interfaces;
 
 using Microsoft.Azure.WebJobs;
