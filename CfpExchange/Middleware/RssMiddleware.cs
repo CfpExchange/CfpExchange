@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
 using CfpExchange.Common;
-using CfpExchange.Data;
+using CfpExchange.Common.Data;
 
 namespace CfpExchange.Middleware
 {

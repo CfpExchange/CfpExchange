@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CfpExchange.Data;
-using CfpExchange.Models;
+using CfpExchange.Common.Data;
+using CfpExchange.Common.Models;
 
 namespace CfpExchange.Services
 {

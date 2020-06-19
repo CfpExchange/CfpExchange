@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using CfpExchange.Models;
+using CfpExchange.Common.Models;
 
 namespace CfpExchange.Services
 {

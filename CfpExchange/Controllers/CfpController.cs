@@ -15,7 +15,6 @@ using CfpExchange.Common;
 using CfpExchange.Common.Helpers;
 using CfpExchange.Common.Models;
 using CfpExchange.Common.Services.Interfaces;
-using CfpExchange.Models;
 using CfpExchange.Services;
 using CfpExchange.ViewModels;
 

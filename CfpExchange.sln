@@ -31,6 +31,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CfpExchange.Common.Services
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CfpExchange.Common.UnitTests", "CfpExchange.Common.UnitTests\CfpExchange.Common.UnitTests.csproj", "{FB1D5A8A-D116-4305-912D-C03C99482B2E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CfpExchange.Common.Data", "CfpExchange.Common.Data\CfpExchange.Common.Data.csproj", "{EDF93BE5-1D59-4FB5-9B6F-131D7E6A2AEB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +75,10 @@ Global
 		{FB1D5A8A-D116-4305-912D-C03C99482B2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB1D5A8A-D116-4305-912D-C03C99482B2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB1D5A8A-D116-4305-912D-C03C99482B2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDF93BE5-1D59-4FB5-9B6F-131D7E6A2AEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDF93BE5-1D59-4FB5-9B6F-131D7E6A2AEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDF93BE5-1D59-4FB5-9B6F-131D7E6A2AEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDF93BE5-1D59-4FB5-9B6F-131D7E6A2AEB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -84,6 +90,7 @@ Global
 		{EE94E5BC-852E-4A34-9CA8-B6855F4C7AC1} = {7EAC52BB-156D-43FF-8D29-117E6DD11FEA}
 		{E15F564F-2CCC-4FA2-95C2-DEE6BEAD87FD} = {03358E35-CFE0-4912-9CB8-A39700179E3A}
 		{FB1D5A8A-D116-4305-912D-C03C99482B2E} = {03358E35-CFE0-4912-9CB8-A39700179E3A}
+		{EDF93BE5-1D59-4FB5-9B6F-131D7E6A2AEB} = {7EAC52BB-156D-43FF-8D29-117E6DD11FEA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {455D1C0B-EC50-4391-8AF4-88F725609D48}

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 using CfpExchange.Common.Services.Interfaces;
-using CfpExchange.Models;
+using CfpExchange.Common.Models;
 using CfpExchange.ViewModels;
 
 namespace CfpExchange.Controllers
