@@ -5,26 +5,16 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Humanizer.Core" Version="2.8.26" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.5" />
     <PackageReference Include="Microsoft.Azure.ServiceBus" Version="4.1.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.5" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.5" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.1.5" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.5" />
-    <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="3.1.5" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.5">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CfpExchange.Common.Data\CfpExchange.Common.Data.csproj" />
     <ProjectReference Include="..\CfpExchange.Common.Services\CfpExchange.Common.Services.csproj" />
     <ProjectReference Include="..\CfpExchange.Common\CfpExchange.Common.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="wwwroot\js\" />
     <Folder Include="wwwroot\images\" />
-    <Folder Include="Data\" />
     <Folder Include="wwwroot\js\plugins\bootstrap-datepicker\" />
     <Folder Include="wwwroot\css\plugins\" />
     <Folder Include="wwwroot\css\plugins\bootstrap-datepicker\" />

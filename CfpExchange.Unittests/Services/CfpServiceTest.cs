@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
 using Moq.AutoMock;
 using Xunit;
-
-using CfpExchange.Models;
+using CfpExchange.Common.Models;
 using CfpExchange.Services;
 
 namespace CfpExchange.UnitTests.Services

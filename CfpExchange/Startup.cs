@@ -11,9 +11,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 using CfpExchange.Common;
-using CfpExchange.Data;
+using CfpExchange.Common.Data;
 using CfpExchange.Middleware;
-using CfpExchange.Models;
+using CfpExchange.Common.Models;
 using CfpExchange.Services;
 using CfpExchange.Common.Services.Interfaces;
 using CfpExchange.Common.Services;

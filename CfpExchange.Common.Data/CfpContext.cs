@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Linq;
-
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-
 using CfpExchange.Common.Helpers;
 using CfpExchange.Common.Enums;
-using CfpExchange.Models;
+using CfpExchange.Common.Models;
 
-namespace CfpExchange.Data
+namespace CfpExchange.Common.Data
 {
 	public class CfpContext : IdentityDbContext<ApplicationUser>
 	{

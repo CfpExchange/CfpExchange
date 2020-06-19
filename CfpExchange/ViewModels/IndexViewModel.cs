@@ -1,4 +1,4 @@
-﻿using CfpExchange.Models;
+﻿using CfpExchange.Common.Models;
 
 namespace CfpExchange.ViewModels
 {

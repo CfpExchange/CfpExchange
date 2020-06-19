@@ -2,9 +2,8 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using CfpExchange.Common.Enums;
-using CfpExchange.Common;
 
-namespace CfpExchange.Models
+namespace CfpExchange.Common.Models
 {
     public class Cfp
 	{
