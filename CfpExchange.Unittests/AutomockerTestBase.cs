@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Linq;
-
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using Moq.AutoMock;
-
-using CfpExchange.Data;
-using CfpExchange.Models;
+using CfpExchange.Common.Data;
+using CfpExchange.Common.Models;
 
 namespace CfpExchange.UnitTests
 {
