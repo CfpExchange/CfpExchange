@@ -2,14 +2,14 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using CfpExchange.Common.Services.Interfaces;
-using CfpExchange.Common.Data;
-using CfpExchange.Common.Models;
-using CfpExchange.Services;
-using CfpExchange.ViewModels;
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+
+using CfpExchange.Common.Data;
+using CfpExchange.Common.Services.Interfaces;
+using CfpExchange.ViewModels;
 
 namespace CfpExchange.Controllers
 {
