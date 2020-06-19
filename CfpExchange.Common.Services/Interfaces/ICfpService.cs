@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+
 using CfpExchange.Common.Models;
 
-namespace CfpExchange.Services
+namespace CfpExchange.Common.Services.Interfaces
 {
     public interface ICfpService
     {

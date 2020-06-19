@@ -2,15 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 using CfpExchange.Common.Data;
 using CfpExchange.Common.Models;
+using CfpExchange.Common.Services.Interfaces;
 
-namespace CfpExchange.Services
+namespace CfpExchange.Common.Services
 {
     public class CfpService : ICfpService
     {
         private const int MaximumNumberOfItemsPerPage = 10;
-        
+
         private readonly CfpContext _cfpContext;
 
         public CfpService(CfpContext cfpContext)

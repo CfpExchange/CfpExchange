@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CfpExchange.Common.Data\CfpExchange.Common.Data.csproj" />
     <ProjectReference Include="..\CfpExchange.Common\CfpExchange.Common.csproj" />
   </ItemGroup>
 
