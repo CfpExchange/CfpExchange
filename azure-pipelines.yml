@@ -16,6 +16,10 @@ stages:
       vmImage: 'windows-latest'
 
     steps:
+    - task: UseDotNet@2
+      inputs:
+        version: 3.1.400
+
     - task: DotNetCoreCLI@2
       displayName: 'Build CfpExchange'
       inputs:
