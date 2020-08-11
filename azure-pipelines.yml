@@ -11,7 +11,7 @@ stages:
   jobs:
 
   - job: Build_Solution
-    displayName: 'Build & Test'
+    displayName: 'Build, Test and Publish'
     pool:
       vmImage: 'windows-latest'
 
