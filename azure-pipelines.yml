@@ -27,7 +27,7 @@ stages:
       inputs:
         command: test
         projects: '**/CfpExchange.Unittests/*.csproj'
-        arguments: '--configuration $(BuildConfiguration) /p:CollectCoverage=true /p:CoverletOputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)\TestResults\Coverage\ --collect "Code coverage"'
+        arguments: '--configuration $(BuildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)\TestResults\Coverage\ --collect "Code coverage"'
 
     - task: CopyFiles@2
       displayName: 'Copy Infrastructure Code'
