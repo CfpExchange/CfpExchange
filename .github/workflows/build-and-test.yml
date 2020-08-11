@@ -20,4 +20,4 @@ jobs:
     - name: Build
       run: dotnet build --configuration Release /p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true
     - name: Test
-      run: dotnet test --no-restore --verbosity normal
+      run: dotnet test
