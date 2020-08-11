@@ -11,9 +11,9 @@ stages:
   jobs:
 
   - job: Build_Solution
-    displayName: 'Build Solution'
+    displayName: 'Build & Test'
     pool:
-      vmImage: 'windows-2019'
+      vmImage: 'windows-latest'
 
     steps:
     - task: DotNetCoreCLI@2
@@ -26,7 +26,7 @@ stages:
       displayName: 'Run CfpExchange unit tests'
       inputs:
         command: test
-        projects: '**/CfpExchange.Unittests/*.csproj'
+        projects: '**/*.UnitTests.csproj'
         arguments: '--configuration $(BuildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)\TestResults\Coverage\ --collect "Code coverage"'
 
     - task: CopyFiles@2
