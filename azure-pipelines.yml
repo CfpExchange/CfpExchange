@@ -16,32 +16,6 @@ stages:
       vmImage: 'windows-2019'
 
     steps:
-    - task: UseNode@1
-    
-      displayName: 'Use Node 12.x'
-      inputs:
-        version: 12.x
-
-    - task: DotNetCoreCLI@2
-      displayName: 'Restore nuget packages'
-      inputs:
-        command: restore
-        projects: '**/*.csproj'
-
-    - task: Npm@1
-      displayName: 'Restore npm packages'
-      inputs:
-        workingDir: Themes
-        verbose: false
-
-    - task: Gulp@1
-      displayName: 'Run gulp tasks'
-      inputs:
-        gulpFile: Themes/gulpfile.js
-        targets: runAll
-        workingDirectory: Themes
-        gulpjs: 'node_modules/gulp/bin/gulp.js'
-
     - task: DotNetCoreCLI@2
       displayName: 'Build CfpExchange'
       inputs:
