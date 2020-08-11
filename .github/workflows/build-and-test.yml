@@ -19,5 +19,9 @@ jobs:
         dotnet-version: 3.1.301
     - name: Build
       run: dotnet build --configuration Release
-    - name: Test
-      run: dotnet test
+    - name: Run Common tests
+      run: dotnet test CfpExchange.Common.UnitTests
+    - name: Run Services tests
+      run: dotnet test CfpExchange.Common.Services.UnitTests    
+    - name: Run CfpExchange tests
+      run: dotnet test CfpExchange.UnitTests
