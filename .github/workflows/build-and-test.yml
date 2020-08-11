@@ -24,4 +24,4 @@ jobs:
     - name: Run Services tests
       run: dotnet test CfpExchange.Common.Services.UnitTests    
     - name: Run CfpExchange tests
-      run: dotnet test CfpExchange.UnitTests
+      run: dotnet test CfpExchange.Unittests
