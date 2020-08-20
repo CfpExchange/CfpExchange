@@ -28,12 +28,12 @@ jobs:
     - name: ReportGenerator
       uses: danielpalme/ReportGenerator-GitHub-Action@4.6.4
       with:
-        reports: '${{HOME}}/TEST_RESULTS/*'
-        targetdir: '${{HOME}}/TEST_RESULTS/'
+        reports: '$HOME/TEST_RESULTS/*'
+        targetdir: '$HOME/TEST_RESULTS/'
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2.1.4
       with:
         # Artifact name
         name: Testreport
         # A file, directory or wildcard pattern that describes what to upload
-        path: '${{HOME}}/TEST_RESULTS/*.html'
+        path: '$HOME/TEST_RESULTS/*.html'
