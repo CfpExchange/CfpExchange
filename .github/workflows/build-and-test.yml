@@ -20,8 +20,8 @@ jobs:
     - name: Build
       run: dotnet build --configuration Release
     - name: Run Common tests
-      run: dotnet test CfpExchange.Common.UnitTests
+      run: dotnet test CfpExchange.Common.UnitTests --collect:"XPlat Code Coverage" --results-directory $HOME/TEST_RESULTS/
     - name: Run Services tests
-      run: dotnet test CfpExchange.Common.Services.UnitTests    
+      run: dotnet test CfpExchange.Common.Services.UnitTests --collect:"XPlat Code Coverage" --results-directory $HOME/TEST_RESULTS/
     - name: Run CfpExchange tests
-      run: dotnet test CfpExchange.Unittests
+      run: dotnet test CfpExchange.Unittests --collect:"XPlat Code Coverage" --results-directory $HOME/TEST_RESULTS/
