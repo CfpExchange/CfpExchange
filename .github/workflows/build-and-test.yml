@@ -36,4 +36,4 @@ jobs:
         # Artifact name
         name: Testreport
         # A file, directory or wildcard pattern that describes what to upload
-        path: '/home/runner/TEST_RESULTS/REPORTS/'
+        path: '/home/runner/TEST_RESULTS/REPORTS/*.html'
