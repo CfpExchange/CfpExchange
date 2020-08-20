@@ -1,6 +1,6 @@
 name: Build CfpExchange
 env:
-  TEST_RESULTS_FOLDER: $HOME & '/TEST_RESULTS/'
+  TEST_RESULTS_FOLDER: '$HOME/TEST_RESULTS/'
 
 on:
   push:
