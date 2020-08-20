@@ -36,4 +36,4 @@ jobs:
         # Artifact name
         name: Testreport
         # A file, directory or wildcard pattern that describes what to upload
-        path: '${{ end.HOME }}/TEST_RESULTS/*.html'
+        path: '${{ env.HOME }}/TEST_RESULTS/*.html'
