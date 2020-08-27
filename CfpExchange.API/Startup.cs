@@ -46,10 +46,17 @@ namespace CfpExchange.API
                 services.AddTransient<IEmailService, MailgunEmailService>();
 #endif
             services.AddTransient<ICfpService, CfpService>();
+            services.AddSwaggerGen();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "CFP.Exchange API");
+                c.RoutePrefix = string.Empty;
+            });
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
