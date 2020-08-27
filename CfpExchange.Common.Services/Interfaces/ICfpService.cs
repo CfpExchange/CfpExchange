@@ -12,6 +12,8 @@ namespace CfpExchange.Common.Services.Interfaces
 
         Cfp GetCfpBySlug(string slug);
 
+        List<Cfp> GetAllActiveCfps();
+
         List<Cfp> GetAllActiveCfps(string lowercaseSearchTerm, DateTime startDateTime, DateTime endDateTime, int pageToShow);
 
         List<Cfp> GetNewestActiveCfps(int pageToShow);
