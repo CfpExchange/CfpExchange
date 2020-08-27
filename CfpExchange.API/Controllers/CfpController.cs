@@ -2,33 +2,46 @@
 using System.Collections.Generic;
 
 using Microsoft.AspNetCore.Mvc;
+using Nelibur.ObjectMapper;
 
 using CfpExchange.API.Models;
 using CfpExchange.Common.Services.Interfaces;
 
 namespace CfpExchange.API.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class CfpController : ControllerBase
     {
-        private ICfpService _cfpService;
+        #region Fields
+
+        private readonly ICfpService _cfpService;
+
+        #endregion
+
+        #region Constructors
 
         public CfpController(ICfpService cfpService)
         {
             _cfpService = cfpService;
         }
 
+        #endregion
+
         [HttpGet]
         public IEnumerable<CfpData> Get()
         {
-            // TODO implement
-            return null;
+            var cfps = _cfpService.GetAllActiveCfps();
+            
+            return TinyMapper.Map<List<CfpData>>(cfps);
         }
 
-        [HttpGet]
-        public CfpData GetById(Guid id)
+        [HttpGet("{id}")]
+        public CfpData Get(Guid id)
         {
-            // TODO implement
-            return null;
+            var cfp = _cfpService.GetCfpById(id);
+
+            return TinyMapper.Map<CfpData>(cfp);
         }
     }
 }
