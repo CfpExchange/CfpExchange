@@ -43,5 +43,12 @@ namespace CfpExchange.API.Controllers
 
             return TinyMapper.Map<CfpData>(cfp);
         }
+
+        [HttpPost]
+        public CfpData Post(CfpData cfpData)
+        {
+            // TODO: implement
+            return cfpData;
+        }
     }
 }
