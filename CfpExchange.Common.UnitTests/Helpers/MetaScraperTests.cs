@@ -12,7 +12,7 @@ namespace CfpExchange.Common.UnitTests.Helpers
 
         private const string INVALID_URL = "no-valid";
         private const string VALID_URL = "https://github.com";
-        private const string VALID_URL_TITLE = "Build software better, together";
+        private const string VALID_URL_TITLE = "GitHub: Where the world builds software";
 
         #endregion
 
