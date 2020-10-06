@@ -22,9 +22,9 @@ jobs:
     - name: Run Common tests
       run: dotnet test CfpExchange.Common.UnitTests --test-adapter-path:. --logger:junit
     - name: Run Services tests
-      run: dotnet test CfpExchange.Common.Services.UnitTests
+      run: dotnet test CfpExchange.Common.Services.UnitTests --test-adapter-path:. --logger:junit
     - name: Run CfpExchange tests
-      run: dotnet test CfpExchange.Unittests
+      run: dotnet test CfpExchange.Unittests --test-adapter-path:. --logger:junit
     - name: Publish Unit Test Results
       uses: EnricoMi/publish-unit-test-result-action@v1.3
       if: always()
