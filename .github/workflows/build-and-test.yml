@@ -39,8 +39,8 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: CfpExchange.Web
-        path: $HOME/output/web/
+        path: /home/runner/output/web/
     - uses: actions/upload-artifact@v2
       with:
         name: CfpExchange.Functions
-        path: $HOME/output/functions/
+        path: /home/runner/output/functions/
