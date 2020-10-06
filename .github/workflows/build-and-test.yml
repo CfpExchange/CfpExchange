@@ -1,0 +1,46 @@
+name: Build CfpExchange
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.301
+    - name: Build
+      run: dotnet build -c Release
+    - name: Publish Web
+      run: dotnet publish CfpExchange -c Release -o $HOME/output/web/
+    - name: Publish Functions
+      run: dotnet publish CfpExchange.Functions -c Release -o $HOME/output/functions/
+    - name: Run Common tests
+      run: dotnet test CfpExchange.Common.UnitTests --test-adapter-path:. --logger:junit
+    - name: Run Services tests
+      run: dotnet test CfpExchange.Common.Services.UnitTests --test-adapter-path:. --logger:junit
+    - name: Run CfpExchange tests
+      run: dotnet test CfpExchange.Unittests --test-adapter-path:. --logger:junit
+    - name: Publish Unit Test Results
+      uses: EnricoMi/publish-unit-test-result-action@v1.3
+      if: always()
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        check_name: Unit Test Results
+        files: '**/TestResults.xml'
+    - uses: actions/upload-artifact@v2
+      with:
+        name: CfpExchange.Web
+        path: /home/runner/output/web/
+    - uses: actions/upload-artifact@v2
+      with:
+        name: CfpExchange.Functions
+        path: /home/runner/output/functions/
