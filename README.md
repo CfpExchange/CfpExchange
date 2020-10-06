@@ -1,4 +1,4 @@
-# ![CFP Exchange logo](https://cfp.exchange/images/exchange50x50.png) CFP.Exchange [![Build status](https://jfversluis.visualstudio.com/CfpExchange/_apis/build/status/CfpExchange%20CI)](https://jfversluis.visualstudio.com/CfpExchange/_build/latest?definitionId=30)
+# ![CFP Exchange logo](https://cfp.exchange/images/exchange50x50.png) CFP.Exchange
 
 An online community website used to share interesting call for papers with speakers. 
 
