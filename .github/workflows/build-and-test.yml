@@ -30,10 +30,10 @@ jobs:
       with:
         reports: '/home/runner/TEST_RESULTS/**/coverage.cobertura.xml'
         targetdir: '/home/runner/TEST_RESULTS/REPORTS/'
-    - name: Upload a Build Artifact
-      uses: actions/upload-artifact@v2.1.4
+    - name: Publish Unit Test Results
+      uses: EnricoMi/publish-unit-test-result-action@v1.3
+      if: always()
       with:
-        # Artifact name
-        name: Testreport
-        # A file, directory or wildcard pattern that describes what to upload
-        path: '/home/runner/TEST_RESULTS/REPORTS/*.html'
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        check_name: Unit Test Results
+        files: /home/runner/TEST_RESULTS/**/*.xml
