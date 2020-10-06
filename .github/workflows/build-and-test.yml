@@ -18,7 +18,11 @@ jobs:
       with:
         dotnet-version: 3.1.301
     - name: Build
-      run: dotnet build --configuration Release
+      run: dotnet build -c Release
+    - name: Publish Web
+      run: dotnet publish CfpExchange -c Release -o $HOME/output/web/
+    - name: Publish Functions
+      run: dotnet publish CfpExchange.Functions -c Release -o $HOME/output/functions/
     - name: Run Common tests
       run: dotnet test CfpExchange.Common.UnitTests --test-adapter-path:. --logger:junit
     - name: Run Services tests
@@ -32,3 +36,11 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         check_name: Unit Test Results
         files: '**/TestResults.xml'
+    - uses: actions/upload-artifact@v2
+      with:
+        name: CfpExchange.Web
+        path: $HOME/output/web/
+    - uses: actions/upload-artifact@v2
+      with:
+        name: CfpExchange.Functions
+        path: $HOME/output/functions/
