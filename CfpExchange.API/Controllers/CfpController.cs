@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Mvc;
 using Nelibur.ObjectMapper;
 
 using CfpExchange.API.Models;
 using CfpExchange.Common.Services.Interfaces;
+using CfpExchange.Common.Models;
 
 namespace CfpExchange.API.Controllers
 {
@@ -29,26 +31,28 @@ namespace CfpExchange.API.Controllers
         #endregion
 
         [HttpGet]
-        public IEnumerable<CfpData> Get()
+        public IActionResult Get()
         {
             var cfps = _cfpService.GetAllActiveCfps();
             
-            return TinyMapper.Map<List<CfpData>>(cfps);
+            return new OkObjectResult(TinyMapper.Map<List<CfpData>>(cfps));
         }
 
         [HttpGet("{id}")]
-        public CfpData Get(Guid id)
+        public IActionResult Get(Guid id)
         {
             var cfp = _cfpService.GetCfpById(id);
 
-            return TinyMapper.Map<CfpData>(cfp);
+            return new OkObjectResult(TinyMapper.Map<CfpData>(cfp));
         }
 
         [HttpPost]
-        public CfpData Post(CfpData cfpData)
+        public async Task<IActionResult> Post(CfpData cfpData)
         {
-            // TODO: implement
-            return cfpData;
+            var cfp = TinyMapper.Map<Cfp>(cfpData);
+            await _cfpService.AddCfpAsync(cfp);
+
+            return new OkObjectResult(TinyMapper.Map<CfpData>(cfp));
         }
     }
 }
