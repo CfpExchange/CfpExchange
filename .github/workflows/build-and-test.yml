@@ -20,20 +20,15 @@ jobs:
     - name: Build
       run: dotnet build --configuration Release
     - name: Run Common tests
-      run: dotnet test CfpExchange.Common.UnitTests --collect:"XPlat Code Coverage" --results-directory $HOME/TEST_RESULTS/
+      run: dotnet test CfpExchange.Common.UnitTests --test-adapter-path:. --logger:junit
     - name: Run Services tests
-      run: dotnet test CfpExchange.Common.Services.UnitTests --collect:"XPlat Code Coverage" --results-directory $HOME/TEST_RESULTS/
+      run: dotnet test CfpExchange.Common.Services.UnitTests
     - name: Run CfpExchange tests
-      run: dotnet test CfpExchange.Unittests --collect:"XPlat Code Coverage" --results-directory $HOME/TEST_RESULTS/
-    - name: ReportGenerator
-      uses: danielpalme/ReportGenerator-GitHub-Action@4.6.4
-      with:
-        reports: '/home/runner/TEST_RESULTS/**/coverage.cobertura.xml'
-        targetdir: '/home/runner/TEST_RESULTS/REPORTS/'
+      run: dotnet test CfpExchange.Unittests
     - name: Publish Unit Test Results
       uses: EnricoMi/publish-unit-test-result-action@v1.3
       if: always()
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         check_name: Unit Test Results
-        files: $HOME/TEST_RESULTS/**/*.xml
+        files: '**/*.xml'
