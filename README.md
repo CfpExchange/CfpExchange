@@ -1,4 +1,4 @@
-# ![CFP Exchange logo](https://cfp.exchange/images/exchange50x50.png) CFP.Exchange
+# ![CFP Exchange logo](https://cfp.exchange/images/exchange50x50.png) CFP.Exchange ![Build CfpExchange](https://github.com/CfpExchange/CfpExchange/workflows/Build%20CfpExchange/badge.svg)
 
 An online community website used to share interesting call for papers with speakers. 
 
