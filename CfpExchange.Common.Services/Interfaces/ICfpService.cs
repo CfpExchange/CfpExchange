@@ -23,7 +23,9 @@ namespace CfpExchange.Common.Services.Interfaces
         bool CfpWithIdenticalSlugExists(string cfpToAddSlug);
 
         void AddCfp(Cfp cfpToAdd);
-        
+
+        Task AddCfpAsync(Cfp cfpToAdd);
+
         Task SaveChangesAsync();
     }
 }

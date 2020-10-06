@@ -105,6 +105,12 @@ namespace CfpExchange.Common.Services
             _cfpContext.Add(cfpToAdd);
         }
 
+        public async Task AddCfpAsync(Cfp cfpToAdd)
+        {
+            _cfpContext.Add(cfpToAdd);
+            await _cfpContext.SaveChangesAsync();
+        }
+
         public async Task SaveChangesAsync()
         {
             await _cfpContext.SaveChangesAsync();
