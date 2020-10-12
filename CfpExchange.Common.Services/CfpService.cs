@@ -11,14 +11,26 @@ namespace CfpExchange.Common.Services
 {
     public class CfpService : ICfpService
     {
+        #region Constants
+
         private const int MaximumNumberOfItemsPerPage = 10;
 
+        #endregion
+
+        #region Fields
+
         private readonly CfpContext _cfpContext;
+
+        #endregion
+
+        #region Constructors
 
         public CfpService(CfpContext cfpContext)
         {
             _cfpContext = cfpContext;
         }
+
+        #endregion
 
         public Cfp GetCfpById(Guid id)
         {
@@ -28,6 +40,17 @@ namespace CfpExchange.Common.Services
         public Cfp GetCfpBySlug(string slug)
         {
             return _cfpContext.Cfps.SingleOrDefault(cfp => cfp.Slug == slug);
+        }
+
+        public List<Cfp> GetAllActiveCfps()
+        {
+            var allActiveCfps = _cfpContext.Cfps
+                .Where(cfp => cfp.CfpStartDate <= DateTime.UtcNow && cfp.CfpEndDate > DateTime.UtcNow)
+                .Where(cfp => cfp.DuplicateOfId == null)
+                .OrderBy(cfp => cfp.CfpEndDate)
+                .ToList();
+
+            return allActiveCfps;
         }
 
         public List<Cfp> GetAllActiveCfps(string lowercaseSearchTerm, DateTime startDateTime, DateTime endDateTime, int pageToShow)
@@ -80,6 +103,12 @@ namespace CfpExchange.Common.Services
         public void AddCfp(Cfp cfpToAdd)
         {
             _cfpContext.Add(cfpToAdd);
+        }
+
+        public async Task AddCfpAsync(Cfp cfpToAdd)
+        {
+            _cfpContext.Add(cfpToAdd);
+            await _cfpContext.SaveChangesAsync();
         }
 
         public async Task SaveChangesAsync()
